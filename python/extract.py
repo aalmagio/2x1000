@@ -41,6 +41,22 @@ TIMEOUT_FILE = 120
 
 TABULAR_EXTS = (".csv", ".xlsx", ".xls", ".pdf")
 
+# Link che compaiono quasi su ogni pagina istituzionale ma non sono mai i dati
+# cercati (informativa privacy, cookie policy, note legali...). Senza questo
+# filtro find_download_links() può "trovare" e scaricare con successo un file
+# del tutto irrilevante, facendo sembrare l'acquisizione riuscita quando non
+# lo è (visto in produzione: pagine del Dipartimento delle Finanze che non
+# espongono alcun link ai dati, solo all'informativa privacy in PDF).
+_JUNK_LINK_KEYWORDS = (
+    "privacy", "cookie", "note legali", "note-legali", "informativa",
+    "accessibilita", "accessibilità", "dichiarazione-accessibilita",
+)
+
+
+def _is_junk_link(href: str, text: str) -> bool:
+    haystack = f"{href} {text}".lower()
+    return any(kw in haystack for kw in _JUNK_LINK_KEYWORDS)
+
 
 # ---------------------------------------------------------------------------
 # Download
@@ -65,18 +81,27 @@ def find_download_links(page_url: str, session, exts=TABULAR_EXTS) -> dict:
         return result
 
     soup = BeautifulSoup(resp.text, "html.parser")
+    skipped_junk = 0
     for a_tag in soup.find_all("a", href=True):
         href = a_tag["href"].strip()
         href_lower = href.lower()
+        text = a_tag.get_text(strip=True)[:80]
+
+        if _is_junk_link(href, text):
+            skipped_junk += 1
+            continue
+
         for ext in exts:
             if href_lower.endswith(ext) or f"{ext}" in href_lower:
                 full_url = urljoin(page_url, href)
                 key = ext.lstrip(".")
                 if full_url not in result[key]:
                     result[key].append(full_url)
-                    text = a_tag.get_text(strip=True)[:80]
                     logger.info(f"    Trovato {key.upper()}: {text}")
                 break
+
+    if skipped_junk:
+        logger.info(f"  Ignorati {skipped_junk} link non pertinenti (privacy/cookie/note legali)")
 
     total = sum(len(v) for v in result.values())
     logger.info(f"  Totale link trovati: {total}")
