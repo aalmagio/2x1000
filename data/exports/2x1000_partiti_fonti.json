@@ -1,0 +1,13 @@
+[
+    {
+        "id": 1,
+        "institution": "DATI DEMO",
+        "title": "Dataset dimostrativo generato per lo sviluppo — NON rappresenta dati ufficiali reali",
+        "url": null,
+        "source_type": "altro",
+        "publication_date": null,
+        "download_date": null,
+        "checksum": null,
+        "notes": "SAMPLE DATA: numeri inventati a scopo di test. Sostituire con le fonti ufficiali MEF/Agenzia delle Entrate prima della produzione."
+    }
+]

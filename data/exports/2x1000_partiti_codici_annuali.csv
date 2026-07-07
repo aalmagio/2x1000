@@ -1,0 +1,9 @@
+﻿id,party_slug,canonical_name,declaration_year,tax_year,code,official_name,source_id
+1,partito-demo-a,"Partito Demo A",2024,2023,D01,"PARTITO DEMO A",1
+2,partito-demo-b,"Partito Demo B",2024,2023,D02,"PARTITO DEMO B",1
+3,partito-demo-c,"Partito Demo C",2024,2023,D03,"PARTITO DEMO C",1
+4,partito-demo-d,"Partito Demo D",2024,2023,D04,"PARTITO DEMO D",1
+5,partito-demo-e,"Partito Demo E",2024,2023,D05,"PARTITO DEMO E",1
+6,partito-demo-f,"Partito Demo F",2024,2023,D06,"PARTITO DEMO F",1
+7,partito-demo-g,"Partito Demo G",2024,2023,D07,"PARTITO DEMO G",1
+8,partito-demo-h,"Partito Demo H",2024,2023,D08,"PARTITO DEMO H",1

@@ -1,0 +1,74 @@
+[
+    {
+        "id": 1,
+        "canonical_name": "Partito Demo A",
+        "slug": "partito-demo-a",
+        "first_year": 2020,
+        "last_year": 2024,
+        "is_active": 1,
+        "notes": "DATO DEMO/SAMPLE — non un partito realmente esistente"
+    },
+    {
+        "id": 2,
+        "canonical_name": "Partito Demo B",
+        "slug": "partito-demo-b",
+        "first_year": 2020,
+        "last_year": 2024,
+        "is_active": 1,
+        "notes": "DATO DEMO/SAMPLE — non un partito realmente esistente"
+    },
+    {
+        "id": 3,
+        "canonical_name": "Partito Demo C",
+        "slug": "partito-demo-c",
+        "first_year": 2020,
+        "last_year": 2024,
+        "is_active": 1,
+        "notes": "DATO DEMO/SAMPLE — non un partito realmente esistente"
+    },
+    {
+        "id": 4,
+        "canonical_name": "Partito Demo D",
+        "slug": "partito-demo-d",
+        "first_year": 2020,
+        "last_year": 2024,
+        "is_active": 1,
+        "notes": "DATO DEMO/SAMPLE — non un partito realmente esistente"
+    },
+    {
+        "id": 5,
+        "canonical_name": "Partito Demo E",
+        "slug": "partito-demo-e",
+        "first_year": 2020,
+        "last_year": 2024,
+        "is_active": 1,
+        "notes": "DATO DEMO/SAMPLE — non un partito realmente esistente"
+    },
+    {
+        "id": 6,
+        "canonical_name": "Partito Demo F",
+        "slug": "partito-demo-f",
+        "first_year": 2020,
+        "last_year": 2024,
+        "is_active": 1,
+        "notes": "DATO DEMO/SAMPLE — non un partito realmente esistente"
+    },
+    {
+        "id": 7,
+        "canonical_name": "Partito Demo G",
+        "slug": "partito-demo-g",
+        "first_year": 2020,
+        "last_year": 2024,
+        "is_active": 1,
+        "notes": "DATO DEMO/SAMPLE — non un partito realmente esistente"
+    },
+    {
+        "id": 8,
+        "canonical_name": "Partito Demo H",
+        "slug": "partito-demo-h",
+        "first_year": 2020,
+        "last_year": 2024,
+        "is_active": 1,
+        "notes": "DATO DEMO/SAMPLE — non un partito realmente esistente"
+    }
+]

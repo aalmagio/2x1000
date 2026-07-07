@@ -1,0 +1,82 @@
+[
+    {
+        "id": 1,
+        "party_slug": "partito-demo-a",
+        "canonical_name": "Partito Demo A",
+        "declaration_year": 2024,
+        "tax_year": 2023,
+        "code": "D01",
+        "official_name": "PARTITO DEMO A",
+        "source_id": 1
+    },
+    {
+        "id": 2,
+        "party_slug": "partito-demo-b",
+        "canonical_name": "Partito Demo B",
+        "declaration_year": 2024,
+        "tax_year": 2023,
+        "code": "D02",
+        "official_name": "PARTITO DEMO B",
+        "source_id": 1
+    },
+    {
+        "id": 3,
+        "party_slug": "partito-demo-c",
+        "canonical_name": "Partito Demo C",
+        "declaration_year": 2024,
+        "tax_year": 2023,
+        "code": "D03",
+        "official_name": "PARTITO DEMO C",
+        "source_id": 1
+    },
+    {
+        "id": 4,
+        "party_slug": "partito-demo-d",
+        "canonical_name": "Partito Demo D",
+        "declaration_year": 2024,
+        "tax_year": 2023,
+        "code": "D04",
+        "official_name": "PARTITO DEMO D",
+        "source_id": 1
+    },
+    {
+        "id": 5,
+        "party_slug": "partito-demo-e",
+        "canonical_name": "Partito Demo E",
+        "declaration_year": 2024,
+        "tax_year": 2023,
+        "code": "D05",
+        "official_name": "PARTITO DEMO E",
+        "source_id": 1
+    },
+    {
+        "id": 6,
+        "party_slug": "partito-demo-f",
+        "canonical_name": "Partito Demo F",
+        "declaration_year": 2024,
+        "tax_year": 2023,
+        "code": "D06",
+        "official_name": "PARTITO DEMO F",
+        "source_id": 1
+    },
+    {
+        "id": 7,
+        "party_slug": "partito-demo-g",
+        "canonical_name": "Partito Demo G",
+        "declaration_year": 2024,
+        "tax_year": 2023,
+        "code": "D07",
+        "official_name": "PARTITO DEMO G",
+        "source_id": 1
+    },
+    {
+        "id": 8,
+        "party_slug": "partito-demo-h",
+        "canonical_name": "Partito Demo H",
+        "declaration_year": 2024,
+        "tax_year": 2023,
+        "code": "D08",
+        "official_name": "PARTITO DEMO H",
+        "source_id": 1
+    }
+]
