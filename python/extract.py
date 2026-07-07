@@ -437,10 +437,41 @@ def find_col(header_norm: "list[str]", aliases: "frozenset[str] | set[str]") -> 
         if c in aliases:
             return i
     for i, c in enumerate(header_norm):
+        if not c:
+            # Una cella vuota è "contenuta" in qualsiasi alias (c in a è
+            # sempre vero se c == ""): senza questo controllo farebbe
+            # scattare un match falso per la prima colonna vuota incontrata,
+            # indipendentemente dall'alias cercato.
+            continue
         for a in aliases:
             if len(a) > 4 and (a in c or c in a):
                 return i
     return None
+
+
+def locate_header(
+    header: "list[str]", rows: "list[list[str]]",
+    required_aliases: "frozenset[str] | set[str]", max_scan: int = 15,
+) -> "tuple[list[str], list[list[str]]]":
+    """
+    Alcuni export (es. i PDF/CSV del Dipartimento delle Finanze e
+    dell'Agenzia delle Entrate) iniziano con una o più righe di titolo/
+    metadati del report prima della vera intestazione delle colonne, es.
+    "PARTITI POLITICI AMMESSI AL BENEFICIO..." oppure "Analisi statistiche -
+    Due per mille". Se la prima riga non contiene nessuna colonna attesa
+    (verificato tramite `required_aliases`, tipicamente gli alias della
+    colonna partito/denominazione), cerca nelle righe successive (fino a
+    max_scan) quella che la contiene e la usa come vera intestazione,
+    scartando le righe di titolo prima di essa.
+    """
+    if find_col([h.strip().lower() for h in header], required_aliases) is not None:
+        return header, rows
+
+    for i, row in enumerate(rows[:max_scan]):
+        if find_col([c.strip().lower() for c in row], required_aliases) is not None:
+            return row, rows[i + 1:]
+
+    return header, rows
 
 
 def parse_amount(value) -> "float | None":

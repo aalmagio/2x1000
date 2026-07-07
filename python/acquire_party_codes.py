@@ -25,7 +25,7 @@ from datetime import date
 from pathlib import Path
 
 from common import REPO_ROOT, get_logger, load_config
-from extract import fetch_source_file, find_col, is_footer_row, read_table, sha256_file
+from extract import fetch_source_file, find_col, is_footer_row, locate_header, read_table, sha256_file
 
 NAME_ALIASES = frozenset({
     "denominazione", "denominazione ufficiale", "partito", "partito politico",
@@ -52,6 +52,7 @@ def _apply_config(cfg: dict) -> None:
 
 
 def parse_codes_table(header: "list[str]", rows: "list[list[str]]") -> "list[dict]":
+    header, rows = locate_header(header, rows, NAME_ALIASES)
     header_norm = [h.strip().lower() for h in header]
     name_idx = find_col(header_norm, NAME_ALIASES)
     code_idx = find_col(header_norm, CODE_ALIASES)

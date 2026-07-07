@@ -36,7 +36,10 @@ from datetime import date
 from pathlib import Path
 
 from common import REPO_ROOT, get_logger, load_config
-from extract import fetch_source_file, find_col, is_footer_row, parse_amount, parse_int, read_table, sha256_file
+from extract import (
+    fetch_source_file, find_col, is_footer_row, locate_header,
+    parse_amount, parse_int, read_table, sha256_file,
+)
 
 PARTY_ALIASES = frozenset({
     "denominazione", "partito", "partito politico", "denominazione partito",
@@ -72,25 +75,6 @@ def _apply_config(cfg: dict) -> None:
             YEAR_URLS[int(anno)] = str(url)
 
 
-def _locate_header(header: "list[str]", rows: "list[list[str]]", max_scan: int = 15) -> "tuple[list[str], list[list[str]]]":
-    """
-    Alcuni export (es. il CSV del Dipartimento delle Finanze) iniziano con una
-    o più righe di titolo/metadati del report prima della vera intestazione
-    delle colonne, es. "Analisi statistiche - Due per mille". Se la prima riga
-    non contiene una colonna partito riconoscibile, cerca nelle righe
-    successive (fino a max_scan) quella che la contiene e la usa come vera
-    intestazione, scartando le righe di titolo prima di essa.
-    """
-    if find_col([h.strip().lower() for h in header], PARTY_ALIASES) is not None:
-        return header, rows
-
-    for i, row in enumerate(rows[:max_scan]):
-        if find_col([c.strip().lower() for c in row], PARTY_ALIASES) is not None:
-            return row, rows[i + 1:]
-
-    return header, rows
-
-
 def parse_results_table(header: "list[str]", rows: "list[list[str]]") -> "list[dict]":
     """
     Mappa una tabella grezza (header, rows) sullo schema normalizzato
@@ -98,7 +82,7 @@ def parse_results_table(header: "list[str]", rows: "list[list[str]]") -> "list[d
     Salta le righe senza nome partito o totalmente numeriche/vuote (righe di
     totale, note a piè di pagina, ecc.).
     """
-    header, rows = _locate_header(header, rows)
+    header, rows = locate_header(header, rows, PARTY_ALIASES)
     header_norm = [h.strip().lower() for h in header]
     party_idx = find_col(header_norm, PARTY_ALIASES)
     choices_idx = find_col(header_norm, CHOICES_ALIASES)
