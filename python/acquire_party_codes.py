@@ -25,14 +25,7 @@ from datetime import date
 from pathlib import Path
 
 from common import REPO_ROOT, get_logger, load_config
-from extract import (
-    download_file,
-    find_col,
-    find_download_links,
-    read_table,
-    sanitize_filename,
-    sha256_file,
-)
+from extract import fetch_source_file, find_col, read_table, sha256_file
 
 NAME_ALIASES = frozenset({
     "denominazione", "denominazione ufficiale", "partito", "partito politico",
@@ -100,16 +93,10 @@ def download_year(year: int, raw_dir: Path, session) -> "Path | None":
 
     folder = raw_dir / str(year) / "codici"
     folder.mkdir(parents=True, exist_ok=True)
-    links = find_download_links(url, session)
-
-    for ext in ("csv", "xlsx", "xls", "pdf"):
-        for idx, file_url in enumerate(links.get(ext, []), 1):
-            filename = sanitize_filename(file_url, idx, ext)
-            dest = folder / filename
-            if download_file(file_url, dest, session):
-                return dest
-    logging.warning(f"[{year}] Nessun file scaricabile trovato nella pagina {url}")
-    return None
+    dest = fetch_source_file(url, folder, session)
+    if not dest:
+        logging.warning(f"[{year}] Nessun file scaricabile trovato per {url}")
+    return dest
 
 
 def find_local_file(raw_dir: Path, year: int) -> "Path | None":

@@ -13,23 +13,36 @@ download:
   user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 
 # --- URL per anno: risultati annuali del 2x1000 ai partiti politici ---
-# Pagina del Ministero dell'Economia e delle Finanze - Dipartimento delle
-# Finanze con il file scaricabile (CSV/XLSX/PDF) dei risultati per anno.
-# NESSUN URL è precompilato: vanno cercati e verificati manualmente sul sito
-# ufficiale (Dipartimento delle Finanze → Analisi statistiche delle
-# dichiarazioni → 2 per mille) e incollati qui. In alternativa, salva il file
-# scaricato manualmente in data/raw/<anno>/ ed esegui con --no-download.
-url_anni_risultati: {}
-  # 2024: "https://.../pagina-risultati-2x1000-2024"
-  # 2023: "https://.../pagina-risultati-2x1000-2023"
+# Fonte: Dipartimento delle Finanze, portale "Analisi statistiche - Due per
+# mille" (https://www1.finanze.gov.it/finanze/2xmille/public/index.php).
+# Il portale è organizzato ad albero con un nodo per anno (parametro "tree",
+# prefisso = anno + suffisso fisso "AADUEXM0101"). La riga 2022 sotto è stata
+# trovata già con "&export=1", che sembra essere il parametro che attiva
+# l'esportazione dei dati — ma NON è stata verificata scaricandola (questo
+# ambiente non può raggiungere i siti .gov.it). Prima di fidarsi in automatico
+# di questi URL, testali con:
+#   python acquire_results.py --anni 2022
+# e controlla il file prodotto in data/processed/mef_results_2022.csv.
+# Se il parsing fallisce o il file scaricato non è quello giusto, scarica a
+# mano dal portale (aprendolo nel browser) e salvalo in data/raw/<anno>/,
+# poi esegui con --no-download.
+url_anni_risultati:
+  2022: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2022AADUEXM0101&page=1&export=1&aggiornato=1522252800"
+  # 2024: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2024AADUEXM0101"  # DA VERIFICARE: pagina di navigazione, va cercato il link di export effettivo
+  # 2023: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2023AADUEXM0101"  # DA VERIFICARE
 
 # --- URL per anno: elenco partiti ammessi e codici da dichiarazione ---
-# Pagina dell'Agenzia delle Entrate con l'elenco dei partiti ammessi al
-# beneficio e i codici da indicare nel modello dichiarativo. Stesse note
-# di cui sopra: nessun URL precompilato, va verificato e aggiunto qui.
-url_anni_codici: {}
-  # 2024: "https://.../elenco-partiti-ammessi-2x1000-2024"
-  # 2023: "https://.../elenco-partiti-ammessi-2x1000-2023"
+# Fonte: Agenzia delle Entrate, tabella PDF "Partiti politici ammessi al
+# beneficio della destinazione volontaria del due per mille dell'Irpef",
+# pubblicata in allegato alle istruzioni dei modelli Redditi PF e 730.
+# Questi due URL sono link diretti a PDF (verificati via ricerca web, non
+# scaricati da questo ambiente): fetch_source_file() li scarica direttamente
+# senza dover scansionare una pagina HTML. Il parsing del PDF (due colonne:
+# denominazione + codice) va comunque verificato con:
+#   python acquire_party_codes.py --anni 2025
+url_anni_codici:
+  2025: "https://www.agenziaentrate.gov.it/portale/documents/20143/8673492/PF1_Tabella+partiti+politici+2025.pdf/07dd2e41-6897-bee5-bd9a-84eb764a5979?t=1742475109785"
+  2024: "https://www.agenziaentrate.gov.it/portale/documents/20143/5948858/PF1_2024_tabella_partiti_politici.pdf/758cd2d4-2ed1-ad07-332d-4c21d5cdb684"
 
 # --- Pipeline (pipeline.py) ---
 pipeline:

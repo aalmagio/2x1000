@@ -111,15 +111,70 @@ def download_file(url: str, dest_path: "str | Path", session) -> bool:
 
 
 def sanitize_filename(url: str, index: int, ext: str) -> str:
-    """Genera un nome file pulito dall'URL, con indice progressivo come fallback."""
+    """
+    Genera un nome file pulito dall'URL, con indice progressivo come fallback.
+
+    Alcuni CMS pubblici (es. Agenzia delle Entrate, basati su Liferay) inseriscono
+    il nome del file a metà del path, seguito da un segmento di hash/versione:
+    .../documents/123/456/Nome+file.pdf/07dd2e41-6897-...?t=169900000
+    In quel caso l'ultimo segmento del path (l'hash) non è un nome utile: si
+    cerca invece il segmento più vicino alla fine che contiene già l'estensione.
+    """
     parsed = urlparse(url)
-    basename = os.path.basename(unquote(parsed.path))
+    segments = [unquote(s) for s in parsed.path.split("/") if s]
+    basename = next((s for s in reversed(segments) if f".{ext}" in s.lower()), None)
+    if basename is None and segments:
+        basename = segments[-1]
+
     if basename and len(basename) < 200:
         basename = re.sub(r"[^\w\-.() ]", "_", basename)
         if not basename.lower().endswith(f".{ext}"):
             basename += f".{ext}"
         return basename
     return f"file_{index:02d}.{ext}"
+
+
+def is_direct_file_url(url: str) -> "str | None":
+    """
+    Se l'URL punta già direttamente a un file (non a una pagina HTML da
+    scansionare per trovare i link), restituisce l'estensione rilevata
+    ('pdf', 'csv', 'xlsx', 'xls'); altrimenti None.
+
+    Il controllo è per sottostringa (non solo suffisso) perché — come nel caso
+    sopra — l'estensione può comparire a metà del path invece che alla fine.
+    """
+    url_lower = url.lower()
+    for ext in ("pdf", "csv", "xlsx", "xls"):
+        if f".{ext}" in url_lower:
+            return ext
+    return None
+
+
+def fetch_source_file(url: str, dest_folder: "str | Path", session) -> "Path | None":
+    """
+    Scarica il file dei dati da un URL configurato in config.yaml, che può
+    essere:
+      - un link diretto a un file (PDF/CSV/XLSX) → scaricato subito;
+      - una pagina HTML che elenca i file da scaricare → la pagina viene
+        scansionata con find_download_links() e si scarica il primo file
+        trovato (ordine di preferenza: csv, xlsx, xls, pdf).
+
+    Restituisce il percorso del file scaricato, o None se non è stato
+    possibile ottenere nulla.
+    """
+    dest_folder = Path(dest_folder)
+    direct_ext = is_direct_file_url(url)
+    if direct_ext:
+        dest = dest_folder / sanitize_filename(url, 1, direct_ext)
+        return dest if download_file(url, dest, session) else None
+
+    links = find_download_links(url, session)
+    for ext in ("csv", "xlsx", "xls", "pdf"):
+        for idx, file_url in enumerate(links.get(ext, []), 1):
+            dest = dest_folder / sanitize_filename(file_url, idx, ext)
+            if download_file(file_url, dest, session):
+                return dest
+    return None
 
 
 def sha256_file(path: "str | Path") -> str:

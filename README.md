@@ -198,17 +198,28 @@ python pipeline.py --anni 2024 --dry-run
    di import scelto — non esiste una seconda implementazione dei calcoli in
    Python da mantenere sincronizzata con quella PHP.
 
-**Configurazione delle fonti — da compilare:** `python/config.yaml` contiene
-`url_anni_risultati` e `url_anni_codici`, entrambi **vuoti di default**.
-Nessun URL del MEF o dell'Agenzia delle Entrate è precompilato: le pagine
-ufficiali vanno cercate e verificate manualmente (Dipartimento delle Finanze
-→ Analisi statistiche delle dichiarazioni → 2 per mille; Agenzia delle
-Entrate → elenco partiti ammessi al due per mille), poi aggiunte a
-`config.yaml` una volta confermate. Finché un URL non è configurato per un
-anno, gli script si limitano a leggere un file già scaricato manualmente e
-salvato in `data/raw/<anno>/` (risultati) o `data/raw/<anno>/codici/`
-(elenco/codici) — usando `--no-download`, esattamente come funziona senza
-alcuna configurazione di rete.
+**Configurazione delle fonti:** `python/config.yaml` contiene `url_anni_risultati`
+(Dipartimento delle Finanze) e `url_anni_codici` (Agenzia delle Entrate).
+Alcuni URL trovati tramite ricerca web sono già precompilati (2024/2025 per i
+codici AdE, 2022 per i risultati MEF), ma **non sono stati verificati
+scaricandoli** — questo ambiente di sviluppo non riesce a raggiungere i siti
+`.gov.it` (bloccati dal proxy di rete). Prima di fidarsi in automatico:
+```bash
+python acquire_results.py --anni 2022
+python acquire_party_codes.py --anni 2025
+```
+e controlla il contenuto di `data/processed/mef_results_2022.csv` /
+`ade_codes_2025.csv`. Se il file scaricato non è quello giusto o il parser
+non trova le colonne, apri l'URL nel browser per trovare quello corretto e
+aggiorna `config.yaml`. Per gli anni non ancora configurati, gli script si
+limitano a leggere un file scaricato manualmente e salvato in
+`data/raw/<anno>/` (risultati) o `data/raw/<anno>/codici/` (elenco/codici),
+usando `--no-download`.
+
+Un URL può essere sia una pagina HTML da scansionare per trovare i link ai
+file, sia un link diretto a un file (PDF/CSV/XLSX, anche con l'estensione a
+metà del path come nei link dell'Agenzia delle Entrate): `fetch_source_file()`
+in `extract.py` gestisce entrambi i casi automaticamente.
 
 I parser (CSV, XLSX, PDF) individuano le colonne per alias di nome (es.
 "Denominazione"/"Partito", "Numero scelte"/"Scelte", "Importo") invece che
