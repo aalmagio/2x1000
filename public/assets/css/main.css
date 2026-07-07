@@ -1,7 +1,10 @@
 /* 2x1000 Open Data — Partiti politici
-   Stile coerente con l'identità dell'Osservatorio ASSIF (osservatorio.assif.it):
-   rosso istituzionale come colore di marca, pulsanti a pillola, impostazione
-   da portale dati sobria per le pagine dense di tabelle/grafici. */
+   Stile coerente con l'identità dell'Osservatorio ASSIF (osservatorio.assif.it
+   e dati5x1000.assif.it): rosso istituzionale come colore di marca (valori
+   campionati direttamente dai due siti: #fd0000 / #e00000 / tinte #ffe3e3),
+   pulsanti a pillola, impostazione da portale dati sobria per le pagine
+   dense di tabelle/grafici. Sfondo sempre chiaro: nessuna modalità scura,
+   per restare fedeli all'estetica dei siti di riferimento. */
 
 :root {
   --color-bg: #f7f8fa;
@@ -9,9 +12,9 @@
   --color-text: #1c2530;
   --color-text-muted: #5b6472;
   --color-border: #dde2e8;
-  --color-primary: #e2001a;
-  --color-primary-dark: #a5000f;
-  --color-primary-light: #fbe7e9;
+  --color-primary: #e00000;
+  --color-primary-dark: #a30000;
+  --color-primary-light: #ffe3e3;
   --color-accent: #147d75;
   --color-positive: #147d75;
   --color-negative: #b23a2e;
@@ -24,19 +27,7 @@
   --max-width: 1180px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #10151b;
-    --color-surface: #171e26;
-    --color-text: #e8edf2;
-    --color-text-muted: #9aa7b4;
-    --color-border: #2a333d;
-    --color-primary: #ff5a6e;
-    --color-primary-dark: #ff8a95;
-    --color-primary-light: #3a1216;
-    --color-accent: #3fb3a8;
-  }
-}
+:root { color-scheme: light; }
 
 * { box-sizing: border-box; }
 
