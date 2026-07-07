@@ -77,10 +77,28 @@ function clean_int(mixed $value, int $min = 0, int $max = 1000000): ?int
     return ($int >= $min && $int <= $max) ? $int : null;
 }
 
-/** Restituisce lo slug generato da un nome (per import/normalizzazione). */
+/**
+ * Restituisce lo slug generato da un nome (per import/normalizzazione).
+ *
+ * La tabella di trascrizione deve restare identica a quella in
+ * python/common.py::slugify(): entrambi i lati scrivono lo slug univoco
+ * della stessa tabella `parties`, quindi devono produrre risultati identici
+ * per lo stesso input (es. "Südtiroler" e "Sudtiroler" → stesso slug).
+ * Usa mb_strtolower (non strtolower) perché le lettere accentate maiuscole
+ * sono multi-byte in UTF-8 e strtolower() non le riconosce.
+ */
 function slugify(string $text): string
 {
-    $text = strtolower(trim($text));
+    static $transliteration = [
+        'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a',
+        'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e',
+        'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
+        'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ö' => 'o',
+        'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ü' => 'u',
+        'ý' => 'y', 'ÿ' => 'y', 'ñ' => 'n', 'ç' => 'c',
+    ];
+    $text = mb_strtolower(trim($text), 'UTF-8');
+    $text = strtr($text, $transliteration);
     $text = preg_replace('/[^a-z0-9]+/', '-', $text) ?? $text;
     return trim($text, '-');
 }

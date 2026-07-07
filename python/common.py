@@ -120,6 +120,21 @@ def ask_yes_no(prompt: str, default: str = "s") -> bool:
         print("  Rispondi s o n.")
 
 
+# Stessa tabella di app/includes/helpers.php::slugify(): i due lati (Python e
+# PHP) devono restare identici, perché entrambi scrivono lo slug univoco della
+# stessa tabella `parties`. Senza normalizzare gli accenti, lo stesso partito
+# scritto come "Sudtiroler" in una fonte e "Südtiroler" in un'altra genera due
+# slug diversi e quindi due righe duplicate.
+_TRANSLITERATION = {
+    "à": "a", "á": "a", "â": "a", "ã": "a", "ä": "a", "å": "a",
+    "è": "e", "é": "e", "ê": "e", "ë": "e",
+    "ì": "i", "í": "i", "î": "i", "ï": "i",
+    "ò": "o", "ó": "o", "ô": "o", "õ": "o", "ö": "o",
+    "ù": "u", "ú": "u", "û": "u", "ü": "u",
+    "ý": "y", "ÿ": "y", "ñ": "n", "ç": "c",
+}
+
+
 def slugify(text: str) -> str:
     """
     Genera uno slug canonico da un nome di partito.
@@ -127,5 +142,6 @@ def slugify(text: str) -> str:
     gli slug generati da Python coincidano con quelli usati dal sito PHP.
     """
     text = text.strip().lower()
+    text = "".join(_TRANSLITERATION.get(c, c) for c in text)
     text = re.sub(r"[^a-z0-9]+", "-", text)
     return text.strip("-")
