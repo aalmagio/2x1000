@@ -16,33 +16,56 @@ download:
 # Fonte: Dipartimento delle Finanze, portale "Analisi statistiche - Due per
 # mille" (https://www1.finanze.gov.it/finanze/2xmille/public/index.php).
 # Il portale è organizzato ad albero con un nodo per anno (parametro "tree",
-# prefisso = anno + suffisso fisso "AADUEXM0101"). La riga 2022 sotto è stata
-# trovata già con "&export=1", che sembra essere il parametro che attiva
-# l'esportazione dei dati — ma NON è stata verificata scaricandola (questo
-# ambiente non può raggiungere i siti .gov.it). Prima di fidarsi in automatico
-# di questi URL, testali con:
-#   python acquire_results.py --anni 2022
-# e controlla il file prodotto in data/processed/mef_results_2022.csv.
-# Se il parsing fallisce o il file scaricato non è quello giusto, scarica a
-# mano dal portale (aprendolo nel browser) e salvalo in data/raw/<anno>/,
+# prefisso = anno + suffisso fisso "AADUEXM0101") e "&export=1" per attivare
+# l'esportazione dei dati. Il pattern è confermato per il 2022 (trovato via
+# ricerca web) ed è stato poi replicato per gli altri anni cambiando solo il
+# prefisso: NON VERIFICATO per il 2014-2021 e 2023-2025 — testa ogni anno con:
+#   python acquire_results.py --anni <ANNO>
+# e controlla data/processed/mef_results_<ANNO>.csv prima di fidartene per un
+# import massivo. Se un anno non funziona, scarica a mano dal portale
+# (aprendolo nel browser, navigando l'albero) e salvalo in data/raw/<anno>/,
 # poi esegui con --no-download.
 url_anni_risultati:
+  2025: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2025AADUEXM0101&page=1&export=1&aggiornato=1522252800"
+  2024: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2024AADUEXM0101&page=1&export=1&aggiornato=1522252800"
+  2023: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2023AADUEXM0101&page=1&export=1&aggiornato=1522252800"
   2022: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2022AADUEXM0101&page=1&export=1&aggiornato=1522252800"
-  # 2024: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2024AADUEXM0101"  # DA VERIFICARE: pagina di navigazione, va cercato il link di export effettivo
-  # 2023: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2023AADUEXM0101"  # DA VERIFICARE
+  2021: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2021AADUEXM0101&page=1&export=1&aggiornato=1522252800"
+  2020: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2020AADUEXM0101&page=1&export=1&aggiornato=1522252800"
+  2019: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2019AADUEXM0101&page=1&export=1&aggiornato=1522252800"
+  2018: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2018AADUEXM0101&page=1&export=1&aggiornato=1522252800"
+  2017: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2017AADUEXM0101&page=1&export=1&aggiornato=1522252800"
+  2016: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2016AADUEXM0101&page=1&export=1&aggiornato=1522252800"
+  2015: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2015AADUEXM0101&page=1&export=1&aggiornato=1522252800"
 
 # --- URL per anno: elenco partiti ammessi e codici da dichiarazione ---
 # Fonte: Agenzia delle Entrate, tabella PDF "Partiti politici ammessi al
 # beneficio della destinazione volontaria del due per mille dell'Irpef",
 # pubblicata in allegato alle istruzioni dei modelli Redditi PF e 730.
-# Questi due URL sono link diretti a PDF (verificati via ricerca web, non
-# scaricati da questo ambiente): fetch_source_file() li scarica direttamente
-# senza dover scansionare una pagina HTML. Il parsing del PDF (due colonne:
-# denominazione + codice) va comunque verificato con:
-#   python acquire_party_codes.py --anni 2025
+# Sono link diretti a PDF: fetch_source_file() li scarica subito, senza
+# scansionare una pagina HTML. Il parsing del PDF (due colonne: denominazione
+# + codice) va verificato per ciascun anno con:
+#   python acquire_party_codes.py --anni <ANNO>
+#
+# ATTENZIONE — 2016 e 2020 puntano allo STESSO file (.../0cddc6ef-4211-bd86-
+# d704-751e0c7cd244): non è stato verificato se è corretto (l'AdE potrebbe
+# aver pubblicato la stessa tabella per entrambi gli anni) o se uno dei due
+# anni ha in realtà un documento diverso non ancora trovato. Prima di
+# importare questi due anni, apri entrambi i link nel browser e controlla
+# che il contenuto/anno indicato nel PDF corrisponda.
 url_anni_codici:
   2025: "https://www.agenziaentrate.gov.it/portale/documents/20143/8673492/PF1_Tabella+partiti+politici+2025.pdf/07dd2e41-6897-bee5-bd9a-84eb764a5979?t=1742475109785"
   2024: "https://www.agenziaentrate.gov.it/portale/documents/20143/5948858/PF1_2024_tabella_partiti_politici.pdf/758cd2d4-2ed1-ad07-332d-4c21d5cdb684"
+  2023: "https://www.agenziaentrate.gov.it/portale/documents/20143/5082843/PF_2023_tabella_partiti_politici.pdf/7f2b9935-30e8-e918-5c79-55eff480ec96"
+  2022: "https://www.agenziaentrate.gov.it/portale/documents/20143/4124889/730_2022_tab_partiti+politici.pdf/516f4b43-1e2c-0563-8cf7-b4f34ddbb8a6"
+  2021: "https://www.agenziaentrate.gov.it/portale/documents/20143/3188954/REDDITI_2021_tabella_partiti_politici.pdf/9efde4d8-2c7f-95f0-2e88-d30c4c546375"
+  2020: "https://www.agenziaentrate.gov.it/portale/documents/20143/373633/Tabella+partiti+politici_Tabella+partiti+politici.pdf/0cddc6ef-4211-bd86-d704-751e0c7cd244"
+  2019: "https://www.agenziaentrate.gov.it/portale/documents/20143/247396/8+5+2+per+mille+730+tabella+partiti+politici+2019_730_Tab_partiti_2019.pdf/95014acb-6c2f-8f9d-e8de-b24dd399ee30"
+  2018: "https://www.agenziaentrate.gov.it/portale/documents/20143/359636/Tabella+partiti+politici+Redditi+2018_PF1_partiti_politici.pdf/66b3dac2-376c-fe7e-d298-4e242b85833f"
+  2017: "https://www.agenziaentrate.gov.it/portale/documents/20143/367669/Tabella+partiti+730+2017_Codici_partiti+politici_da_Mod.730.pdf/4ec56bc9-8ff9-8b7b-15f4-4c47d9aaa9dd"
+  2016: "https://www.agenziaentrate.gov.it/portale/documents/20143/373633/Tabella+partiti+politici_Tabella+partiti+politici.pdf/0cddc6ef-4211-bd86-d704-751e0c7cd244"
+  2015: "https://www.agenziaentrate.gov.it/portale/documents/20143/314020/CS+17032015+elenco_043_Com.+st.+Risoluzione+2+per+mille+2015+17.03.15.pdf/ea47222b-a4e9-fd82-5ae6-3d7652bea3e6?t=1426619572797/-/cs-17032015-elenco"
+  2014: "https://www.agenziaentrate.gov.it/portale/documents/20143/380401/Elenco+partiti+ammessi+al+2+per+mille_Elenco+partiti+politici+2+permille.pdf/141d25ca-2d61-37ed-add2-beb76b46d28f"
 
 # --- Pipeline (pipeline.py) ---
 pipeline:
