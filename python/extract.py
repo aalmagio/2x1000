@@ -62,25 +62,10 @@ def _is_junk_link(href: str, text: str) -> bool:
 # Download
 # ---------------------------------------------------------------------------
 
-def find_download_links(page_url: str, session, exts=TABULAR_EXTS) -> dict:
-    """
-    Scarica una pagina HTML e restituisce i link ai file scaricabili,
-    raggruppati per estensione: {"csv": [...], "xlsx": [...], "pdf": [...]}.
-    """
+def _extract_links_from_html(page_url: str, html_text: str, exts=TABULAR_EXTS) -> dict:
+    """Scansiona un HTML già scaricato e restituisce i link ai file scaricabili."""
     result = {ext.lstrip("."): [] for ext in exts}
-    if not HAS_WEB:
-        logger.error("requests/beautifulsoup4 non installati: impossibile leggere la pagina.")
-        return result
-
-    logger.info(f"  Scarico pagina: {page_url}")
-    try:
-        resp = session.get(page_url, headers=HEADERS, timeout=TIMEOUT_PAGE)
-        resp.raise_for_status()
-    except requests.RequestException as e:
-        logger.error(f"  Errore nello scaricare la pagina: {e}")
-        return result
-
-    soup = BeautifulSoup(resp.text, "html.parser")
+    soup = BeautifulSoup(html_text, "html.parser")
     skipped_junk = 0
     for a_tag in soup.find_all("a", href=True):
         href = a_tag["href"].strip()
@@ -106,6 +91,27 @@ def find_download_links(page_url: str, session, exts=TABULAR_EXTS) -> dict:
     total = sum(len(v) for v in result.values())
     logger.info(f"  Totale link trovati: {total}")
     return result
+
+
+def find_download_links(page_url: str, session, exts=TABULAR_EXTS) -> dict:
+    """
+    Scarica una pagina HTML e restituisce i link ai file scaricabili,
+    raggruppati per estensione: {"csv": [...], "xlsx": [...], "pdf": [...]}.
+    """
+    result = {ext.lstrip("."): [] for ext in exts}
+    if not HAS_WEB:
+        logger.error("requests/beautifulsoup4 non installati: impossibile leggere la pagina.")
+        return result
+
+    logger.info(f"  Scarico pagina: {page_url}")
+    try:
+        resp = session.get(page_url, headers=HEADERS, timeout=TIMEOUT_PAGE)
+        resp.raise_for_status()
+    except requests.RequestException as e:
+        logger.error(f"  Errore nello scaricare la pagina: {e}")
+        return result
+
+    return _extract_links_from_html(page_url, resp.text, exts)
 
 
 def download_file(url: str, dest_path: "str | Path", session) -> bool:
@@ -175,14 +181,35 @@ def is_direct_file_url(url: str) -> "str | None":
     return None
 
 
+_CONTENT_TYPE_EXT = {
+    "text/csv": "csv",
+    "application/csv": "csv",
+    "application/vnd.ms-excel": "xls",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
+    "application/pdf": "pdf",
+}
+
+
+def _filename_from_content_disposition(header_value: str) -> "str | None":
+    """Estrae il nome file da un header Content-Disposition, se presente."""
+    if not header_value:
+        return None
+    match = re.search(r'filename\*?=(?:UTF-8\'\')?"?([^";]+)"?', header_value)
+    return unquote(match.group(1)) if match else None
+
+
 def fetch_source_file(url: str, dest_folder: "str | Path", session) -> "Path | None":
     """
     Scarica il file dei dati da un URL configurato in config.yaml, che può
     essere:
-      - un link diretto a un file (PDF/CSV/XLSX) → scaricato subito;
-      - una pagina HTML che elenca i file da scaricare → la pagina viene
-        scansionata con find_download_links() e si scarica il primo file
-        trovato (ordine di preferenza: csv, xlsx, xls, pdf).
+      - un link diretto a un file (PDF/CSV/XLSX, riconoscibile dall'estensione
+        nell'URL stesso) → scaricato subito;
+      - un URL che risponde direttamente con il file (es. un parametro
+        "export=1" che fa restituire al server un CSV/Excel invece di una
+        pagina HTML, senza che l'URL contenga l'estensione) → riconosciuto
+        dal Content-Type della risposta e salvato subito, senza cercare link;
+      - una vera pagina HTML che elenca i file da scaricare → viene
+        scansionata per trovare i link (ordine di preferenza: csv, xlsx, xls, pdf).
 
     Restituisce il percorso del file scaricato, o None se non è stato
     possibile ottenere nulla.
@@ -193,7 +220,44 @@ def fetch_source_file(url: str, dest_folder: "str | Path", session) -> "Path | N
         dest = dest_folder / sanitize_filename(url, 1, direct_ext)
         return dest if download_file(url, dest, session) else None
 
-    links = find_download_links(url, session)
+    if not HAS_WEB:
+        logger.error("requests/beautifulsoup4 non installati: impossibile contattare l'URL.")
+        return None
+
+    logger.info(f"  Richiamo URL: {url}")
+    try:
+        resp = session.get(url, headers=HEADERS, timeout=TIMEOUT_PAGE)
+        resp.raise_for_status()
+    except requests.RequestException as e:
+        logger.error(f"  Errore nella richiesta: {e}")
+        return None
+
+    content_type = resp.headers.get("Content-Type", "").split(";")[0].strip().lower()
+
+    if content_type and not content_type.startswith("text/html"):
+        # La risposta non è una pagina HTML da scansionare: è già il file dati
+        # (tipico di endpoint con parametro "export=1" che restituiscono
+        # direttamente un CSV/Excel invece di renderizzare una pagina).
+        filename = _filename_from_content_disposition(resp.headers.get("Content-Disposition", ""))
+        if filename:
+            dest = dest_folder / re.sub(r"[^\w\-.() ]", "_", filename)
+        else:
+            ext = _CONTENT_TYPE_EXT.get(content_type)
+            if not ext:
+                logger.warning(
+                    f"  Content-Type non riconosciuto ({content_type or 'assente'}) e nessun "
+                    f"nome file nell'header Content-Disposition: impossibile determinare il formato."
+                )
+                return None
+            dest = dest_folder / sanitize_filename(url, 1, ext)
+
+        dest_folder.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes(resp.content)
+        logger.info(f"  Risposta non-HTML ({content_type}): salvata come {dest.name} ({len(resp.content):,} bytes)")
+        return dest
+
+    # È una pagina HTML: scansionala per trovare i link ai file
+    links = _extract_links_from_html(url, resp.text)
     for ext in ("csv", "xlsx", "xls", "pdf"):
         for idx, file_url in enumerate(links.get(ext, []), 1):
             dest = dest_folder / sanitize_filename(file_url, idx, ext)
