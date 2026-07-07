@@ -111,7 +111,8 @@ def find_local_file(raw_dir: Path, year: int) -> "Path | None":
     return None
 
 
-def process_year(year: int, args, raw_dir: Path, processed_dir: Path, session=None) -> bool:
+def process_year(year: int, args, raw_dir: Path, processed_dir: Path, session=None) -> str:
+    """Restituisce 'ok', 'skipped' (anno non configurato, non è un errore) o 'error'."""
     logging.info(f"[{year}] Inizio elaborazione")
 
     if args.input:
@@ -127,23 +128,23 @@ def process_year(year: int, args, raw_dir: Path, processed_dir: Path, session=No
             f"(url_anni_codici) oppure salva manualmente il file ufficiale in "
             f"data/raw/{year}/codici/ e riesegui con --no-download."
         )
-        return False
+        return "skipped"
 
     logging.info(f"[{year}] Lettura: {file_path.name}")
     try:
         header, rows = read_table(file_path)
     except Exception as e:
         logging.error(f"[{year}] Errore nella lettura di {file_path.name}: {e}")
-        return False
+        return "error"
 
     if not header:
         logging.error(f"[{year}] Impossibile determinare l'intestazione di {file_path.name}")
-        return False
+        return "error"
 
     records = parse_codes_table(header, rows)
     if not records:
         logging.warning(f"[{year}] Nessun codice estratto da {file_path.name}")
-        return False
+        return "error"
 
     tax_year = args.tax_year if args.tax_year else year - 1
     out_csv = processed_dir / f"ade_codes_{year}.csv"
@@ -163,7 +164,7 @@ def process_year(year: int, args, raw_dir: Path, processed_dir: Path, session=No
     write_meta(meta, processed_dir / f"ade_codes_{year}.meta.json")
 
     logging.info(f"[{year}] => {out_csv.name} ({len(records)} partiti)")
-    return True
+    return "ok"
 
 
 def parse_args():
@@ -215,21 +216,25 @@ def main():
         except ImportError:
             logging.warning("requests non installato: salto il download, uso solo i file locali.")
 
-    ok, errors = 0, 0
+    ok, skipped, errors = 0, 0, 0
     for year in years:
         try:
-            if process_year(year, args, raw_dir, processed_dir, session):
-                ok += 1
-            else:
-                errors += 1
+            result = process_year(year, args, raw_dir, processed_dir, session)
         except Exception as e:
             logging.error(f"[{year}] Errore imprevisto: {e}")
+            result = "error"
+
+        if result == "ok":
+            ok += 1
+        elif result == "skipped":
+            skipped += 1
+        else:
             errors += 1
 
     if session:
         session.close()
 
-    logging.info(f"Completato: {ok} anni elaborati, {errors} errori/skip")
+    logging.info(f"Completato: {ok} anni elaborati, {skipped} saltati (non configurati), {errors} errori")
     sys.exit(0 if errors == 0 else 1)
 
 
