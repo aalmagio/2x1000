@@ -58,6 +58,25 @@ def _is_junk_link(href: str, text: str) -> bool:
     return any(kw in haystack for kw in _JUNK_LINK_KEYWORDS)
 
 
+# Righe che compaiono nelle tabelle di partiti/codici ma non sono un partito:
+# totali, note a piè di pagina, riferimenti di memoria ("Per memoria: Totale
+# contribuenti"), didascalie. Confrontate come prefisso (non substring) sul
+# nome/denominazione già in minuscolo, per non scartare per errore un partito
+# il cui nome contenga per coincidenza una di queste parole a metà frase.
+_FOOTER_ROW_PREFIXES = (
+    "per memoria", "totale", "totali", "di cui", "nota", "n.b.", "n.d.",
+    "fonte", "elaborazione", "note:", "*",
+)
+
+
+def is_footer_row(name: "str | None") -> bool:
+    """True se `name` è con tutta probabilità una riga di nota/riepilogo e non un partito."""
+    if not name:
+        return True
+    n = name.strip().lower()
+    return any(n.startswith(p) for p in _FOOTER_ROW_PREFIXES)
+
+
 # ---------------------------------------------------------------------------
 # Download
 # ---------------------------------------------------------------------------

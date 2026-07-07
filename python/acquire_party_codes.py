@@ -25,7 +25,7 @@ from datetime import date
 from pathlib import Path
 
 from common import REPO_ROOT, get_logger, load_config
-from extract import fetch_source_file, find_col, read_table, sha256_file
+from extract import fetch_source_file, find_col, is_footer_row, read_table, sha256_file
 
 NAME_ALIASES = frozenset({
     "denominazione", "denominazione ufficiale", "partito", "partito politico",
@@ -66,7 +66,7 @@ def parse_codes_table(header: "list[str]", rows: "list[list[str]]") -> "list[dic
             continue
         name = row[name_idx].strip()
         code = row[code_idx].strip()
-        if not name or not code:
+        if not name or not code or is_footer_row(name):
             continue
         records.append({"official_name": name, "code": code})
     return records

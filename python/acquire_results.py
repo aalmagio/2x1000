@@ -36,7 +36,7 @@ from datetime import date
 from pathlib import Path
 
 from common import REPO_ROOT, get_logger, load_config
-from extract import fetch_source_file, find_col, parse_amount, parse_int, read_table, sha256_file
+from extract import fetch_source_file, find_col, is_footer_row, parse_amount, parse_int, read_table, sha256_file
 
 PARTY_ALIASES = frozenset({
     "denominazione", "partito", "partito politico", "denominazione partito",
@@ -116,7 +116,7 @@ def parse_results_table(header: "list[str]", rows: "list[list[str]]") -> "list[d
         if party_idx >= len(row):
             continue
         name = row[party_idx].strip()
-        if not name or name.lower() in ("totale", "totale generale", "totali"):
+        if is_footer_row(name):
             continue
 
         choices = parse_int(row[choices_idx]) if choices_idx is not None and choices_idx < len(row) else None
