@@ -421,11 +421,20 @@ def parse_amount(value) -> "float | None":
     if not s:
         return None
     s = s.replace("€", "").strip()
-    # Formato italiano: punto = separatore migliaia, virgola = decimali
+    # Formato italiano: punto = separatore migliaia, virgola = decimali.
     if "," in s and "." in s:
         s = s.replace(".", "").replace(",", ".")
     elif "," in s:
         s = s.replace(",", ".")
+    elif "." in s:
+        # Solo punto, nessuna virgola: ambiguo tra migliaia ("941.704" → 941704)
+        # e decimale ("123.5" → 123.5). Più punti, o un solo punto seguito da
+        # esattamente 3 cifre (il raggruppamento italiano standard), sono
+        # trattati come separatore delle migliaia — l'uso più comune nelle
+        # fonti pubbliche italiane per conteggi/importi senza decimali.
+        parts = s.split(".")
+        if len(parts) > 2 or (len(parts) == 2 and len(parts[-1]) == 3):
+            s = s.replace(".", "")
     s = re.sub(r"[^\d.\-]", "", s)
     if not s:
         return None

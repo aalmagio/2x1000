@@ -40,15 +40,21 @@ from extract import fetch_source_file, find_col, parse_amount, parse_int, read_t
 
 PARTY_ALIASES = frozenset({
     "denominazione", "partito", "partito politico", "denominazione partito",
-    "nome partito", "beneficiario",
+    "nome partito", "beneficiario", "partiti politici",
 })
 CHOICES_ALIASES = frozenset({
     "numero scelte", "n. scelte", "n scelte", "scelte", "numero di scelte",
     "scelte valide", "numero scelte valide",
 })
+# "totale" da solo non va messo qui: comparirebbe come substring anche in
+# colonne percentuali come "% sul totale scelte", facendo puntare amount_idx
+# alla colonna sbagliata. Le frasi sotto sono quelle viste nei PDF reali del
+# Dipartimento delle Finanze (export=1) e nelle fonti CSV/Excel più comuni.
 AMOUNT_ALIASES = frozenset({
     "importo", "importo (euro)", "importo euro", "importo totale",
     "importo assegnato", "ammontare",
+    "totale 2‰ spettante", "totale 2 per mille spettante",
+    "totale spettante", "importo spettante",
 })
 
 # URL per anno (Dipartimento delle Finanze / MEF). Vuoto di default: va
