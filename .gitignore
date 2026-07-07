@@ -6,3 +6,10 @@
 Thumbs.db
 /data/raw/*
 !/data/raw/.gitkeep
+
+# Pipeline Python (python/)
+/python/.venv/
+/python/__pycache__/
+/python/log/
+__pycache__/
+*.pyc

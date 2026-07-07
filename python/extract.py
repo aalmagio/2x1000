@@ -1,0 +1,296 @@
+#!/usr/bin/env python3
+"""
+extract.py — Utilità generiche di download e lettura tabellare, condivise da
+acquire_results.py e acquire_party_codes.py.
+
+Le pagine del Ministero dell'Economia e delle Finanze e dell'Agenzia delle
+Entrate pubblicano i dati in formati non standardizzati (CSV, XLSX o PDF a
+seconda dell'anno): queste funzioni astraggono il download e la lettura in
+una tabella (header + righe) indipendentemente dal formato, con lo stesso
+approccio "alias di colonna" già usato per l'estrazione dei dati 5x1000.
+"""
+
+from __future__ import annotations
+
+import csv
+import hashlib
+import logging
+import os
+import re
+from pathlib import Path
+from urllib.parse import unquote, urljoin, urlparse
+
+logger = logging.getLogger(__name__)
+
+try:
+    import requests
+    from bs4 import BeautifulSoup
+    HAS_WEB = True
+except ImportError:
+    HAS_WEB = False
+
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "it-IT,it;q=0.9,en;q=0.8",
+}
+
+TIMEOUT_PAGE = 60
+TIMEOUT_FILE = 120
+
+TABULAR_EXTS = (".csv", ".xlsx", ".xls", ".pdf")
+
+
+# ---------------------------------------------------------------------------
+# Download
+# ---------------------------------------------------------------------------
+
+def find_download_links(page_url: str, session, exts=TABULAR_EXTS) -> dict:
+    """
+    Scarica una pagina HTML e restituisce i link ai file scaricabili,
+    raggruppati per estensione: {"csv": [...], "xlsx": [...], "pdf": [...]}.
+    """
+    result = {ext.lstrip("."): [] for ext in exts}
+    if not HAS_WEB:
+        logger.error("requests/beautifulsoup4 non installati: impossibile leggere la pagina.")
+        return result
+
+    logger.info(f"  Scarico pagina: {page_url}")
+    try:
+        resp = session.get(page_url, headers=HEADERS, timeout=TIMEOUT_PAGE)
+        resp.raise_for_status()
+    except requests.RequestException as e:
+        logger.error(f"  Errore nello scaricare la pagina: {e}")
+        return result
+
+    soup = BeautifulSoup(resp.text, "html.parser")
+    for a_tag in soup.find_all("a", href=True):
+        href = a_tag["href"].strip()
+        href_lower = href.lower()
+        for ext in exts:
+            if href_lower.endswith(ext) or f"{ext}" in href_lower:
+                full_url = urljoin(page_url, href)
+                key = ext.lstrip(".")
+                if full_url not in result[key]:
+                    result[key].append(full_url)
+                    text = a_tag.get_text(strip=True)[:80]
+                    logger.info(f"    Trovato {key.upper()}: {text}")
+                break
+
+    total = sum(len(v) for v in result.values())
+    logger.info(f"  Totale link trovati: {total}")
+    return result
+
+
+def download_file(url: str, dest_path: "str | Path", session) -> bool:
+    """Scarica un file da URL e lo salva in dest_path. Restituisce True se riuscito."""
+    dest_path = Path(dest_path)
+    if dest_path.exists():
+        logger.info(f"    File già presente ({dest_path.stat().st_size:,} bytes), salto: {dest_path.name}")
+        return True
+    if not HAS_WEB:
+        logger.error("requests non installato: impossibile scaricare il file.")
+        return False
+
+    logger.info(f"    Scarico: {dest_path.name}...")
+    try:
+        resp = session.get(url, headers=HEADERS, timeout=TIMEOUT_FILE, stream=True)
+        resp.raise_for_status()
+        dest_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(dest_path, "wb") as f:
+            for chunk in resp.iter_content(chunk_size=8192):
+                f.write(chunk)
+        logger.info(f"    Salvato: {dest_path.name} ({dest_path.stat().st_size:,} bytes)")
+        return True
+    except requests.RequestException as e:
+        logger.error(f"    Errore nel download di {dest_path.name}: {e}")
+        if dest_path.exists():
+            dest_path.unlink()
+        return False
+
+
+def sanitize_filename(url: str, index: int, ext: str) -> str:
+    """Genera un nome file pulito dall'URL, con indice progressivo come fallback."""
+    parsed = urlparse(url)
+    basename = os.path.basename(unquote(parsed.path))
+    if basename and len(basename) < 200:
+        basename = re.sub(r"[^\w\-.() ]", "_", basename)
+        if not basename.lower().endswith(f".{ext}"):
+            basename += f".{ext}"
+        return basename
+    return f"file_{index:02d}.{ext}"
+
+
+def sha256_file(path: "str | Path") -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for block in iter(lambda: f.read(65536), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
+# ---------------------------------------------------------------------------
+# Lettura tabellare (CSV / XLSX / PDF) → (header, rows) di stringhe
+# ---------------------------------------------------------------------------
+
+def clean_cell(value) -> str:
+    if value is None:
+        return ""
+    value = str(value).strip()
+    if len(value) >= 2 and value[0] in ("'", '"') and value[-1] == value[0]:
+        value = value[1:-1].strip()
+    value = re.sub(r"\n+", " ", value)
+    value = re.sub(r"\s{2,}", " ", value)
+    return value
+
+
+def _detect_csv_params(path: Path) -> "tuple[str, str]":
+    for enc in ("utf-8", "utf-8-sig", "latin-1", "cp1252", "iso-8859-15"):
+        try:
+            with open(path, "r", encoding=enc) as f:
+                sample = f.read(4096)
+            break
+        except (UnicodeDecodeError, UnicodeError):
+            continue
+    else:
+        enc = "latin-1"
+        with open(path, "r", encoding=enc) as f:
+            sample = f.read(4096)
+
+    try:
+        dialect = csv.Sniffer().sniff(sample, delimiters=";,\t|")
+        delimiter = dialect.delimiter
+    except csv.Error:
+        delimiter = ";"
+
+    return enc, delimiter
+
+
+def _read_csv(path: Path) -> "tuple[list[str] | None, list[list[str]]]":
+    enc, delimiter = _detect_csv_params(path)
+    header = None
+    rows = []
+    with open(path, "r", encoding=enc, errors="replace") as f:
+        reader = csv.reader(f, delimiter=delimiter)
+        for row in reader:
+            cleaned = [clean_cell(c) for c in row]
+            if all(c == "" for c in cleaned):
+                continue
+            if header is None:
+                header = cleaned
+                continue
+            rows.append(cleaned)
+    return header, rows
+
+
+def _read_xlsx(path: Path) -> "tuple[list[str] | None, list[list[str]]]":
+    import openpyxl
+    import warnings
+
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", "Workbook contains no default style", UserWarning)
+        wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    ws = wb.active
+    all_rows = list(ws.iter_rows(values_only=True))
+    wb.close()
+
+    if not all_rows:
+        return None, []
+
+    header = [clean_cell(c) for c in all_rows[0]]
+    rows = []
+    for row in all_rows[1:]:
+        cleaned = [clean_cell(c) for c in row]
+        if any(c != "" for c in cleaned):
+            rows.append(cleaned)
+    return header, rows
+
+
+def _read_pdf(path: Path) -> "tuple[list[str] | None, list[list[str]]]":
+    try:
+        import pdfplumber
+    except ImportError:
+        logger.error("pdfplumber non installato: impossibile leggere PDF. pip install pdfplumber")
+        return None, []
+
+    header = None
+    rows = []
+    pdf = pdfplumber.open(path)
+    try:
+        for page in pdf.pages:
+            for table in page.extract_tables() or []:
+                for row in table:
+                    cleaned = [clean_cell(c) for c in row]
+                    if all(c == "" for c in cleaned):
+                        continue
+                    if header is None:
+                        header = cleaned
+                        continue
+                    if cleaned[:3] == header[:3]:
+                        continue  # intestazione ripetuta su ogni pagina
+                    rows.append(cleaned)
+    finally:
+        pdf.close()
+    return header, rows
+
+
+def read_table(path: "str | Path") -> "tuple[list[str] | None, list[list[str]]]":
+    """
+    Legge un file tabellare (CSV, XLSX/XLS o PDF) e restituisce (header, rows),
+    entrambi liste di stringhe pulite. header è None se il file non contiene dati.
+    """
+    path = Path(path)
+    ext = path.suffix.lower()
+    if ext == ".csv":
+        return _read_csv(path)
+    if ext in (".xlsx", ".xls"):
+        return _read_xlsx(path)
+    if ext == ".pdf":
+        return _read_pdf(path)
+    raise ValueError(f"Formato non supportato: {ext} ({path.name})")
+
+
+def find_col(header_norm: "list[str]", aliases: "frozenset[str] | set[str]") -> "int | None":
+    """
+    Trova l'indice della colonna che corrisponde a uno degli alias.
+    Prima cerca un match esatto (case-insensitive, già normalizzato), poi
+    un match parziale (substring) per gli alias più lunghi di 4 caratteri.
+    """
+    for i, c in enumerate(header_norm):
+        if c in aliases:
+            return i
+    for i, c in enumerate(header_norm):
+        for a in aliases:
+            if len(a) > 4 and (a in c or c in a):
+                return i
+    return None
+
+
+def parse_amount(value) -> "float | None":
+    """Converte un valore grezzo (stringa con virgola/punto, o numero) in float."""
+    if value is None:
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    s = str(value).strip()
+    if not s:
+        return None
+    s = s.replace("€", "").strip()
+    # Formato italiano: punto = separatore migliaia, virgola = decimali
+    if "," in s and "." in s:
+        s = s.replace(".", "").replace(",", ".")
+    elif "," in s:
+        s = s.replace(",", ".")
+    s = re.sub(r"[^\d.\-]", "", s)
+    if not s:
+        return None
+    try:
+        return float(s)
+    except ValueError:
+        return None
+
+
+def parse_int(value) -> "int | None":
+    f = parse_amount(value)
+    return int(round(f)) if f is not None else None

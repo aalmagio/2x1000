@@ -21,6 +21,7 @@ metodologica completa.
 - [Installazione su Plesk](#installazione-su-plesk)
 - [Configurazione](#configurazione)
 - [Importazione dei dati](#importazione-dei-dati)
+- [Pipeline Python di acquisizione dati](#pipeline-python-di-acquisizione-dati)
 - [Generazione degli open data](#generazione-degli-open-data)
 - [API](#api)
 - [Dati demo](#dati-demo)
@@ -36,6 +37,8 @@ metodologica completa.
 - Nessuna dipendenza da Composer o Node.js in produzione: il frontend usa
   Chart.js vendorizzato in `public/assets/js/vendor/`, senza chiamate a CDN
   esterni
+- Python 3.10+ **opzionale**, solo se si usa la pipeline di acquisizione
+  automatica in `python/` (l'import via CSV manuale non ne ha bisogno)
 
 ## Struttura del progetto
 
@@ -64,6 +67,12 @@ scripts/
   import_results.php       Importa i risultati annuali da CSV
   calculate_indicators.php Calcola quote, ranking, medie, concentrazione
   export_open_data.php     Genera i CSV/JSON pubblicati in data/exports/
+python/
+  acquire_results.py       Scarica/estrae i risultati annuali dal MEF
+  acquire_party_codes.py   Scarica/estrae elenco partiti ammessi e codici dall'AdE
+  db_updater.py            Scrive i dati normalizzati nel database MySQL
+  pipeline.py              Orchestratore: acquisizione → DB → indicatori → export
+  config.yaml              URL per anno delle fonti ufficiali (da compilare)
 ```
 
 ## Installazione su Plesk
@@ -141,7 +150,70 @@ primo argomento, es. `php scripts/import_results.php /percorso/mio.csv`.
 Le fonti (tabella `sources`) e i codici annuali da dichiarazione (tabella
 `party_codes`) si popolano tramite `INSERT` diretti (manuali o da script
 ad hoc) sul database, dato il basso volume e la necessità di verifica
-manuale del contenuto ufficiale.
+manuale del contenuto ufficiale — oppure automaticamente tramite la pipeline
+Python descritta di seguito.
+
+## Pipeline Python di acquisizione dati
+
+In alternativa all'import manuale via CSV, il progetto include in `python/`
+una pipeline di acquisizione automatica dalle fonti ufficiali al database,
+analoga (ma più semplice, dato il formato del 2x1000) a quella già usata nel
+progetto gemello [5x1000](https://github.com/aalmagio/5x1000). Scrive nello
+**stesso database** del sito PHP, leggendo le stesse variabili da `.env`
+(`DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS`).
+
+```bash
+cd python
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+
+# Pipeline completa per un anno: download → estrazione → DB → indicatori → export
+python pipeline.py --anni 2024
+
+# Solo scrittura DB + ricalcolo indicatori, senza riscaricare (file già in data/raw/)
+python pipeline.py --anni 2024 --skip-download
+
+# Solo alcuni step
+python pipeline.py --anni 2024 --only db,indicators,export
+
+# Analisi senza scrivere nel database
+python pipeline.py --anni 2024 --dry-run
+```
+
+**Come funziona:**
+1. `acquire_results.py` scarica (o legge da `data/raw/<anno>/`) il file dei
+   risultati annuali pubblicato dal **MEF – Dipartimento delle Finanze** e lo
+   normalizza in `data/processed/mef_results_<anno>.csv`;
+2. `acquire_party_codes.py` fa lo stesso per l'elenco dei partiti ammessi e i
+   codici da dichiarazione pubblicati dall'**Agenzia delle Entrate**
+   (`data/processed/ade_codes_<anno>.csv`);
+3. `db_updater.py` scrive questi CSV normalizzati nel database (`sources`,
+   `parties`, `results`, `party_codes`), con upsert idempotenti — ogni fonte
+   viene registrata una sola volta (deduplicata per checksum SHA-256), ogni
+   partito individuato per slug con `first_year`/`last_year` estesi
+   automaticamente;
+4. `pipeline.py` richiama infine `scripts/calculate_indicators.php` e
+   `scripts/export_open_data.php` (gli stessi script PHP usati per l'import
+   manuale), così i numeri restano identici indipendentemente dal percorso
+   di import scelto — non esiste una seconda implementazione dei calcoli in
+   Python da mantenere sincronizzata con quella PHP.
+
+**Configurazione delle fonti — da compilare:** `python/config.yaml` contiene
+`url_anni_risultati` e `url_anni_codici`, entrambi **vuoti di default**.
+Nessun URL del MEF o dell'Agenzia delle Entrate è precompilato: le pagine
+ufficiali vanno cercate e verificate manualmente (Dipartimento delle Finanze
+→ Analisi statistiche delle dichiarazioni → 2 per mille; Agenzia delle
+Entrate → elenco partiti ammessi al due per mille), poi aggiunte a
+`config.yaml` una volta confermate. Finché un URL non è configurato per un
+anno, gli script si limitano a leggere un file già scaricato manualmente e
+salvato in `data/raw/<anno>/` (risultati) o `data/raw/<anno>/codici/`
+(elenco/codici) — usando `--no-download`, esattamente come funziona senza
+alcuna configurazione di rete.
+
+I parser (CSV, XLSX, PDF) individuano le colonne per alias di nome (es.
+"Denominazione"/"Partito", "Numero scelte"/"Scelte", "Importo") invece che
+per posizione fissa, per tollerare le variazioni di formato tra un anno e
+l'altro delle fonti ufficiali.
 
 ## Generazione degli open data
 

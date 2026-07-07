@@ -1,0 +1,18 @@
+# 2x1000 - Pipeline Python di acquisizione dati
+# pip install -r requirements.txt
+
+# --- Download e parsing pagine ufficiali ---
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+
+# --- Lettura file Excel/PDF ---
+openpyxl>=3.1.0
+# Opzionale: necessario solo se le fonti pubblicano PDF invece di CSV/XLSX
+pdfplumber>=0.10.0
+
+# --- Configurazione esterna (config.yaml) ---
+# Opzionale: senza PyYAML gli script usano i default interni
+PyYAML>=6.0
+
+# --- Database (db_updater.py, pipeline.py) ---
+pymysql>=1.1.0

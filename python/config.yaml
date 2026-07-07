@@ -1,0 +1,42 @@
+# ============================================================================
+# 2x1000 — Configurazione pipeline Python di acquisizione dati
+# ============================================================================
+# Modifica questi valori senza toccare il codice Python.
+# Se questo file non esiste o una chiave manca, gli script usano i default
+# interni (e semplicemente non scaricano nulla finché un URL non è configurato).
+# Richiede PyYAML (pip install pyyaml); senza, funziona lo stesso con i default.
+# ============================================================================
+
+download:
+  timeout_pagina: 60
+  timeout_file: 120
+  user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+
+# --- URL per anno: risultati annuali del 2x1000 ai partiti politici ---
+# Pagina del Ministero dell'Economia e delle Finanze - Dipartimento delle
+# Finanze con il file scaricabile (CSV/XLSX/PDF) dei risultati per anno.
+# NESSUN URL è precompilato: vanno cercati e verificati manualmente sul sito
+# ufficiale (Dipartimento delle Finanze → Analisi statistiche delle
+# dichiarazioni → 2 per mille) e incollati qui. In alternativa, salva il file
+# scaricato manualmente in data/raw/<anno>/ ed esegui con --no-download.
+url_anni_risultati: {}
+  # 2024: "https://.../pagina-risultati-2x1000-2024"
+  # 2023: "https://.../pagina-risultati-2x1000-2023"
+
+# --- URL per anno: elenco partiti ammessi e codici da dichiarazione ---
+# Pagina dell'Agenzia delle Entrate con l'elenco dei partiti ammessi al
+# beneficio e i codici da indicare nel modello dichiarativo. Stesse note
+# di cui sopra: nessun URL precompilato, va verificato e aggiunto qui.
+url_anni_codici: {}
+  # 2024: "https://.../elenco-partiti-ammessi-2x1000-2024"
+  # 2023: "https://.../elenco-partiti-ammessi-2x1000-2023"
+
+# --- Pipeline (pipeline.py) ---
+pipeline:
+  php_binary: "php"      # eseguibile PHP per gli step indicators/export
+  step_timeouts:
+    acquire_results: 1800
+    acquire_codes: 1800
+    db: 900
+    indicators: 300
+    export: 300
