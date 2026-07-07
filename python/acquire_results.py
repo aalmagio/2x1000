@@ -75,10 +75,12 @@ def _apply_config(cfg: dict) -> None:
             YEAR_URLS[int(anno)] = str(url)
 
 
-def parse_results_table(header: "list[str]", rows: "list[list[str]]") -> "list[dict]":
+def parse_results_table(header: "list[str]", rows: "list[list[str]]") -> "tuple[list[dict], int | None]":
     """
     Mappa una tabella grezza (header, rows) sullo schema normalizzato
-    [{"party_name": ..., "valid_choices": int, "amount": float}, ...].
+    [{"party_name": ..., "valid_choices": int, "amount": float}, ...], più il
+    totale contribuenti se presente nella riga "Per memoria: Totale
+    contribuenti" (necessario per calcolare il tasso di scelta).
     Salta le righe senza nome partito o totalmente numeriche/vuote (righe di
     totale, note a piè di pagina, ecc.).
     """
@@ -90,16 +92,28 @@ def parse_results_table(header: "list[str]", rows: "list[list[str]]") -> "list[d
 
     if party_idx is None:
         logging.error(f"  Colonna partito non trovata. Intestazione: {header}")
-        return []
+        return [], None
     if choices_idx is None and amount_idx is None:
         logging.error(f"  Nessuna colonna scelte/importo trovata. Intestazione: {header}")
-        return []
+        return [], None
 
     records = []
+    total_taxpayers = None
     for row in rows:
         if party_idx >= len(row):
             continue
         name = row[party_idx].strip()
+        name_lower = name.lower()
+
+        # "Per memoria: Totale contribuenti" non è un partito: è il totale dei
+        # contribuenti dichiaranti, necessario per il tasso di scelta
+        # (valid_choice_rate). Va estratto, non scartato come le altre righe
+        # di nota/riepilogo.
+        if "memoria" in name_lower and "contribuenti" in name_lower:
+            if choices_idx is not None and choices_idx < len(row):
+                total_taxpayers = parse_int(row[choices_idx])
+            continue
+
         if is_footer_row(name):
             continue
 
@@ -114,7 +128,7 @@ def parse_results_table(header: "list[str]", rows: "list[list[str]]") -> "list[d
             "amount": amount or 0.0,
         })
 
-    return records
+    return records, total_taxpayers
 
 
 def write_normalized_csv(records: "list[dict]", declaration_year: int, tax_year: int, out_path: Path) -> None:
@@ -187,7 +201,7 @@ def process_year(year: int, args, raw_dir: Path, processed_dir: Path, session=No
         logging.error(f"[{year}] Impossibile determinare l'intestazione di {file_path.name}")
         return "error"
 
-    records = parse_results_table(header, rows)
+    records, total_taxpayers = parse_results_table(header, rows)
     if not records:
         logging.warning(f"[{year}] Nessun risultato estratto da {file_path.name}")
         return "error"
@@ -206,8 +220,12 @@ def process_year(year: int, args, raw_dir: Path, processed_dir: Path, session=No
         "checksum": sha256_file(file_path),
         "download_date": date.today().isoformat(),
         "row_count": len(records),
+        "total_taxpayers": total_taxpayers,
     }
     write_meta(meta, processed_dir / f"mef_results_{year}.meta.json")
+
+    if total_taxpayers:
+        logging.info(f"[{year}] Totale contribuenti: {total_taxpayers:,}")
 
     logging.info(f"[{year}] => {out_csv.name} ({len(records)} partiti)")
     return "ok"

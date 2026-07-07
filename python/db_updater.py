@@ -117,6 +117,42 @@ def upsert_result(cur, party_id: int, declaration_year: int, tax_year: int,
     )
 
 
+def upsert_annual_totals_external(
+    cur, declaration_year: int, tax_year: int,
+    total_taxpayers: "int | None", number_of_parties_admitted: "int | None",
+    source_id: "int | None",
+) -> None:
+    """
+    Registra i valori di annual_totals che sono input esterni non derivabili
+    dai soli dati di `results` (totale contribuenti dichiaranti, numero di
+    partiti ammessi al beneficio nell'anno). Gli altri campi della tabella
+    (quote, ranking, concentrazione) restano compito esclusivo di
+    scripts/calculate_indicators.php, per non avere due punti che scrivono lo
+    stesso dato con logiche diverse.
+    """
+    if total_taxpayers is None and number_of_parties_admitted is None:
+        return
+    cur.execute(
+        """
+        INSERT INTO annual_totals (declaration_year, tax_year, total_taxpayers, number_of_parties_admitted, source_id)
+        VALUES (%s, %s, %s, %s, %s)
+        ON DUPLICATE KEY UPDATE
+            total_taxpayers = COALESCE(VALUES(total_taxpayers), annual_totals.total_taxpayers),
+            number_of_parties_admitted = COALESCE(VALUES(number_of_parties_admitted), annual_totals.number_of_parties_admitted),
+            source_id = COALESCE(annual_totals.source_id, VALUES(source_id))
+        """,
+        (declaration_year, tax_year, total_taxpayers, number_of_parties_admitted, source_id),
+    )
+
+
+def count_admitted_parties(cur, declaration_year: int) -> "int | None":
+    """Numero di partiti ammessi nell'anno: la dimensione dell'elenco codici AdE per quell'anno."""
+    cur.execute("SELECT COUNT(*) FROM party_codes WHERE declaration_year = %s", (declaration_year,))
+    row = cur.fetchone()
+    count = row[0] if row else 0
+    return count or None
+
+
 def upsert_party_code(cur, party_id: int, declaration_year: int, tax_year: int,
                        code: str, official_name: str, source_id: "int | None") -> None:
     cur.execute(
@@ -179,6 +215,9 @@ def process_results_file(cur, csv_path: Path, dry_run: bool) -> int:
         )
         count += 1
 
+    tax_year = meta.get("tax_year") or int(rows[0]["tax_year"])
+    upsert_annual_totals_external(cur, declaration_year, tax_year, meta.get("total_taxpayers"), None, source_id)
+
     logger.info(f"{csv_path.name}: {count} risultati aggiornati (anno {declaration_year})")
     return count
 
@@ -215,6 +254,10 @@ def process_codes_file(cur, csv_path: Path, dry_run: bool) -> int:
             source_id,
         )
         count += 1
+
+    tax_year = meta.get("tax_year") or int(rows[0]["tax_year"])
+    number_of_parties_admitted = count_admitted_parties(cur, declaration_year)
+    upsert_annual_totals_external(cur, declaration_year, tax_year, None, number_of_parties_admitted, source_id)
 
     logger.info(f"{csv_path.name}: {count} codici aggiornati (anno {declaration_year})")
     return count

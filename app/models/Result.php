@@ -19,7 +19,8 @@ final class Result
     /** Ultimo risultato disponibile per ciascun partito, con variazioni anno su anno. */
     public static function latestForAllParties(): array
     {
-        $sql = 'SELECT v.* FROM v_results_full v
+        $sql = 'SELECT v.*, (SELECT COUNT(*) FROM results r2 WHERE r2.party_id = v.party_id) AS years_present
+                FROM v_results_full v
                 JOIN (
                     SELECT party_id, MAX(declaration_year) AS max_year
                     FROM results GROUP BY party_id
