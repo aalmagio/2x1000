@@ -290,6 +290,19 @@ def clean_cell(value) -> str:
 
 
 def _detect_csv_params(path: Path) -> "tuple[str, str]":
+    # Se il file inizia con un BOM UTF-8, va decodificato con "utf-8-sig" per
+    # rimuoverlo: provando prima "utf-8" semplice la decodifica riesce comunque
+    # (il BOM è una sequenza UTF-8 valida), ma lascia il carattere
+    # incollato alla prima cella della prima riga.
+    with open(path, "rb") as f:
+        if f.read(3) == b"\xef\xbb\xbf":
+            sample = path.read_text(encoding="utf-8-sig", errors="replace")[:4096]
+            try:
+                delimiter = csv.Sniffer().sniff(sample, delimiters=";,\t|").delimiter
+            except csv.Error:
+                delimiter = ";"
+            return "utf-8-sig", delimiter
+
     for enc in ("utf-8", "utf-8-sig", "latin-1", "cp1252", "iso-8859-15"):
         try:
             with open(path, "r", encoding=enc) as f:
