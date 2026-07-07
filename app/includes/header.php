@@ -30,8 +30,8 @@ $currentPath = current_path();
 <header class="site-header">
   <div class="container header-inner">
     <a class="brand" href="/">
-      <span class="brand-mark">2×1000</span>
-      <span class="brand-sub">Open Data · Partiti politici</span>
+      <span class="brand-eyebrow">Osservatorio ASSIF sul 5, 2 e 8 per mille</span>
+      <span class="brand-mark">2×1000 <span class="brand-sub">Open Data · Partiti politici</span></span>
     </a>
     <nav class="main-nav" aria-label="Navigazione principale">
       <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav-list">Menu</button>
@@ -43,9 +43,6 @@ $currentPath = current_path();
         <?php endforeach; ?>
       </ul>
     </nav>
-  </div>
-  <div class="observatory-strip">
-    <div class="container">Osservatorio ASSIF sul 5, 2 e 8 per mille</div>
   </div>
 </header>
 <main id="main-content">
