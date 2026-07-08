@@ -5,23 +5,12 @@ require __DIR__ . '/../app/includes/bootstrap.php';
 
 $rows = Result::latestForAllParties();
 
-// Assicura che compaiano anche i partiti anagrafati senza ancora risultati.
-$withResults = array_column($rows, null, 'party_id');
-foreach (Party::all() as $p) {
-    if (!isset($withResults[$p['id']])) {
-        $rows[] = [
-            'party_id' => $p['id'],
-            'canonical_name' => $p['canonical_name'],
-            'slug' => $p['slug'],
-            'years_present' => 0,
-            'declaration_year' => null,
-            'valid_choices' => null,
-            'amount' => null,
-            'avg_amount_per_choice' => null,
-            'choices_delta_pct' => null,
-        ];
-    }
-}
+// Esclude i partiti senza presenza storica o senza scelte nell'ultimo anno
+// disponibile (anagrafati ma senza dati reali, o con 0 scelte).
+$rows = array_values(array_filter($rows, static function (array $r): bool {
+    return (int) ($r['years_present'] ?? 0) > 0 && (int) ($r['valid_choices'] ?? 0) > 0;
+}));
+
 usort($rows, fn($a, $b) => strcmp($a['canonical_name'], $b['canonical_name']));
 
 render_page(
