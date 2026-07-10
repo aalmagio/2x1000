@@ -19,4 +19,5 @@ json_response([
     'codes' => Party::codes((int) $party['id']),
     'results' => Result::forParty((int) $party['id']),
     'sources' => Source::forParty((int) $party['id']),
+    'regional_results' => RegionalResult::forParty((int) $party['id']),
 ]);

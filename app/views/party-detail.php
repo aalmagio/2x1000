@@ -6,6 +6,7 @@ declare(strict_types=1);
 /** @var array $codes */
 /** @var array $sources */
 /** @var array|null $latest */
+/** @var array $regionalResults */
 ?>
 <div class="container section">
   <nav class="breadcrumb"><a href="/">Home</a> / <a href="/partiti.php">Partiti</a> / <span aria-current="page"><?= h($party['canonical_name']) ?></span></nav>
@@ -71,6 +72,28 @@ declare(strict_types=1);
     </table>
   </div>
 
+  <?php if ($regionalResults): ?>
+  <h2>Ripartizione regionale delle scelte</h2>
+  <p class="text-muted">Numero di scelte valide per regione di residenza del contribuente, per anno di dichiarazione (fonte: Dipartimento delle Finanze). I valori troppo bassi sono oscurati dalla fonte per tutela della riservatezza e sono indicati come "n.d.": le quote percentuali sono calcolate sulla somma delle sole regioni non oscurate e possono quindi non coincidere esattamente con il totale nazionale del partito.</p>
+  <div class="filter-bar">
+    <div class="field">
+      <label for="regional-year-select">Anno di dichiarazione</label>
+      <select id="regional-year-select"></select>
+    </div>
+  </div>
+  <div class="chart-card">
+    <h3>Scelte valide per regione</h3>
+    <div class="chart-wrap tall"><canvas id="chart-party-regional" role="img" aria-label="Scelte valide per regione, anno selezionato"></canvas></div>
+  </div>
+  <div class="table-wrap">
+    <table class="data-table" id="regional-table">
+      <caption>Ripartizione regionale, anno selezionato</caption>
+      <thead><tr><th>Regione</th><th>Scelte valide</th><th>Quota sulle scelte ripartite</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <?php endif; ?>
+
   <?php if ($aliases): ?>
   <h2>Denominazioni alternative</h2>
   <ul>
@@ -92,7 +115,7 @@ declare(strict_types=1);
 </div>
 
 <script>
-  window.PARTY_DATA = <?= json_encode(['results' => $results]) ?>;
+  window.PARTY_DATA = <?= json_encode(['results' => $results, 'regionalResults' => $regionalResults]) ?>;
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -105,5 +128,61 @@ document.addEventListener('DOMContentLoaded', function () {
   Viz.lineChart('chart-party-avg', years, [{ label: 'Importo medio per scelta (€)', data: results.map(function (r) { return r.avg_amount_per_choice !== null ? parseFloat(r.avg_amount_per_choice) : null; }) }], {
     yTickFormat: function (v) { return '€ ' + Number(v).toLocaleString('it-IT'); },
   });
+
+  var regionalRows = window.PARTY_DATA.regionalResults;
+  var regionalSelect = document.getElementById('regional-year-select');
+  if (regionalRows && regionalRows.length && regionalSelect) {
+    var regionalByYear = {};
+    regionalRows.forEach(function (r) {
+      var y = parseInt(r.declaration_year, 10);
+      (regionalByYear[y] = regionalByYear[y] || []).push(r);
+    });
+    var regionalYears = Object.keys(regionalByYear).map(Number).sort(function (a, b) { return b - a; });
+    regionalYears.forEach(function (y) {
+      var opt = document.createElement('option');
+      opt.value = String(y);
+      opt.textContent = String(y);
+      regionalSelect.appendChild(opt);
+    });
+
+    var regionalChart = null;
+    var renderRegional = function (year) {
+      var rows = (regionalByYear[year] || []).slice().sort(function (a, b) {
+        var av = a.valid_choices !== null ? parseInt(a.valid_choices, 10) : -1;
+        var bv = b.valid_choices !== null ? parseInt(b.valid_choices, 10) : -1;
+        return bv - av;
+      });
+      var total = rows.reduce(function (sum, r) {
+        return sum + (r.valid_choices !== null ? parseInt(r.valid_choices, 10) : 0);
+      }, 0);
+
+      var labels = rows.map(function (r) { return r.region; });
+      var data = rows.map(function (r) { return r.valid_choices !== null ? parseInt(r.valid_choices, 10) : null; });
+
+      if (regionalChart) { regionalChart.destroy(); }
+      regionalChart = Viz.barChart('chart-party-regional', labels, data, { horizontal: true, label: 'Scelte valide' });
+
+      var tbody = document.querySelector('#regional-table tbody');
+      tbody.innerHTML = '';
+      rows.forEach(function (r) {
+        var tr = document.createElement('tr');
+        var tdRegion = document.createElement('td');
+        tdRegion.textContent = r.region;
+        var tdChoices = document.createElement('td');
+        tdChoices.textContent = r.is_suppressed ? 'n.d.' : Number(r.valid_choices).toLocaleString('it-IT');
+        var tdShare = document.createElement('td');
+        tdShare.textContent = (r.is_suppressed || !total) ? '—' : (r.valid_choices / total * 100).toLocaleString('it-IT', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%';
+        tr.appendChild(tdRegion);
+        tr.appendChild(tdChoices);
+        tr.appendChild(tdShare);
+        tbody.appendChild(tr);
+      });
+    };
+
+    regionalSelect.addEventListener('change', function () {
+      renderRegional(parseInt(regionalSelect.value, 10));
+    });
+    renderRegional(regionalYears[0]);
+  }
 });
 </script>

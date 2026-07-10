@@ -8,3 +8,4 @@ require_once __DIR__ . '/../models/Party.php';
 require_once __DIR__ . '/../models/Result.php';
 require_once __DIR__ . '/../models/AnnualTotal.php';
 require_once __DIR__ . '/../models/Source.php';
+require_once __DIR__ . '/../models/RegionalResult.php';

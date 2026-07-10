@@ -24,6 +24,7 @@ render_page(
         'aliases' => Party::aliases((int) $party['id']),
         'codes' => Party::codes((int) $party['id']),
         'sources' => Source::forParty((int) $party['id']),
+        'regionalResults' => RegionalResult::forParty((int) $party['id']),
     ],
     $party['canonical_name'] . ' — 2x1000 Open Data',
     'Scheda dati 2x1000 per ' . $party['canonical_name']
