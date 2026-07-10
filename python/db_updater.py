@@ -169,6 +169,51 @@ def upsert_party_code(cur, party_id: int, declaration_year: int, tax_year: int,
     )
 
 
+def upsert_regional_result(cur, party_id: int, declaration_year: int, tax_year: int,
+                            region: str, valid_choices: "int | None", is_suppressed: bool,
+                            source_id: "int | None") -> None:
+    cur.execute(
+        """
+        INSERT INTO regional_results (party_id, declaration_year, tax_year, region, valid_choices, is_suppressed, source_id)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        ON DUPLICATE KEY UPDATE
+            tax_year = VALUES(tax_year),
+            valid_choices = VALUES(valid_choices),
+            is_suppressed = VALUES(is_suppressed),
+            source_id = VALUES(source_id)
+        """,
+        (party_id, declaration_year, tax_year, region, valid_choices, 1 if is_suppressed else 0, source_id),
+    )
+
+
+def build_party_name_index(cur) -> "dict[str, int]":
+    """
+    Costruisce l'indice slug(nome) -> party_id usato per risolvere i nomi
+    partito nei file che non hanno una colonna codice (es. la ripartizione
+    regionale, che intesta le colonne col nome del partito). Le fonti del
+    nome, in ordine di popolamento (le successive non sovrascrivono le
+    precedenti se già presente lo stesso slug):
+      1. parties.canonical_name
+      2. party_codes.official_name (la dicitura esatta usata dall'AdE quell'anno)
+      3. party_aliases.alias_name (grafie storiche registrate a mano o da merge_parties.py)
+    """
+    index: dict[str, int] = {}
+
+    cur.execute("SELECT id, canonical_name FROM parties")
+    for party_id, name in cur.fetchall():
+        index.setdefault(slugify(name), party_id)
+
+    cur.execute("SELECT party_id, official_name FROM party_codes")
+    for party_id, name in cur.fetchall():
+        index.setdefault(slugify(name), party_id)
+
+    cur.execute("SELECT party_id, alias_name FROM party_aliases")
+    for party_id, name in cur.fetchall():
+        index.setdefault(slugify(name), party_id)
+
+    return index
+
+
 # ---------------------------------------------------------------------------
 # Elaborazione file
 # ---------------------------------------------------------------------------
@@ -263,6 +308,65 @@ def process_codes_file(cur, csv_path: Path, dry_run: bool) -> int:
     return count
 
 
+def process_regional_file(cur, csv_path: Path, dry_run: bool, name_index: "dict[str, int] | None" = None,
+                           unresolved: "set[str] | None" = None) -> int:
+    """
+    name_index: da build_party_name_index(), obbligatorio quando dry_run=False.
+    unresolved: set (mutato in place) dove si accumulano i nomi partito che
+    non sono stati trovati in name_index, per il report finale — le righe
+    corrispondenti vengono scartate, non inventano un partito nuovo.
+    """
+    meta = _load_meta(csv_path)
+
+    with open(csv_path, "r", encoding="utf-8", newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    if not rows:
+        logger.warning(f"{csv_path.name}: nessuna riga")
+        return 0
+
+    declaration_year = meta.get("declaration_year") or int(rows[0]["declaration_year"])
+    title = f"Ripartizione regionale delle scelte 2x1000 — dichiarazione {declaration_year}"
+
+    if dry_run:
+        logger.info(f"[DRY-RUN] {csv_path.name}: {len(rows)} righe (source={meta.get('institution')})")
+        return len(rows)
+
+    source_id = upsert_source(cur, meta, title) if meta else None
+
+    count = 0
+    skipped_unresolved = 0
+    for row in rows:
+        slug = slugify(row["party_name"])
+        party_id = name_index.get(slug)
+        if party_id is None:
+            if unresolved is not None:
+                unresolved.add(row["party_name"])
+            skipped_unresolved += 1
+            continue
+
+        valid_choices = int(row["valid_choices"]) if row["valid_choices"] not in (None, "") else None
+        upsert_regional_result(
+            cur,
+            party_id,
+            int(row["declaration_year"]),
+            int(row["tax_year"]),
+            row["region"],
+            valid_choices,
+            row["is_suppressed"] in ("1", "True", "true"),
+            source_id,
+        )
+        count += 1
+
+    if skipped_unresolved:
+        logger.warning(
+            f"{csv_path.name}: {skipped_unresolved} righe scartate per nome partito non riconosciuto "
+            f"(vedi elenco a fine esecuzione)"
+        )
+    logger.info(f"{csv_path.name}: {count} righe di ripartizione regionale aggiornate (anno {declaration_year})")
+    return count
+
+
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
@@ -298,8 +402,9 @@ def main():
 
     results_files = sorted(p for p in processed_dir.glob("mef_results_*.csv") if not years or _year_of(p) in years)
     codes_files = sorted(p for p in processed_dir.glob("ade_codes_*.csv") if not years or _year_of(p) in years)
+    regional_files = sorted(p for p in processed_dir.glob("regional_results_*.csv") if not years or _year_of(p) in years)
 
-    if not results_files and not codes_files:
+    if not results_files and not codes_files and not regional_files:
         logging.warning(f"Nessun file trovato in {processed_dir} (filtro anni: {years or 'tutti'})")
         sys.exit(1)
 
@@ -309,6 +414,8 @@ def main():
             total += process_results_file(None, f, dry_run=True)
         for f in codes_files:
             total += process_codes_file(None, f, dry_run=True)
+        for f in regional_files:
+            total += process_regional_file(None, f, dry_run=True)
         logging.info(f"[DRY-RUN] Totale righe che verrebbero elaborate: {total}")
         return
 
@@ -321,14 +428,36 @@ def main():
 
     conn = get_connection()
     total = 0
+    unresolved: set[str] = set()
     try:
         with conn.cursor() as cur:
             for f in results_files:
                 total += process_results_file(cur, f, dry_run=False)
             for f in codes_files:
                 total += process_codes_file(cur, f, dry_run=False)
+
+            if regional_files:
+                # Costruito qui, dopo results/codes: vede anche i partiti e i
+                # codici scritti in questa stessa esecuzione (stessa
+                # transazione, non serve un commit intermedio).
+                name_index = build_party_name_index(cur)
+                for f in regional_files:
+                    total += process_regional_file(cur, f, dry_run=False, name_index=name_index, unresolved=unresolved)
+
         conn.commit()
         logging.info(f"Completato: {total} righe scritte nel database (commit ok)")
+
+        if unresolved:
+            logging.warning(
+                f"{len(unresolved)} nomi partito nella ripartizione regionale non sono stati riconosciuti "
+                f"e le relative righe sono state SCARTATE. Se sono varianti di partiti già in anagrafica, "
+                f"registra un alias e rilancia:"
+            )
+            for name in sorted(unresolved):
+                logging.warning(f"  - {name!r}")
+            logging.warning(
+                "  python add_party_alias.py --party <slug-corretto> --alias \"<nome esatto sopra>\""
+            )
     except Exception:
         conn.rollback()
         logging.error("Errore durante la scrittura: rollback eseguito", exc_info=True)

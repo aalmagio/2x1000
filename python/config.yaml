@@ -69,12 +69,37 @@ url_anni_codici:
   2015: "https://www.agenziaentrate.gov.it/portale/documents/20143/314020/CS+17032015+elenco_043_Com.+st.+Risoluzione+2+per+mille+2015+17.03.15.pdf/ea47222b-a4e9-fd82-5ae6-3d7652bea3e6?t=1426619572797/-/cs-17032015-elenco"
   2014: "https://www.agenziaentrate.gov.it/portale/documents/20143/380401/Elenco+partiti+ammessi+al+2+per+mille_Elenco+partiti+politici+2+permille.pdf/141d25ca-2d61-37ed-add2-beb76b46d28f"
 
+# --- URL per anno: ripartizione regionale delle scelte per partito ---
+# Stesso portale del Dipartimento delle Finanze, stesso anno+"tree", ma
+# suffisso "AADUEXM0201" invece di "...0101" (nodo "Ripartizione regionale
+# delle scelte per partito politico" invece di "Analisi statistiche").
+# Pattern export=3 (CSV) applicato per analogia con url_anni_risultati: NON
+# ANCORA VERIFICATO per nessun anno — testa con:
+#   python acquire_regional_results.py --anni <ANNO>
+# e controlla data/processed/regional_results_<ANNO>.csv. Se export=3 non
+# funziona per questo nodo, prova export=2 (Excel) o scarica a mano (come
+# nello screenshot che mi hai mandato) e salva in data/raw/<anno>/geografia/,
+# poi esegui con --no-download.
+url_anni_geografia:
+  2025: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2025AADUEXM0201&page=1&export=3&aggiornato=1522252800"
+  2024: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2024AADUEXM0201&page=1&export=3&aggiornato=1522252800"
+  2023: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2023AADUEXM0201&page=1&export=3&aggiornato=1522252800"
+  2022: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2022AADUEXM0201&page=1&export=3&aggiornato=1522252800"
+  2021: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2021AADUEXM0201&page=1&export=3&aggiornato=1522252800"
+  2020: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2020AADUEXM0201&page=1&export=3&aggiornato=1522252800"
+  2019: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2019AADUEXM0201&page=1&export=3&aggiornato=1522252800"
+  2018: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2018AADUEXM0201&page=1&export=3&aggiornato=1522252800"
+  2017: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2017AADUEXM0201&page=1&export=3&aggiornato=1522252800"
+  2016: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2016AADUEXM0201&page=1&export=3&aggiornato=1522252800"
+  2015: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2015AADUEXM0201&page=1&export=3&aggiornato=1522252800"
+
 # --- Pipeline (pipeline.py) ---
 pipeline:
   php_binary: "php"      # eseguibile PHP per gli step indicators/export
   step_timeouts:
     acquire_results: 1800
     acquire_codes: 1800
+    acquire_geo: 1800
     db: 900
     indicators: 300
     export: 300

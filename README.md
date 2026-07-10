@@ -68,11 +68,13 @@ scripts/
   calculate_indicators.php Calcola quote, ranking, medie, concentrazione
   export_open_data.php     Genera i CSV/JSON pubblicati in data/exports/
 python/
-  acquire_results.py       Scarica/estrae i risultati annuali dal MEF
-  acquire_party_codes.py   Scarica/estrae elenco partiti ammessi e codici dall'AdE
-  db_updater.py            Scrive i dati normalizzati nel database MySQL
-  pipeline.py              Orchestratore: acquisizione → DB → indicatori → export
-  config.yaml              URL per anno delle fonti ufficiali (da compilare)
+  acquire_results.py         Scarica/estrae i risultati annuali dal MEF
+  acquire_party_codes.py     Scarica/estrae elenco partiti ammessi e codici dall'AdE
+  acquire_regional_results.py Scarica/estrae la ripartizione regionale delle scelte dal MEF
+  db_updater.py               Scrive i dati normalizzati nel database MySQL
+  add_party_alias.py          Registra una grafia alternativa per un partito esistente
+  pipeline.py                 Orchestratore: acquisizione → DB → indicatori → export
+  config.yaml                 URL per anno delle fonti ufficiali (da compilare)
 ```
 
 ## Installazione su Plesk
@@ -94,6 +96,14 @@ python/
    mysql -u <utente> -p <database> < database/views.sql
    ```
    Non eseguire `database/seed.sql` in produzione: contiene solo dati DEMO.
+   Se il database esisteva già da prima di una modifica allo schema (es.
+   l'aggiunta della tabella `regional_results`), esegui anche
+   `database/migrations.sql`: `schema.sql` usa `CREATE TABLE IF NOT EXISTS`
+   quindi crea le tabelle nuove ma non altera quelle già esistenti (es. i
+   valori di un ENUM), motivo per cui le migrazioni sono in un file a parte.
+   ```
+   mysql -u <utente> -p <database> < database/migrations.sql
+   ```
 6. **Importa i dati reali** (si veda [Importazione dei dati](#importazione-dei-dati)).
 7. **Genera gli open data:** `php scripts/export_open_data.php`.
 8. **Permessi cartelle.** Assicurati che `data/exports/` sia scrivibile
@@ -187,33 +197,62 @@ python pipeline.py --anni 2024 --dry-run
 2. `acquire_party_codes.py` fa lo stesso per l'elenco dei partiti ammessi e i
    codici da dichiarazione pubblicati dall'**Agenzia delle Entrate**
    (`data/processed/ade_codes_<anno>.csv`);
-3. `db_updater.py` scrive questi CSV normalizzati nel database (`sources`,
-   `parties`, `results`, `party_codes`), con upsert idempotenti — ogni fonte
-   viene registrata una sola volta (deduplicata per checksum SHA-256), ogni
-   partito individuato per slug con `first_year`/`last_year` estesi
-   automaticamente;
-4. `pipeline.py` richiama infine `scripts/calculate_indicators.php` e
+3. `acquire_regional_results.py` scarica/estrae la tabella di ripartizione
+   regionale delle scelte (regione × partito, pubblicata dal MEF sullo
+   stesso portale con nodo `...AADUEXM0201` invece di `...0101`) e la
+   normalizza in `data/processed/regional_results_<anno>.csv`;
+4. `db_updater.py` scrive questi CSV normalizzati nel database (`sources`,
+   `parties`, `results`, `party_codes`, `regional_results`), con upsert
+   idempotenti — ogni fonte viene registrata una sola volta (deduplicata per
+   checksum SHA-256), ogni partito individuato per slug con
+   `first_year`/`last_year` estesi automaticamente;
+5. `pipeline.py` richiama infine `scripts/calculate_indicators.php` e
    `scripts/export_open_data.php` (gli stessi script PHP usati per l'import
    manuale), così i numeri restano identici indipendentemente dal percorso
    di import scelto — non esiste una seconda implementazione dei calcoli in
    Python da mantenere sincronizzata con quella PHP.
 
+**Ripartizione regionale e nomi partito non riconosciuti:** a differenza di
+`acquire_results.py`/`acquire_party_codes.py` (che riportano un `code`
+ufficiale AdE), la tabella regionale del MEF intesta le colonne solo con il
+**nome** del partito. `db_updater.py` risolve ogni nome a un `party_id`
+cercandolo (in ordine) tra `parties.canonical_name`, `party_codes.official_name`
+e `party_aliases.alias_name` (tutti confrontati via `slugify()`, insensibile
+ad accenti/maiuscole/punteggiatura). I nomi che non trovano corrispondenza
+**non creano un nuovo partito automaticamente**: la riga viene scartata e il
+nome elencato a fine esecuzione, con il comando pronto da lanciare:
+```bash
+python add_party_alias.py --party <slug-partito-corretto> --alias "Nome esatto non riconosciuto"
+```
+poi rilancia `db_updater.py` per quell'anno: la riga verrà risolta. Non è
+stata creata una tabella separata per le grafie alternative (proposta
+iniziale: `Codice, Nome, Tipo`) perché il progetto ha già `party_aliases`
+con lo stesso scopo (denominazione alternativa → `party_id`, con
+`year_from`/`year_to`/`source`) — usarla evita due fonti di verità sullo
+stesso concetto.
+
 **Configurazione delle fonti:** `python/config.yaml` contiene `url_anni_risultati`
-(Dipartimento delle Finanze) e `url_anni_codici` (Agenzia delle Entrate).
+(Dipartimento delle Finanze), `url_anni_codici` (Agenzia delle Entrate) e
+`url_anni_geografia` (ripartizione regionale, Dipartimento delle Finanze).
 Alcuni URL trovati tramite ricerca web sono già precompilati (2024/2025 per i
 codici AdE, 2022 per i risultati MEF), ma **non sono stati verificati
 scaricandoli** — questo ambiente di sviluppo non riesce a raggiungere i siti
-`.gov.it` (bloccati dal proxy di rete). Prima di fidarsi in automatico:
+`.gov.it` (bloccati dal proxy di rete). Gli URL di `url_anni_geografia` sono
+costruiti per analogia con `url_anni_risultati` (stesso `tree`, suffisso
+`0201` invece di `0101`, `export=3`) e **non sono mai stati testati**: prima
+di lanciarli su tutti gli anni configurati, verifica un anno alla volta:
 ```bash
 python acquire_results.py --anni 2022
 python acquire_party_codes.py --anni 2025
+python acquire_regional_results.py --anni 2025
 ```
 e controlla il contenuto di `data/processed/mef_results_2022.csv` /
-`ade_codes_2025.csv`. Se il file scaricato non è quello giusto o il parser
-non trova le colonne, apri l'URL nel browser per trovare quello corretto e
-aggiorna `config.yaml`. Per gli anni non ancora configurati, gli script si
-limitano a leggere un file scaricato manualmente e salvato in
-`data/raw/<anno>/` (risultati) o `data/raw/<anno>/codici/` (elenco/codici),
+`ade_codes_2025.csv` / `regional_results_2025.csv`. Se il file scaricato non
+è quello giusto o il parser non trova le colonne, apri l'URL nel browser per
+trovare quello corretto e aggiorna `config.yaml`. Per gli anni non ancora
+configurati, gli script si limitano a leggere un file scaricato manualmente e
+salvato in `data/raw/<anno>/` (risultati), `data/raw/<anno>/codici/`
+(elenco/codici) o `data/raw/<anno>/geografia/` (ripartizione regionale),
 usando `--no-download`.
 
 Un URL può essere sia una pagina HTML da scansionare per trovare i link ai

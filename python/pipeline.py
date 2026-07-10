@@ -5,11 +5,12 @@ pipeline.py — Orchestratore della pipeline Python di acquisizione dati 2x1000
 del 2x1000).
 
 Esegue in sequenza:
-  1. acquire_results.py       — risultati annuali dal MEF
-  2. acquire_party_codes.py   — elenco partiti ammessi e codici dall'AdE
-  3. db_updater.py            — scrive i dati normalizzati nel database MySQL
-  4. scripts/calculate_indicators.php  — calcola quote, ranking, medie, concentrazione
-  5. scripts/export_open_data.php      — rigenera i CSV/JSON pubblicati in data/exports/
+  1. acquire_results.py            — risultati annuali dal MEF
+  2. acquire_party_codes.py        — elenco partiti ammessi e codici dall'AdE
+  3. acquire_regional_results.py   — ripartizione regionale delle scelte dal MEF
+  4. db_updater.py                 — scrive i dati normalizzati nel database MySQL
+  5. scripts/calculate_indicators.php  — calcola quote, ranking, medie, concentrazione
+  6. scripts/export_open_data.php      — rigenera i CSV/JSON pubblicati in data/exports/
 
 I passi 4 e 5 sono script PHP già esistenti nel progetto (scripts/): la
 pipeline Python li richiama invece di duplicarne la logica di calcolo, così
@@ -34,7 +35,7 @@ from pathlib import Path
 
 from common import REPO_ROOT, get_logger, load_config, load_dotenv
 
-STEPS_ALL = ["acquire_results", "acquire_codes", "db", "indicators", "export"]
+STEPS_ALL = ["acquire_results", "acquire_codes", "acquire_geo", "db", "indicators", "export"]
 
 PYTHON_DIR = Path(__file__).resolve().parent
 PYTHON = sys.executable or "python3"
@@ -143,6 +144,16 @@ def main():
             cmd += ["--no-download"]
         results["acquire_codes"] = run_step(
             "acquire_codes", cmd, PYTHON_DIR, timeouts.get("acquire_codes", _DEFAULT_STEP_TIMEOUT)
+        )
+
+    if "acquire_geo" in steps:
+        cmd = [PYTHON, "acquire_regional_results.py"]
+        if args.anni:
+            cmd += ["--anni", args.anni]
+        if args.skip_download:
+            cmd += ["--no-download"]
+        results["acquire_geo"] = run_step(
+            "acquire_geo", cmd, PYTHON_DIR, timeouts.get("acquire_geo", _DEFAULT_STEP_TIMEOUT)
         )
 
     if "db" in steps:

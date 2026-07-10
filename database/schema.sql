@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS sources (
   institution VARCHAR(255) NOT NULL COMMENT 'es. Ministero Economia e Finanze, Agenzia delle Entrate',
   title VARCHAR(500) NOT NULL,
   url VARCHAR(1000) NULL,
-  source_type ENUM('risultati_annuali', 'elenco_ammessi', 'codici_dichiarazione', 'comunicato', 'altro') NOT NULL DEFAULT 'altro',
+  source_type ENUM('risultati_annuali', 'elenco_ammessi', 'codici_dichiarazione', 'ripartizione_regionale', 'comunicato', 'altro') NOT NULL DEFAULT 'altro',
   publication_date DATE NULL,
   download_date DATE NULL,
   checksum VARCHAR(128) NULL COMMENT 'es. sha256 del file scaricato',
@@ -129,6 +129,35 @@ CREATE TABLE IF NOT EXISTS annual_totals (
   KEY idx_totals_tax_year (tax_year),
   KEY idx_totals_source (source_id),
   CONSTRAINT fk_totals_source FOREIGN KEY (source_id) REFERENCES sources (id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ---------------------------------------------------------------------------
+-- regional_results: ripartizione regionale delle scelte per partito e anno
+-- (fonte: Dipartimento delle Finanze, tabella a sviluppo orizzontale
+-- regione x partito). is_suppressed distingue "0 scelte reali" da "dato
+-- oscurato dalla fonte per soglia di tutela della riservatezza" (riportato
+-- come "***" nel file originale quando il numero è troppo basso): in quel
+-- caso valid_choices resta NULL e is_suppressed = 1, per non confonderlo
+-- con uno zero vero.
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS regional_results (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  party_id INT UNSIGNED NOT NULL,
+  declaration_year SMALLINT UNSIGNED NOT NULL,
+  tax_year SMALLINT UNSIGNED NOT NULL,
+  region VARCHAR(60) NOT NULL COMMENT 'nome regione come da fonte, es. "Trentino Alto Adige (PA Trento)", "Non residenti"',
+  valid_choices BIGINT UNSIGNED NULL COMMENT 'NULL se oscurato per riservatezza (vedi is_suppressed)',
+  is_suppressed TINYINT(1) NOT NULL DEFAULT 0,
+  source_id INT UNSIGNED NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uniq_regional_party_year_region (party_id, declaration_year, region),
+  KEY idx_regional_declaration_year (declaration_year),
+  KEY idx_regional_region (region),
+  KEY idx_regional_source (source_id),
+  CONSTRAINT fk_regional_party FOREIGN KEY (party_id) REFERENCES parties (id) ON DELETE CASCADE,
+  CONSTRAINT fk_regional_source FOREIGN KEY (source_id) REFERENCES sources (id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;
