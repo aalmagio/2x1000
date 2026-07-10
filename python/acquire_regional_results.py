@@ -51,6 +51,23 @@ REGION_ALIASES = frozenset({"regioni", "regione"})
 
 SUPPRESSED_MARKER = "***"
 
+# Colonne di riepilogo che compaiono nella stessa tabella accanto alle colonne
+# partito (es. un totale contribuenti o scelte valide per regione): non sono
+# partiti e vanno escluse a monte, altrimenti finiscono nell'elenco dei "nomi
+# partito non riconosciuti" a ogni esecuzione. Confronto sull'intestazione
+# normalizzata (minuscolo, senza "*" di nota finale).
+_NON_PARTY_COLUMN_ALIASES = frozenset({
+    "numero totale contribuenti",
+    "scelte valide",
+    "totale scelte valide",
+    "totale",
+})
+
+
+def _is_summary_column(header_label: str) -> bool:
+    normalized = header_label.strip().lower().rstrip("*").strip()
+    return normalized in _NON_PARTY_COLUMN_ALIASES
+
 # URL per anno (Dipartimento delle Finanze). Vuoto di default: va compilato
 # in config.yaml (sezione url_anni_geografia). Senza URL configurato, lo
 # script legge i file già presenti in data/raw/<anno>/geografia/.
@@ -83,7 +100,19 @@ def parse_regional_table(header: "list[str]", rows: "list[list[str]]") -> "list[
         logging.error(f"  Colonna regione non trovata. Intestazione: {header}")
         return []
 
-    party_columns = [(i, h.strip()) for i, h in enumerate(header) if i != region_idx and h.strip()]
+    party_columns = []
+    excluded_summary = []
+    for i, h in enumerate(header):
+        if i == region_idx or not h.strip():
+            continue
+        if _is_summary_column(h):
+            excluded_summary.append(h.strip())
+            continue
+        party_columns.append((i, h.strip()))
+
+    if excluded_summary:
+        logging.info(f"  Colonne di riepilogo escluse (non sono partiti): {excluded_summary}")
+
     if not party_columns:
         logging.error("  Nessuna colonna partito trovata nell'intestazione.")
         return []
