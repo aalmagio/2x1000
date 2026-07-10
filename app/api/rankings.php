@@ -30,6 +30,17 @@ if (!in_array($year, Result::availableYears(), true)) {
     json_error('Anno non trovato.', 404);
 }
 
+$region = trim((string) ($_GET['region'] ?? ''));
+if ($region !== '') {
+    if ($type !== 'choices') {
+        json_error('Il parametro "region" è supportato solo per type=choices: la ripartizione regionale include solo il numero di scelte, non importi.', 400);
+    }
+    if (!in_array($region, RegionalResult::availableRegions(), true)) {
+        json_error('Regione non trovata.', 404);
+    }
+    json_response(RegionalResult::rankingForRegion($year, $region, $limit));
+}
+
 $minPrevious = clean_int($_GET['min_previous'] ?? null, 0, 10000000) ?? (int) (env('GROWTH_MIN_PREVIOUS_CHOICES', '5000'));
 
 $result = match ($type) {

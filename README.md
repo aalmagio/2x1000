@@ -261,11 +261,18 @@ se elenca nomi non riconosciuti, risolvili con `add_party_alias.py` come
 sopra e rilancia solo `db_updater.py` (non serve riscaricare).
 
 Una volta scritta in `regional_results`, la ripartizione regionale compare
-automaticamente sulla scheda di ciascun partito (`/partito.php?slug=...`,
-sezione "Ripartizione regionale delle scelte": selettore anno, grafico a
-barre per regione, tabella con le quote) e nella relativa API
-(`/api/party.php?slug=...`, chiave `regional_results`) — non serve nessuna
-azione aggiuntiva lato sito.
+automaticamente sul sito, senza nessuna azione aggiuntiva:
+- sulla scheda di ciascun partito (`/partito.php?slug=...`, sezione
+  "Ripartizione regionale delle scelte": selettore anno, grafico a barre per
+  regione, tabella con le quote) e nella relativa API
+  (`/api/party.php?slug=...`, chiave `regional_results`);
+- sulla pagina `/regioni.php` (selettore anno, totale scelte per regione,
+  partito più scelto in ciascuna, link alla classifica completa);
+- come filtro "Regione" in `/classifiche.php`: se impostato, la sezione
+  "Più scelti" usa i dati regionali invece di quelli nazionali (le altre
+  classifiche — importo, crescita, concentrazione — restano nazionali,
+  perché la fonte regionale copre solo il numero di scelte). Stesso filtro
+  disponibile in `/api/rankings.php?type=choices&year=YYYY&region=...`.
 
 **Pulizia dell'anagrafica (partiti duplicati):** capita che lo stesso
 partito reale finisca su due righe distinte di `parties` — tipicamente
@@ -362,7 +369,7 @@ API JSON pubbliche, sotto `/api/`:
 | `GET /api/results.php[?year=YYYY]` | Risultati per partito (tutti gli anni, o un anno) |
 | `GET /api/parties.php` | Elenco partiti con ultimo dato disponibile |
 | `GET /api/party.php?slug=...` | Scheda completa di un partito (serie storica, ripartizione regionale, alias, codici, fonti) |
-| `GET /api/rankings.php?year=YYYY&type=...` | Classifiche (`choices`, `amount`, `avg_amount`, `growth_choices`, `growth_amount`, `decline_choices`, `decline_amount`, `gap_positive`, `gap_negative`, `longest_presence`) |
+| `GET /api/rankings.php?year=YYYY&type=...` | Classifiche (`choices`, `amount`, `avg_amount`, `growth_choices`, `growth_amount`, `decline_choices`, `decline_amount`, `gap_positive`, `gap_negative`, `longest_presence`). Con `type=choices` accetta anche `region=...` per la classifica regionale |
 | `GET /api/compare.php?parties=slug1,slug2,...` | Confronto tra 1-5 partiti |
 
 Tutte le API restituiscono JSON con header corretti e gestiscono gli errori

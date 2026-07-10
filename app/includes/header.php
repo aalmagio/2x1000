@@ -8,6 +8,7 @@ $navItems = [
     '/dashboard.php' => 'Dashboard',
     '/partiti.php' => 'Partiti',
     '/classifiche.php' => 'Classifiche',
+    '/regioni.php' => 'Regioni',
     '/confronta.php' => 'Confronta',
     '/open-data.php' => 'Open data',
     '/metodo.php' => 'Metodo',

@@ -12,8 +12,21 @@ if ($year === null || !in_array($year, $availableYears, true)) {
 
 $minPrevious = clean_int($_GET['min_previous'] ?? null, 0, 10000000) ?? (int) (env('GROWTH_MIN_PREVIOUS_CHOICES', '5000'));
 
+$availableRegions = RegionalResult::availableRegions();
+$region = trim((string) ($_GET['region'] ?? ''));
+if ($region !== '' && !in_array($region, $availableRegions, true)) {
+    $region = '';
+}
+
 $rankings = [];
-if ($year !== null) {
+$regionalRanking = null;
+if ($year !== null && $region !== '') {
+    $regionalRanking = [
+        'region' => $region,
+        'rows' => RegionalResult::rankingForRegion($year, $region, 20),
+        'suppressed' => RegionalResult::suppressedPartiesForRegion($year, $region),
+    ];
+} elseif ($year !== null) {
     $rankings = [
         'choices' => ['title' => 'Più scelti', 'rows' => Result::top($year, 'choices', 10), 'cols' => ['choices']],
         'amount' => ['title' => 'Più finanziati', 'rows' => Result::top($year, 'amount', 10), 'cols' => ['amount']],
@@ -30,7 +43,7 @@ $longestPresence = Result::longestPresenceRanking(10);
 
 render_page(
     __DIR__ . '/../app/views/rankings.php',
-    compact('year', 'availableYears', 'minPrevious', 'rankings', 'longestPresence'),
+    compact('year', 'availableYears', 'minPrevious', 'rankings', 'longestPresence', 'availableRegions', 'region', 'regionalRanking'),
     'Classifiche — 2x1000 Open Data',
     'Classifiche dei partiti per scelte, importo, crescita e presenza storica nel 2x1000.'
 );
