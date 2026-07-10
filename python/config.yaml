@@ -73,13 +73,15 @@ url_anni_codici:
 # Stesso portale del Dipartimento delle Finanze, stesso anno+"tree", ma
 # suffisso "AADUEXM0201" invece di "...0101" (nodo "Ripartizione regionale
 # delle scelte per partito politico" invece di "Analisi statistiche").
-# Pattern export=3 (CSV) applicato per analogia con url_anni_risultati: NON
-# ANCORA VERIFICATO per nessun anno — testa con:
+# Pattern export=3 (CSV) VERIFICATO IN PRODUZIONE per tutti gli anni 2015-2025
+# (10 luglio 2026): acquire_regional_results.py ha scaricato ed estratto
+# correttamente il CSV per ciascuno di questi anni, 0 errori. Per un anno
+# NON ancora presente in questa lista (es. 2026 in poi), verifica comunque
+# prima di fidartene:
 #   python acquire_regional_results.py --anni <ANNO>
 # e controlla data/processed/regional_results_<ANNO>.csv. Se export=3 non
-# funziona per questo nodo, prova export=2 (Excel) o scarica a mano (come
-# nello screenshot che mi hai mandato) e salva in data/raw/<anno>/geografia/,
-# poi esegui con --no-download.
+# funziona per l'anno nuovo, prova export=2 (Excel) o scarica a mano e salva
+# in data/raw/<anno>/geografia/, poi esegui con --no-download.
 url_anni_geografia:
   2025: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2025AADUEXM0201&page=1&export=3&aggiornato=1522252800"
   2024: "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2024AADUEXM0201&page=1&export=3&aggiornato=1522252800"

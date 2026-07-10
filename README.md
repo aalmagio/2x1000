@@ -46,7 +46,7 @@ metodologica completa.
 app/
   config/database.php     Connessione PDO e caricamento .env
   includes/                Helper, header/footer/layout condivisi
-  models/                  Party, Result, AnnualTotal, Source (query PDO)
+  models/                  Party, Result, AnnualTotal, Source, RegionalResult (query PDO)
   api/                     Logica delle API JSON (richiamata da public/api)
   views/                   Template delle pagine (incluse dentro il layout)
 public/
@@ -68,13 +68,15 @@ scripts/
   calculate_indicators.php Calcola quote, ranking, medie, concentrazione
   export_open_data.php     Genera i CSV/JSON pubblicati in data/exports/
 python/
-  acquire_results.py         Scarica/estrae i risultati annuali dal MEF
-  acquire_party_codes.py     Scarica/estrae elenco partiti ammessi e codici dall'AdE
-  acquire_regional_results.py Scarica/estrae la ripartizione regionale delle scelte dal MEF
-  db_updater.py               Scrive i dati normalizzati nel database MySQL
-  add_party_alias.py          Registra una grafia alternativa per un partito esistente
-  pipeline.py                 Orchestratore: acquisizione → DB → indicatori → export
-  config.yaml                 URL per anno delle fonti ufficiali (da compilare)
+  acquire_results.py           Scarica/estrae i risultati annuali dal MEF
+  acquire_party_codes.py       Scarica/estrae elenco partiti ammessi e codici dall'AdE
+  acquire_regional_results.py  Scarica/estrae la ripartizione regionale delle scelte dal MEF
+  db_updater.py                Scrive i dati normalizzati nel database MySQL
+  add_party_alias.py           Registra una grafia alternativa per un partito esistente
+  find_duplicate_parties.py    Segnala possibili duplicati nell'anagrafica partiti
+  merge_parties.py             Unisce due righe duplicate dell'anagrafica in una sola
+  pipeline.py                  Orchestratore: acquisizione → DB → indicatori → export
+  config.yaml                  URL per anno delle fonti ufficiali (da compilare)
 ```
 
 ## Installazione su Plesk
@@ -104,8 +106,19 @@ python/
    ```
    mysql -u <utente> -p <database> < database/migrations.sql
    ```
-6. **Importa i dati reali** (si veda [Importazione dei dati](#importazione-dei-dati)).
-7. **Genera gli open data:** `php scripts/export_open_data.php`.
+6. **Popola il database con i dati reali.** Due percorsi possibili:
+   - **Consigliato:** la [pipeline Python](#pipeline-python-di-acquisizione-dati),
+     che scarica dalle fonti ufficiali, normalizza e scrive nel database in
+     un solo comando per anno — è il percorso testato end-to-end in
+     produzione;
+   - **Alternativo:** [import manuale via CSV](#importazione-dei-dati), utile
+     se hai già i dati normalizzati in un foglio di calcolo o se preferisci
+     controllare a mano ogni riga prima di importarla.
+
+   In entrambi i casi, il calcolo degli indicatori (`calculate_indicators.php`)
+   va sempre rieseguito dopo ogni import (la pipeline Python lo fa da sola).
+7. **Genera gli open data:** `php scripts/export_open_data.php` (anche questo
+   incluso in automatico se hai usato la pipeline Python).
 8. **Permessi cartelle.** Assicurati che `data/exports/` sia scrivibile
    dall'utente con cui girano i processi PHP (per rigenerare gli export),
    e che `data/raw/` e `data/processed/` non siano esposte pubblicamente
@@ -231,29 +244,84 @@ con lo stesso scopo (denominazione alternativa → `party_id`, con
 `year_from`/`year_to`/`source`) — usarla evita due fonti di verità sullo
 stesso concetto.
 
+**Popolamento massivo per più anni:** una volta verificati gli URL (si veda
+sotto), la sequenza usata in produzione per un primo caricamento di più anni
+insieme è:
+```bash
+python acquire_results.py --anni 2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025
+python acquire_party_codes.py --anni 2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025
+python acquire_regional_results.py --anni 2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025
+python db_updater.py --anni 2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025
+php ../scripts/calculate_indicators.php
+php ../scripts/export_open_data.php
+```
+(`pipeline.py --anni <lista>` fa lo stesso in un solo comando, anno per
+anno). Alla fine controlla sempre l'ultima riga di log di `db_updater.py`:
+se elenca nomi non riconosciuti, risolvili con `add_party_alias.py` come
+sopra e rilancia solo `db_updater.py` (non serve riscaricare).
+
+Una volta scritta in `regional_results`, la ripartizione regionale compare
+automaticamente sulla scheda di ciascun partito (`/partito.php?slug=...`,
+sezione "Ripartizione regionale delle scelte": selettore anno, grafico a
+barre per regione, tabella con le quote) e nella relativa API
+(`/api/party.php?slug=...`, chiave `regional_results`) — non serve nessuna
+azione aggiuntiva lato sito.
+
+**Pulizia dell'anagrafica (partiti duplicati):** capita che lo stesso
+partito reale finisca su due righe distinte di `parties` — tipicamente
+perché in anni diversi la fonte ha usato una grafia leggermente diversa
+(es. con/senza sigla) e l'euristica di risoluzione dei nomi non li ha
+accorpati. Per trovarli:
+```bash
+python find_duplicate_parties.py
+```
+Segnala i candidati su tre livelli di confidenza (stesso codice AdE
+condiviso tra anni = alta; nome uguale a meno della punteggiatura = media;
+similarità testuale ≥95% = bassa, da rivedere a mano). Prima di unire due
+righe, se hanno entrambe un `code` AdE, vale la pena controllare se
+condividono anche un anno con lo stesso codice (`SELECT declaration_year,
+code FROM party_codes WHERE party_id IN (id1, id2) ORDER BY declaration_year`):
+se sì, è quasi certamente lo stesso partito. Poi:
+```bash
+python merge_parties.py --keep <slug-da-mantenere> --merge <slug-duplicato> --dry-run
+# se l'anteprima torna, rilancia senza --dry-run
+python merge_parties.py --keep <slug-da-mantenere> --merge <slug-duplicato>
+```
+Sposta risultati e codici sotto il partito mantenuto, registra il nome del
+duplicato come alias storico, estende `first_year`/`last_year`. Se per lo
+stesso anno esistono righe su entrambi i partiti (un vero conflitto, non
+solo un doppione), **non le sovrascrive**: le segnala e non elimina la riga
+duplicata finché non risolvi il conflitto a mano (confronta le due righe,
+tieni quella corretta, elimina l'altra, poi il partito duplicato — ormai
+vuoto — può essere cancellato). Dopo un merge, rilancia sempre
+`calculate_indicators.php` e `export_open_data.php`, perché classifiche e
+conteggi possono essere cambiati.
+
 **Configurazione delle fonti:** `python/config.yaml` contiene `url_anni_risultati`
 (Dipartimento delle Finanze), `url_anni_codici` (Agenzia delle Entrate) e
 `url_anni_geografia` (ripartizione regionale, Dipartimento delle Finanze).
-Alcuni URL trovati tramite ricerca web sono già precompilati (2024/2025 per i
-codici AdE, 2022 per i risultati MEF), ma **non sono stati verificati
-scaricandoli** — questo ambiente di sviluppo non riesce a raggiungere i siti
-`.gov.it` (bloccati dal proxy di rete). Gli URL di `url_anni_geografia` sono
-costruiti per analogia con `url_anni_risultati` (stesso `tree`, suffisso
-`0201` invece di `0101`, `export=3`) e **non sono mai stati testati**: prima
-di lanciarli su tutti gli anni configurati, verifica un anno alla volta:
+Gli URL per gli anni 2015-2025 sono precompilati e **verificati in produzione**
+(scaricati con successo per tutti e tre i tipi di fonte). Per un anno nuovo,
+non ancora presente in `config.yaml` (es. 2026), non dare per scontato che il
+pattern funzioni identico: verifica sempre un anno alla volta prima di un
+import massivo:
 ```bash
-python acquire_results.py --anni 2022
-python acquire_party_codes.py --anni 2025
-python acquire_regional_results.py --anni 2025
+python acquire_results.py --anni 2026
+python acquire_party_codes.py --anni 2026
+python acquire_regional_results.py --anni 2026
 ```
-e controlla il contenuto di `data/processed/mef_results_2022.csv` /
-`ade_codes_2025.csv` / `regional_results_2025.csv`. Se il file scaricato non
+e controlla il contenuto di `data/processed/mef_results_2026.csv` /
+`ade_codes_2026.csv` / `regional_results_2026.csv`. Se il file scaricato non
 è quello giusto o il parser non trova le colonne, apri l'URL nel browser per
 trovare quello corretto e aggiorna `config.yaml`. Per gli anni non ancora
 configurati, gli script si limitano a leggere un file scaricato manualmente e
 salvato in `data/raw/<anno>/` (risultati), `data/raw/<anno>/codici/`
 (elenco/codici) o `data/raw/<anno>/geografia/` (ripartizione regionale),
 usando `--no-download`.
+
+Nota per gli anni 2016/2020 di `url_anni_codici`: i due URL puntano allo
+stesso file AdE — se l'Agenzia ne pubblica uno nuovo per uno dei due anni,
+aggiorna il link corrispondente.
 
 Un URL può essere sia una pagina HTML da scansionare per trovare i link ai
 file, sia un link diretto a un file (PDF/CSV/XLSX, anche con l'estensione a
@@ -293,7 +361,7 @@ API JSON pubbliche, sotto `/api/`:
 | `GET /api/annual_totals.php[?year=YYYY]` | Totali annuali di sistema (tutti, o per un anno) |
 | `GET /api/results.php[?year=YYYY]` | Risultati per partito (tutti gli anni, o un anno) |
 | `GET /api/parties.php` | Elenco partiti con ultimo dato disponibile |
-| `GET /api/party.php?slug=...` | Scheda completa di un partito (serie storica, alias, codici, fonti) |
+| `GET /api/party.php?slug=...` | Scheda completa di un partito (serie storica, ripartizione regionale, alias, codici, fonti) |
 | `GET /api/rankings.php?year=YYYY&type=...` | Classifiche (`choices`, `amount`, `avg_amount`, `growth_choices`, `growth_amount`, `decline_choices`, `decline_amount`, `gap_positive`, `gap_negative`, `longest_presence`) |
 | `GET /api/compare.php?parties=slug1,slug2,...` | Confronto tra 1-5 partiti |
 
