@@ -40,6 +40,7 @@ import argparse
 import csv
 import json
 import logging
+import re
 import sys
 from datetime import date
 from pathlib import Path
@@ -50,6 +51,16 @@ from extract import fetch_source_file, is_footer_row, locate_header, parse_int, 
 REGION_ALIASES = frozenset({"regioni", "regione"})
 
 SUPPRESSED_MARKER = "***"
+
+# La tabella regione×partito del Dipartimento delle Finanze è paginata sul
+# lato server (query string "page=N"): per gli anni con molti partiti
+# ammessi (es. 2018, anno elettorale) la pagina 1 non contiene tutte le
+# colonne partito, le successive sì. Non è affidabile assumere un numero
+# fisso di pagine (per anni con meno partiti "page=1" è già completa e le
+# pagine successive ripetono lo stesso contenuto): si scaricano pagine
+# successive finché non ne compare una che non aggiunge nessuna colonna
+# partito nuova rispetto a quelle già viste, con un tetto di sicurezza.
+MAX_GEO_PAGES = 6
 
 # Colonne di riepilogo che compaiono nella stessa tabella accanto alle colonne
 # partito (es. un totale contribuenti o scelte valide per regione): non sono
@@ -67,6 +78,23 @@ _NON_PARTY_COLUMN_ALIASES = frozenset({
 def _is_summary_column(header_label: str) -> bool:
     normalized = header_label.strip().lower().rstrip("*").strip()
     return normalized in _NON_PARTY_COLUMN_ALIASES
+
+
+def _page_url(url: str, page: int) -> str:
+    """Sostituisce il parametro page=N nell'URL configurato con il numero indicato."""
+    return re.sub(r"page=\d+", f"page={page}", url)
+
+
+def _header_party_names(header: "list[str]", rows: "list[list[str]]") -> "set[str]":
+    """Nomi partito (colonne) di una tabella già ripulita dalle righe di titolo iniziali."""
+    header, _ = locate_header(header, rows, REGION_ALIASES)
+    header_norm = [h.strip().lower() for h in header]
+    names = set()
+    for i, h in enumerate(header):
+        if not h.strip() or header_norm[i] in REGION_ALIASES or _is_summary_column(h):
+            continue
+        names.add(h.strip())
+    return names
 
 # URL per anno (Dipartimento delle Finanze). Vuoto di default: va compilato
 # in config.yaml (sezione url_anni_geografia). Senza URL configurato, lo
@@ -171,29 +199,86 @@ def write_meta(meta: dict, out_path: Path) -> None:
     out_path.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
-def download_year(year: int, raw_dir: Path, session) -> "Path | None":
+def download_year_pages(year: int, raw_dir: Path, session) -> "list[Path]":
+    """
+    Scarica la pagina 1 e, finché aggiungono colonne partito nuove, le pagine
+    successive (page=2, page=3, ...) fino a MAX_GEO_PAGES. Restituisce i
+    percorsi dei file scaricati che hanno contribuito dati nuovi (la pagina 1
+    è sempre inclusa se il download riesce).
+    """
     url = YEAR_URLS.get(year)
     if not url:
         logging.info(f"[{year}] Nessun URL configurato in config.yaml (url_anni_geografia)")
-        return None
+        return []
 
     folder = raw_dir / str(year) / "geografia"
-    folder.mkdir(parents=True, exist_ok=True)
-    dest = fetch_source_file(url, folder, session)
-    if not dest:
-        logging.warning(f"[{year}] Nessun file scaricabile trovato per {url}")
-    return dest
+    files = []
+    known_parties: "set[str]" = set()
+
+    for page in range(1, MAX_GEO_PAGES + 1):
+        page_folder = folder if page == 1 else folder / f"page{page}"
+        page_folder.mkdir(parents=True, exist_ok=True)
+        dest = fetch_source_file(_page_url(url, page), page_folder, session)
+        if not dest:
+            if page == 1:
+                logging.warning(f"[{year}] Nessun file scaricabile trovato per {url}")
+            break
+
+        try:
+            header, rows = read_table(dest)
+        except Exception as e:
+            logging.warning(f"[{year}] pagina {page}: errore di lettura di {dest.name} ({e}), ignorata")
+            break
+        if not header:
+            break
+
+        page_parties = _header_party_names(header, rows)
+        new_parties = page_parties - known_parties
+        if page > 1 and not new_parties:
+            logging.info(
+                f"[{year}] pagina {page}: nessuna colonna partito nuova rispetto alle {len(known_parties)} "
+                f"già trovate, mi fermo qui."
+            )
+            break
+
+        files.append(dest)
+        known_parties |= page_parties
+        if page > 1:
+            logging.info(f"[{year}] pagina {page}: {len(new_parties)} colonne partito nuove")
+
+    return files
 
 
-def find_local_file(raw_dir: Path, year: int) -> "Path | None":
+def find_local_files(raw_dir: Path, year: int) -> "list[Path]":
+    """Pagina 1 nella cartella dell'anno, più eventuali pagine successive già scaricate in precedenza (page2/, page3/, ...)."""
     folder = raw_dir / str(year) / "geografia"
     if not folder.is_dir():
-        return None
+        return []
+
+    files = []
     for ext in ("*.csv", "*.xlsx", "*.xls"):
         matches = sorted(folder.glob(ext))
         if matches:
-            return matches[0]
-    return None
+            files.append(matches[0])
+            break
+
+    page = 2
+    while True:
+        page_folder = folder / f"page{page}"
+        if not page_folder.is_dir():
+            break
+        found = None
+        for ext in ("*.csv", "*.xlsx", "*.xls"):
+            matches = sorted(page_folder.glob(ext))
+            if matches:
+                found = matches[0]
+                break
+        if not found:
+            break
+        files.append(found)
+        page += 1
+
+    return files
 
 
 def process_year(year: int, args, raw_dir: Path, processed_dir: Path, session=None) -> str:
@@ -201,13 +286,14 @@ def process_year(year: int, args, raw_dir: Path, processed_dir: Path, session=No
     logging.info(f"[{year}] Inizio elaborazione")
 
     if args.input:
-        file_path = Path(args.input)
+        file_paths = [Path(args.input)]
     elif args.no_download:
-        file_path = find_local_file(raw_dir, year)
+        file_paths = find_local_files(raw_dir, year)
     else:
-        file_path = download_year(year, raw_dir, session) or find_local_file(raw_dir, year)
+        file_paths = download_year_pages(year, raw_dir, session) or find_local_files(raw_dir, year)
 
-    if not file_path or not file_path.is_file():
+    file_paths = [p for p in file_paths if p and p.is_file()]
+    if not file_paths:
         logging.warning(
             f"[{year}] Nessun file disponibile. Configura l'URL in config.yaml "
             f"(url_anni_geografia) oppure salva manualmente il file ufficiale in "
@@ -215,20 +301,39 @@ def process_year(year: int, args, raw_dir: Path, processed_dir: Path, session=No
         )
         return "skipped"
 
-    logging.info(f"[{year}] Lettura: {file_path.name}")
-    try:
-        header, rows = read_table(file_path)
-    except Exception as e:
-        logging.error(f"[{year}] Errore nella lettura di {file_path.name}: {e}")
-        return "error"
+    merged: "dict[tuple[str, str], dict]" = {}
+    known_parties: "set[str]" = set()
+    used_paths = []
 
-    if not header:
-        logging.error(f"[{year}] Impossibile determinare l'intestazione di {file_path.name}")
-        return "error"
+    for i, file_path in enumerate(file_paths):
+        logging.info(f"[{year}] Lettura: {file_path.name}")
+        try:
+            header, rows = read_table(file_path)
+        except Exception as e:
+            logging.error(f"[{year}] Errore nella lettura di {file_path.name}: {e}")
+            if i == 0:
+                return "error"
+            continue
 
-    records = parse_regional_table(header, rows)
+        if not header:
+            if i == 0:
+                logging.error(f"[{year}] Impossibile determinare l'intestazione di {file_path.name}")
+                return "error"
+            continue
+
+        page_records = parse_regional_table(header, rows)
+        page_parties = {r["party_name"] for r in page_records}
+        if i > 0 and known_parties and not (page_parties - known_parties):
+            continue  # file già scaricato in una run precedente, non aggiunge nulla
+
+        for r in page_records:
+            merged[(r["region"], r["party_name"])] = r
+        known_parties |= page_parties
+        used_paths.append(file_path)
+
+    records = list(merged.values())
     if not records:
-        logging.warning(f"[{year}] Nessun dato estratto da {file_path.name}")
+        logging.warning(f"[{year}] Nessun dato estratto")
         return "error"
 
     tax_year = args.tax_year if args.tax_year else year - 1
@@ -245,19 +350,22 @@ def process_year(year: int, args, raw_dir: Path, processed_dir: Path, session=No
         "institution": "Ministero dell'Economia e delle Finanze — Dipartimento delle Finanze",
         "source_type": "ripartizione_regionale",
         "url": YEAR_URLS.get(year),
-        "source_file": str(file_path.relative_to(REPO_ROOT)) if file_path.is_relative_to(REPO_ROOT) else str(file_path),
-        "checksum": sha256_file(file_path),
+        "source_file": ", ".join(
+            str(p.relative_to(REPO_ROOT)) if p.is_relative_to(REPO_ROOT) else str(p) for p in used_paths
+        ),
+        "checksum": ", ".join(sha256_file(p) for p in used_paths),
         "download_date": date.today().isoformat(),
         "row_count": len(records),
         "regions": n_regions,
         "parties": n_parties,
         "suppressed": n_suppressed,
+        "pages": len(used_paths),
     }
     write_meta(meta, processed_dir / f"regional_results_{year}.meta.json")
 
     logging.info(
         f"[{year}] => {out_csv.name} ({len(records)} righe, {n_regions} regioni, "
-        f"{n_parties} partiti, {n_suppressed} oscurati)"
+        f"{n_parties} partiti, {n_suppressed} oscurati, {len(used_paths)} pagine lette)"
     )
     return "ok"
 
