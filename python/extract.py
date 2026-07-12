@@ -17,6 +17,7 @@ import hashlib
 import logging
 import os
 import re
+from collections import Counter
 from pathlib import Path
 from urllib.parse import unquote, urljoin, urlparse
 
@@ -465,13 +466,51 @@ def locate_header(
     scartando le righe di titolo prima di essa.
     """
     if find_col([h.strip().lower() for h in header], required_aliases) is not None:
-        return header, rows
+        return _rejoin_split_header(header, rows)
 
     for i, row in enumerate(rows[:max_scan]):
         if find_col([c.strip().lower() for c in row], required_aliases) is not None:
-            return row, rows[i + 1:]
+            return _rejoin_split_header(row, rows[i + 1:])
 
     return header, rows
+
+
+def _rejoin_split_header(header: "list[str]", rows: "list[list[str]]") -> "tuple[list[str], list[list[str]]]":
+    """
+    Alcune tabelle di larghezza fissa a molte colonne (es. la ripartizione
+    regionale del MEF) contengono un valore di intestazione con un ritorno a
+    capo non racchiuso tra virgolette (es. "Lega Nord per l'Indipendenza"
+    seguito, sulla riga dopo, da " della Padania;<altre colonne>"): un CSV
+    reader conforme (compreso il nostro) interpreta quel ritorno a capo come
+    fine riga, spezzando l'intestazione in due e troncando così tutte le
+    colonne successive alla prima riga.
+
+    Se la riga subito dopo l'intestazione ha una lunghezza diversa da quella
+    "normale" delle righe dati successive, e riunendola all'ultima cella
+    dell'intestazione si ottiene esattamente quella lunghezza, la si
+    considera la continuazione dell'intestazione invece che un dato.
+    """
+    if not rows:
+        return header, rows
+
+    data_lengths = [len(r) for r in rows[1:]]
+    if not data_lengths:
+        return header, rows
+
+    expected_len = Counter(data_lengths).most_common(1)[0][0]
+    if len(header) == expected_len:
+        return header, rows
+
+    continuation = rows[0]
+    if len(header) + len(continuation) - 1 != expected_len:
+        return header, rows
+
+    merged_header = header[:-1] + [f"{header[-1]} {continuation[0]}".strip()] + continuation[1:]
+    logger.info(
+        f"  Intestazione ricomposta (ritorno a capo non quotato nella colonna "
+        f"{len(header)}): {header[-1]!r} + {continuation[0]!r}"
+    )
+    return merged_header, rows[1:]
 
 
 def parse_amount(value) -> "float | None":
