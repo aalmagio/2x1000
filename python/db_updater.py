@@ -71,14 +71,38 @@ def upsert_source(cur, meta: dict, title: str) -> int:
     return cur.lastrowid
 
 
-def upsert_party(cur, canonical_name: str, declaration_year: int) -> int:
+def build_alias_index(cur) -> "dict[str, int]":
     """
-    Trova il partito per slug o lo crea. Estende first_year/last_year per
-    includere l'anno appena elaborato.
+    slug(alias_name) -> party_id, da party_aliases. Usato come fallback in
+    upsert_party() prima di creare un partito nuovo: senza questo, una grafia
+    già unita con merge_parties.py (o registrata con add_party_alias.py)
+    ricompare come partito duplicato al primo import successivo che la
+    ripropone (results/codes non consultavano affatto party_aliases finché
+    non è stato scoperto in produzione che un partito unito e cancellato
+    veniva ricreato da un rilancio della pipeline).
+    """
+    index: dict[str, int] = {}
+    cur.execute("SELECT party_id, alias_name FROM party_aliases")
+    for party_id, name in cur.fetchall():
+        index.setdefault(slugify(name), party_id)
+    return index
+
+
+def upsert_party(cur, canonical_name: str, declaration_year: int, alias_index: "dict[str, int] | None" = None) -> int:
+    """
+    Trova il partito per slug, o per alias se lo slug non corrisponde a nessun
+    partito attivo, o lo crea. Estende first_year/last_year per includere
+    l'anno appena elaborato.
     """
     slug = slugify(canonical_name)
     cur.execute("SELECT id, first_year, last_year FROM parties WHERE slug = %s LIMIT 1", (slug,))
     row = cur.fetchone()
+
+    if row is None and alias_index is not None:
+        aliased_id = alias_index.get(slug)
+        if aliased_id is not None:
+            cur.execute("SELECT id, first_year, last_year FROM parties WHERE id = %s LIMIT 1", (aliased_id,))
+            row = cur.fetchone()
 
     if row is None:
         cur.execute(
@@ -226,7 +250,7 @@ def _load_meta(csv_path: Path) -> dict:
     return {}
 
 
-def process_results_file(cur, csv_path: Path, dry_run: bool) -> int:
+def process_results_file(cur, csv_path: Path, dry_run: bool, alias_index: "dict[str, int] | None" = None) -> int:
     meta = _load_meta(csv_path)
     declaration_year = meta.get("declaration_year")
 
@@ -248,7 +272,7 @@ def process_results_file(cur, csv_path: Path, dry_run: bool) -> int:
 
     count = 0
     for row in rows:
-        party_id = upsert_party(cur, row["party_name"], int(row["declaration_year"]))
+        party_id = upsert_party(cur, row["party_name"], int(row["declaration_year"]), alias_index)
         upsert_result(
             cur,
             party_id,
@@ -267,7 +291,7 @@ def process_results_file(cur, csv_path: Path, dry_run: bool) -> int:
     return count
 
 
-def process_codes_file(cur, csv_path: Path, dry_run: bool) -> int:
+def process_codes_file(cur, csv_path: Path, dry_run: bool, alias_index: "dict[str, int] | None" = None) -> int:
     meta = _load_meta(csv_path)
 
     with open(csv_path, "r", encoding="utf-8", newline="") as f:
@@ -288,7 +312,7 @@ def process_codes_file(cur, csv_path: Path, dry_run: bool) -> int:
 
     count = 0
     for row in rows:
-        party_id = upsert_party(cur, row["official_name"], int(row["declaration_year"]))
+        party_id = upsert_party(cur, row["official_name"], int(row["declaration_year"]), alias_index)
         upsert_party_code(
             cur,
             party_id,
@@ -431,10 +455,11 @@ def main():
     unresolved: set[str] = set()
     try:
         with conn.cursor() as cur:
+            alias_index = build_alias_index(cur)
             for f in results_files:
-                total += process_results_file(cur, f, dry_run=False)
+                total += process_results_file(cur, f, dry_run=False, alias_index=alias_index)
             for f in codes_files:
-                total += process_codes_file(cur, f, dry_run=False)
+                total += process_codes_file(cur, f, dry_run=False, alias_index=alias_index)
 
             if regional_files:
                 # Costruito qui, dopo results/codes: vede anche i partiti e i
