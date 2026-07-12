@@ -5,8 +5,9 @@ sola, dopo che sono state confermate come lo stesso partito reale (es. con
 l'aiuto di find_duplicate_parties.py).
 
 Cosa fa, in una singola transazione:
-  1. Sposta tutte le righe di `results` e `party_codes` del partito "merge"
-     sotto il party_id del partito "keep". Se per lo stesso anno esistono
+  1. Sposta tutte le righe di `results`, `party_codes` e `regional_results`
+     del partito "merge" sotto il party_id del partito "keep". Se per lo
+     stesso anno (o stesso anno+regione per regional_results) esistono
      già righe per entrambi (un vero conflitto, non solo un doppione), NON
      sovrascrive: lascia la riga di "keep" e segnala il conflitto per una
      verifica manuale.
@@ -90,6 +91,14 @@ def main():
             conflicting_code_years = merge_code_years & keep_code_years
             movable_code_years = merge_code_years - conflicting_code_years
 
+            # --- regional_results: chiave (declaration_year, region), stessa logica ---
+            cur.execute("SELECT declaration_year, region FROM regional_results WHERE party_id = %s", (merge["id"],))
+            merge_regional_keys = {(r[0], r[1]) for r in cur.fetchall()}
+            cur.execute("SELECT declaration_year, region FROM regional_results WHERE party_id = %s", (keep["id"],))
+            keep_regional_keys = {(r[0], r[1]) for r in cur.fetchall()}
+            conflicting_regional_keys = merge_regional_keys & keep_regional_keys
+            movable_regional_keys = merge_regional_keys - conflicting_regional_keys
+
             if conflicting_result_years:
                 logging.warning(
                     f"Conflitto in results per gli anni {sorted(conflicting_result_years)}: "
@@ -102,6 +111,11 @@ def main():
                     f"Conflitto in party_codes per gli anni {sorted(conflicting_code_years)}: "
                     f"stesso motivo, riga non spostata."
                 )
+            if conflicting_regional_keys:
+                logging.warning(
+                    f"Conflitto in regional_results per (anno, regione) {sorted(conflicting_regional_keys)}: "
+                    f"stesso motivo, riga non spostata."
+                )
 
             new_first = min(x for x in (keep["first_year"], merge["first_year"]) if x is not None)
             new_last = max(x for x in (keep["last_year"], merge["last_year"]) if x is not None)
@@ -111,6 +125,9 @@ def main():
             )
             logging.info(
                 f"party_codes: {len(movable_code_years)} anni spostati, {len(conflicting_code_years)} in conflitto (non spostati)"
+            )
+            logging.info(
+                f"regional_results: {len(movable_regional_keys)} righe spostate, {len(conflicting_regional_keys)} in conflitto (non spostate)"
             )
             logging.info(f"first_year/last_year di #{keep['id']}: {keep['first_year']}–{keep['last_year']} -> {new_first}–{new_last}")
             logging.info(f"Alias registrato: {merge['canonical_name']!r} ({merge['first_year']}–{merge['last_year']})")
@@ -137,6 +154,12 @@ def main():
                     (keep["id"], merge["id"], next(iter(movable_code_years))),
                 )
 
+            for year, region in movable_regional_keys:
+                cur.execute(
+                    "UPDATE regional_results SET party_id = %s WHERE party_id = %s AND declaration_year = %s AND region = %s",
+                    (keep["id"], merge["id"], year, region),
+                )
+
             cur.execute("UPDATE party_aliases SET party_id = %s WHERE party_id = %s", (keep["id"], merge["id"]))
 
             cur.execute(
@@ -158,19 +181,21 @@ def main():
 
             # Il partito "merge" ora ha solo le righe in conflitto (se ce ne sono);
             # se non ne ha più, si può eliminare. Se restano righe in conflitto in
-            # results/party_codes, la FK CASCADE le eliminerebbe: meglio bloccarsi
-            # e lasciare la decisione a chi esegue lo script.
+            # results/party_codes/regional_results, la FK CASCADE le eliminerebbe:
+            # meglio bloccarsi e lasciare la decisione a chi esegue lo script.
             cur.execute("SELECT COUNT(*) FROM results WHERE party_id = %s", (merge["id"],))
             remaining_results = cur.fetchone()[0]
             cur.execute("SELECT COUNT(*) FROM party_codes WHERE party_id = %s", (merge["id"],))
             remaining_codes = cur.fetchone()[0]
+            cur.execute("SELECT COUNT(*) FROM regional_results WHERE party_id = %s", (merge["id"],))
+            remaining_regional = cur.fetchone()[0]
 
-            if remaining_results or remaining_codes:
+            if remaining_results or remaining_codes or remaining_regional:
                 conn.commit()
                 logging.warning(
-                    f"Partito #{merge['id']} NON eliminato: restano {remaining_results} righe in results "
-                    f"e {remaining_codes} in party_codes per gli anni in conflitto elencati sopra. "
-                    f"Risolvi il conflitto a mano, poi ri-esegui per completare l'unione."
+                    f"Partito #{merge['id']} NON eliminato: restano {remaining_results} righe in results, "
+                    f"{remaining_codes} in party_codes e {remaining_regional} in regional_results per gli anni/regioni "
+                    f"in conflitto elencati sopra. Risolvi il conflitto a mano, poi ri-esegui per completare l'unione."
                 )
                 return
 
