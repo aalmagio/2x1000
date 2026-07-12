@@ -354,6 +354,17 @@ equivalente), più un `manifest.json` con data di generazione:
 - `2x1000_partiti_codici_annuali.{csv,json}`
 - `2x1000_partiti_totali_annuali.{csv,json}`
 - `2x1000_partiti_fonti.{csv,json}`
+- `2x1000_partiti_ripartizione_regionale.{csv,json}`
+
+**Formato numeri nei CSV:** separatore di campo punto e virgola (`;`) e numeri
+in formato italiano (virgola decimale, punto delle migliaia — es.
+`1.234,56`), così si aprono correttamente in Excel in italiano con un
+doppio click. Solo le colonne che rappresentano quantità/percentuali sono
+formattate (vedi `$datasets[...]['decimals']` in `export_open_data.php`):
+id, anni e codici (es. `code` in `2x1000_partiti_codici_annuali`) restano
+invariati. I JSON invece riportano sempre numeri in formato standard (punto
+decimale, senza migliaia): JSON non ha una notazione numerica "italiana”, e
+convertirla in stringa romperebbe qualunque consumo automatico dei file.
 
 Questi file sono scaricabili dal pubblico tramite la pagina `/open-data.php`,
 che li serve attraverso `public/download.php` (whitelist rigorosa sul nome

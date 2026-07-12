@@ -1,2 +1,4 @@
-﻿id,institution,title,url,source_type,publication_date,download_date,checksum,notes
-1,"DATI DEMO","Dataset dimostrativo generato per lo sviluppo — NON rappresenta dati ufficiali reali",,altro,,,,"SAMPLE DATA: numeri inventati a scopo di test. Sostituire con le fonti ufficiali MEF/Agenzia delle Entrate prima della produzione."
+﻿id;institution;title;url;source_type;publication_date;download_date;checksum;notes
+1;"DATI DEMO";"Dataset dimostrativo generato per lo sviluppo — NON rappresenta dati ufficiali reali";;altro;;;;"SAMPLE DATA: numeri inventati a scopo di test. Sostituire con le fonti ufficiali MEF/Agenzia delle Entrate prima della produzione."
+4;"Ministero dell'Economia e delle Finanze — Dipartimento delle Finanze";"Risultati 2x1000 ai partiti politici — dichiarazione 2098";;risultati_annuali;;2026-07-07;924cf1abb48b422203b4479dade2cc6a83053d80f7c71873143072f9ed891b74;"Acquisito automaticamente da data/raw/2098/risultati_test.csv (2 righe) via pipeline Python."
+5;"Agenzia delle Entrate";"Elenco partiti ammessi e codici dichiarazione — 2098";;codici_dichiarazione;;2026-07-07;ceb0c8b7e8e9194477f4fd116d30e42e032affc7acf76ee19ec1fb5c3b2f9263;"Acquisito automaticamente da data/raw/2098/codici/elenco_test.csv (3 righe) via pipeline Python."

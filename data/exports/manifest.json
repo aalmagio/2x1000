@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-07-07T06:44:45+00:00",
+    "generated_at": "2026-07-12T09:27:47+00:00",
     "files": [
         "2x1000_partiti_risultati.csv",
         "2x1000_partiti_risultati.json",
@@ -10,6 +10,8 @@
         "2x1000_partiti_totali_annuali.csv",
         "2x1000_partiti_totali_annuali.json",
         "2x1000_partiti_fonti.csv",
-        "2x1000_partiti_fonti.json"
+        "2x1000_partiti_fonti.json",
+        "2x1000_partiti_ripartizione_regionale.csv",
+        "2x1000_partiti_ripartizione_regionale.json"
     ]
 }

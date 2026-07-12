@@ -4,7 +4,7 @@
         "canonical_name": "Partito Demo A",
         "slug": "partito-demo-a",
         "first_year": 2020,
-        "last_year": 2024,
+        "last_year": 2098,
         "is_active": 1,
         "notes": "DATO DEMO/SAMPLE — non un partito realmente esistente"
     },
@@ -13,7 +13,7 @@
         "canonical_name": "Partito Demo B",
         "slug": "partito-demo-b",
         "first_year": 2020,
-        "last_year": 2024,
+        "last_year": 2098,
         "is_active": 1,
         "notes": "DATO DEMO/SAMPLE — non un partito realmente esistente"
     },

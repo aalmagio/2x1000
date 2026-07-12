@@ -73,5 +73,20 @@
         "top_5_amount_share": "90.03025",
         "top_10_amount_share": "100.00000",
         "source_id": 1
+    },
+    {
+        "declaration_year": 2097,
+        "tax_year": 2096,
+        "total_taxpayers": null,
+        "total_valid_choices": 0,
+        "total_amount": "0.00",
+        "valid_choice_rate": null,
+        "avg_amount_per_choice": null,
+        "number_of_parties_with_choices": null,
+        "number_of_parties_admitted": 1,
+        "top_3_amount_share": null,
+        "top_5_amount_share": null,
+        "top_10_amount_share": null,
+        "source_id": null
     }
 ]

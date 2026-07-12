@@ -12,6 +12,7 @@ $labels = [
     '2x1000_partiti_codici_annuali' => 'Codici annuali da dichiarazione',
     '2x1000_partiti_totali_annuali' => 'Totali annuali di sistema',
     '2x1000_partiti_fonti' => 'Fonti ufficiali',
+    '2x1000_partiti_ripartizione_regionale' => 'Ripartizione regionale delle scelte',
 ];
 
 $files = [];

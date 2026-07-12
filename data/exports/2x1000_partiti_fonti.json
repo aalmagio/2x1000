@@ -9,5 +9,27 @@
         "download_date": null,
         "checksum": null,
         "notes": "SAMPLE DATA: numeri inventati a scopo di test. Sostituire con le fonti ufficiali MEF/Agenzia delle Entrate prima della produzione."
+    },
+    {
+        "id": 4,
+        "institution": "Ministero dell'Economia e delle Finanze — Dipartimento delle Finanze",
+        "title": "Risultati 2x1000 ai partiti politici — dichiarazione 2098",
+        "url": null,
+        "source_type": "risultati_annuali",
+        "publication_date": null,
+        "download_date": "2026-07-07",
+        "checksum": "924cf1abb48b422203b4479dade2cc6a83053d80f7c71873143072f9ed891b74",
+        "notes": "Acquisito automaticamente da data/raw/2098/risultati_test.csv (2 righe) via pipeline Python."
+    },
+    {
+        "id": 5,
+        "institution": "Agenzia delle Entrate",
+        "title": "Elenco partiti ammessi e codici dichiarazione — 2098",
+        "url": null,
+        "source_type": "codici_dichiarazione",
+        "publication_date": null,
+        "download_date": "2026-07-07",
+        "checksum": "ceb0c8b7e8e9194477f4fd116d30e42e032affc7acf76ee19ec1fb5c3b2f9263",
+        "notes": "Acquisito automaticamente da data/raw/2098/codici/elenco_test.csv (3 righe) via pipeline Python."
     }
 ]
