@@ -205,6 +205,11 @@ def download_year_pages(year: int, raw_dir: Path, session) -> "list[Path]":
     successive (page=2, page=3, ...) fino a MAX_GEO_PAGES. Restituisce i
     percorsi dei file scaricati che hanno contribuito dati nuovi (la pagina 1
     è sempre inclusa se il download riesce).
+
+    Ogni pagina viene scaricata con una sessione HTTP indipendente (nuovi
+    cookie): il sito del Dipartimento delle Finanze lega lo stato "pagina
+    corrente" alla sessione, per cui riusare la stessa sessione per page=1 e
+    page=2 restituisce due volte il contenuto di page=1.
     """
     url = YEAR_URLS.get(year)
     if not url:
@@ -218,7 +223,16 @@ def download_year_pages(year: int, raw_dir: Path, session) -> "list[Path]":
     for page in range(1, MAX_GEO_PAGES + 1):
         page_folder = folder if page == 1 else folder / f"page{page}"
         page_folder.mkdir(parents=True, exist_ok=True)
-        dest = fetch_source_file(_page_url(url, page), page_folder, session)
+
+        page_session = session
+        if session is not None:
+            import requests
+            page_session = requests.Session()
+        try:
+            dest = fetch_source_file(_page_url(url, page), page_folder, page_session)
+        finally:
+            if page_session is not session:
+                page_session.close()
         if not dest:
             if page == 1:
                 logging.warning(f"[{year}] Nessun file scaricabile trovato per {url}")
