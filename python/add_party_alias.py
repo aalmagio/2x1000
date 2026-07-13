@@ -67,6 +67,10 @@ def main():
             )
             conn.commit()
             logging.info(f"Alias registrato per #{party_id} ({canonical_name!r}): {args.alias!r}")
+            logging.info(
+                "Aggiorna l'archivio versionato: python sync_party_aliases.py --export "
+                "e committa data/reference/party_aliases.csv"
+            )
     except Exception:
         conn.rollback()
         logging.error("Errore durante l'inserimento: rollback eseguito", exc_info=True)

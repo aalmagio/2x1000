@@ -56,7 +56,9 @@ public/
   download.php             Streaming controllato dei file in data/exports/
 data/
   raw/                     File grezzi delle fonti (CSV/HTML/PDF), non versionati
-  processed/               CSV normalizzati pronti per l'import
+  processed/               CSV normalizzati pronti per l'import — da COMMITTARE
+                           dopo ogni acquisizione verificata (archivio del progetto)
+  reference/               Dati di riferimento versionati (party_aliases.csv)
   exports/                 Dataset open data generati (CSV/JSON + manifest.json)
 database/
   schema.sql               Schema completo (tabelle + indici)
@@ -77,6 +79,7 @@ python/
   find_duplicate_parties.py    Segnala possibili duplicati nell'anagrafica partiti
   merge_parties.py             Unisce due righe duplicate dell'anagrafica in una sola
   region_resolver.py           Risolve le etichette regione delle fonti alla tabella regions (codici ISTAT)
+  sync_party_aliases.py        Esporta/importa gli alias da/verso data/reference/ (archivio versionato)
   backfill_region_ids.py       Valorizza region_id sulle righe regionali importate prima della normalizzazione
   tools/generate_italy_map.py  Rigenera la mappa SVG delle regioni (app/includes/italy-map.php)
   pipeline.py                  Orchestratore: acquisizione → DB → indicatori → export
@@ -352,9 +355,39 @@ salvato in `data/raw/<anno>/` (risultati), `data/raw/<anno>/codici/`
 (elenco/codici) o `data/raw/<anno>/geografia/` (ripartizione regionale),
 usando `--no-download`.
 
-Nota per gli anni 2016/2020 di `url_anni_codici`: i due URL puntano allo
-stesso file AdE — se l'Agenzia ne pubblica uno nuovo per uno dei due anni,
-aggiorna il link corrispondente.
+Nota per l'anno 2020 di `url_anni_codici`: l'AdE non pubblica la tabella
+2020 come file a sé (il vecchio link puntava in realtà al file del 2016,
+scoperto in produzione da `validate_data.py`). La tabella è dentro le
+istruzioni del modello 730/2020: la voce di config usa la forma
+`{url: ..., pages: "N"}` che limita l'estrazione del PDF alle pagine
+indicate — verifica il numero di pagina nel PDF prima di importare. Lo
+stesso meccanismo è disponibile da CLI con `--pages "203-206"` per
+qualunque tabella pubblicata dentro un documento lungo.
+
+**Archivio versionato dei dati normalizzati.** Le fonti istituzionali non
+garantiscono un archivio storico stabile (link che cambiano, file
+sostituiti, tabelle inglobate in altri documenti): il repository fa da
+archivio a sé stesso. La convenzione è:
+- i CSV normalizzati e i `.meta.json` in `data/processed/` vanno
+  **committati** dopo ogni acquisizione verificata (contengono già URL,
+  checksum e data di download della fonte originale: la provenienza resta
+  tracciata anche se la fonte sparisce);
+- gli **alias dei partiti** (creati con `add_party_alias.py` o dai merge)
+  vivono nel database: dopo ogni modifica esportali nell'archivio con
+  `python sync_party_aliases.py --export` e committa
+  `data/reference/party_aliases.csv`.
+
+Con questi file nel repository, un database si ricostruisce da zero senza
+toccare AdE/MEF:
+```bash
+cd python
+python db_updater.py                    # partiti, risultati, codici dai CSV committati
+python sync_party_aliases.py --import   # ripristina gli alias
+python db_updater.py                    # ora anche le righe regionali risolvono
+python validate_data.py
+php ../scripts/calculate_indicators.php
+php ../scripts/export_open_data.php
+```
 
 Un URL può essere sia una pagina HTML da scansionare per trovare i link ai
 file, sia un link diretto a un file (PDF/CSV/XLSX, anche con l'estensione a

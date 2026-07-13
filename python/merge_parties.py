@@ -202,6 +202,10 @@ def main():
             cur.execute("DELETE FROM parties WHERE id = %s", (merge["id"],))
             conn.commit()
             logging.info(f"Completato: partito #{merge['id']} unito in #{keep['id']} ed eliminato.")
+            logging.info(
+                "Aggiorna l'archivio versionato: python sync_party_aliases.py --export "
+                "e committa data/reference/party_aliases.csv"
+            )
 
     except Exception:
         conn.rollback()

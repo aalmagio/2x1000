@@ -49,19 +49,27 @@ url_anni_risultati:
 # + codice) va verificato per ciascun anno con:
 #   python acquire_party_codes.py --anni <ANNO>
 #
-# ATTENZIONE — 2016 e 2020 puntano allo STESSO file (.../0cddc6ef-4211-bd86-
-# d704-751e0c7cd244): non è stato verificato se è corretto (l'AdE potrebbe
-# aver pubblicato la stessa tabella per entrambi gli anni) o se uno dei due
-# anni ha in realtà un documento diverso non ancora trovato. Prima di
-# importare questi due anni, apri entrambi i link nel browser e controlla
-# che il contenuto/anno indicato nel PDF corrisponda.
+# Una voce può essere un semplice URL, oppure una mappa {url, pages} quando
+# la tabella non è pubblicata come file a sé ma dentro un documento lungo:
+# `pages` limita l'estrazione del PDF a quelle pagine (es. "203" o "203-206"),
+# altrimenti la prima tabella qualunque del documento verrebbe scambiata per
+# l'elenco partiti. Stessa cosa da CLI: --pages "203-206".
+#
+# NOTA 2020 — confermato in produzione che il vecchio link "2020" puntava in
+# realtà al file del 2016 (11 partiti del 2020, tra cui Italia Viva e Azione,
+# risultavano senza codice). L'AdE non pubblica la tabella 2020 come file a
+# sé: è dentro le istruzioni del modello 730/2020 (URL sotto). VERIFICA il
+# numero di pagina esatto aprendo il PDF (cerca "partiti politici ammessi")
+# e correggi `pages` prima di importare l'anno.
 url_anni_codici:
   2025: "https://www.agenziaentrate.gov.it/portale/documents/20143/8673492/PF1_Tabella+partiti+politici+2025.pdf/07dd2e41-6897-bee5-bd9a-84eb764a5979?t=1742475109785"
   2024: "https://www.agenziaentrate.gov.it/portale/documents/20143/5948858/PF1_2024_tabella_partiti_politici.pdf/758cd2d4-2ed1-ad07-332d-4c21d5cdb684"
   2023: "https://www.agenziaentrate.gov.it/portale/documents/20143/5082843/PF_2023_tabella_partiti_politici.pdf/7f2b9935-30e8-e918-5c79-55eff480ec96"
   2022: "https://www.agenziaentrate.gov.it/portale/documents/20143/4124889/730_2022_tab_partiti+politici.pdf/516f4b43-1e2c-0563-8cf7-b4f34ddbb8a6"
   2021: "https://www.agenziaentrate.gov.it/portale/documents/20143/3188954/REDDITI_2021_tabella_partiti_politici.pdf/9efde4d8-2c7f-95f0-2e88-d30c4c546375"
-  2020: "https://www.agenziaentrate.gov.it/portale/documents/20143/373633/Tabella+partiti+politici_Tabella+partiti+politici.pdf/0cddc6ef-4211-bd86-d704-751e0c7cd244"
+  2020:
+    url: "https://www.agenziaentrate.gov.it/portale/documents/20143/2453342/730_2020_istr_agg.pdf/c4ad8906-4223-2d2b-b321-29cf34e12c2e?t=1587483552817"
+    pages: "203"  # VERIFICA: numero di pagina della tabella partiti nel PDF delle istruzioni
   2019: "https://www.agenziaentrate.gov.it/portale/documents/20143/247396/8+5+2+per+mille+730+tabella+partiti+politici+2019_730_Tab_partiti_2019.pdf/95014acb-6c2f-8f9d-e8de-b24dd399ee30"
   2018: "https://www.agenziaentrate.gov.it/portale/documents/20143/359636/Tabella+partiti+politici+Redditi+2018_PF1_partiti_politici.pdf/66b3dac2-376c-fe7e-d298-4e242b85833f"
   2017: "https://www.agenziaentrate.gov.it/portale/documents/20143/367669/Tabella+partiti+730+2017_Codici_partiti+politici_da_Mod.730.pdf/4ec56bc9-8ff9-8b7b-15f4-4c47d9aaa9dd"

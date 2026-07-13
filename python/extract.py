@@ -384,7 +384,37 @@ def _read_xlsx(path: Path) -> "tuple[list[str] | None, list[list[str]]]":
     return header, rows
 
 
-def _read_pdf(path: Path) -> "tuple[list[str] | None, list[list[str]]]":
+def parse_page_range(spec: "str | None") -> "set[int] | None":
+    """
+    Converte una specifica di pagine ("203", "203-206", "12,14-16") in un set
+    di numeri di pagina 1-based. None/stringa vuota → None (tutte le pagine).
+    Solleva ValueError su specifiche non interpretabili, per far fallire
+    subito una configurazione sbagliata invece di leggere l'intero documento.
+    """
+    if spec is None or str(spec).strip() == "":
+        return None
+    pages: set[int] = set()
+    for part in str(spec).split(","):
+        part = part.strip()
+        if not part:
+            continue
+        if "-" in part:
+            start_s, _, end_s = part.partition("-")
+            start, end = int(start_s.strip()), int(end_s.strip())
+            if start < 1 or end < start:
+                raise ValueError(f"Intervallo di pagine non valido: {part!r}")
+            pages.update(range(start, end + 1))
+        else:
+            page = int(part)
+            if page < 1:
+                raise ValueError(f"Numero di pagina non valido: {part!r}")
+            pages.add(page)
+    if not pages:
+        raise ValueError(f"Specifica di pagine vuota: {spec!r}")
+    return pages
+
+
+def _read_pdf(path: Path, pages: "set[int] | None" = None) -> "tuple[list[str] | None, list[list[str]]]":
     try:
         import pdfplumber
     except ImportError:
@@ -395,7 +425,13 @@ def _read_pdf(path: Path) -> "tuple[list[str] | None, list[list[str]]]":
     rows = []
     pdf = pdfplumber.open(path)
     try:
-        for page in pdf.pages:
+        for page_number, page in enumerate(pdf.pages, start=1):
+            # Limitarsi alle pagine indicate serve quando la tabella cercata è
+            # dentro un documento lungo (es. la tabella partiti in coda alle
+            # istruzioni del modello 730): estrarre le tabelle dell'intero PDF
+            # aggancerebbe la prima tabella qualunque del documento.
+            if pages is not None and page_number not in pages:
+                continue
             for table in page.extract_tables() or []:
                 for row in table:
                     cleaned = [clean_cell(c) for c in row]
@@ -412,10 +448,11 @@ def _read_pdf(path: Path) -> "tuple[list[str] | None, list[list[str]]]":
     return header, rows
 
 
-def read_table(path: "str | Path") -> "tuple[list[str] | None, list[list[str]]]":
+def read_table(path: "str | Path", pages: "set[int] | None" = None) -> "tuple[list[str] | None, list[list[str]]]":
     """
     Legge un file tabellare (CSV, XLSX/XLS o PDF) e restituisce (header, rows),
-    entrambi liste di stringhe pulite. header è None se il file non contiene dati.
+    entrambi liste di stringhe pulite. header è None se il file non contiene
+    dati. `pages` (solo PDF): limita l'estrazione a quelle pagine 1-based.
     """
     path = Path(path)
     ext = path.suffix.lower()
@@ -424,7 +461,7 @@ def read_table(path: "str | Path") -> "tuple[list[str] | None, list[list[str]]]"
     if ext in (".xlsx", ".xls"):
         return _read_xlsx(path)
     if ext == ".pdf":
-        return _read_pdf(path)
+        return _read_pdf(path, pages=pages)
     raise ValueError(f"Formato non supportato: {ext} ({path.name})")
 
 
