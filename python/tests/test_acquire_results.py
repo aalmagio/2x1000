@@ -49,3 +49,26 @@ def test_no_party_column_returns_empty():
     assert records == []
     assert taxpayers is None
     assert control == {}
+
+
+def test_2015_format_amount_from_teorico_column():
+    # Formato MEF 2015/2016: niente colonna "Importo" ma "2‰ teorico" +
+    # "Totale 2‰ erogato nel 2015" + "Somme erogate nel 2016 (art. 11 D.L.
+    # 149/2013)". L'importo spettante fu erogato in due tranche: la colonna
+    # equivalente all'"Importo" degli anni successivi è "2‰ teorico".
+    # Regressione: senza l'alias, questi anni finivano in DB con amount = 0.
+    header = [
+        "Partiti politici", "Scelte valide", "% scelte sul numero contribuenti",
+        "% sul totale scelte", "2‰ teorico", "Totale 2‰ erogato nel 2015",
+        "Somme erogate nel 2016 in base all'art. 11 D.L. 28 dicembre 2013 n. 149",
+    ]
+    rows = [
+        ["Centro Democratico", "19.958", "0,05%", "1,80%", "177.420", "137.873", "39.546"],
+        ["Die Freiheitlichen", "2.949", "0,01%", "0,27%", "28.108", "21.843", "6.265"],
+        ["Totale", "22.907", "", "", "205.528", "159.716", "45.811"],
+    ]
+    records, _, control = parse_results_table(header, rows)
+    assert [r["party_name"] for r in records] == ["Centro Democratico", "Die Freiheitlichen"]
+    assert records[0]["valid_choices"] == 19958
+    assert records[0]["amount"] == 177420.0  # dal "2‰ teorico", non dall'erogato parziale
+    assert control == {"control_total_choices": 22907, "control_total_amount": 205528.0}
