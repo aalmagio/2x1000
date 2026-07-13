@@ -72,6 +72,7 @@ python/
   acquire_party_codes.py       Scarica/estrae elenco partiti ammessi e codici dall'AdE
   acquire_regional_results.py  Scarica/estrae la ripartizione regionale delle scelte dal MEF
   db_updater.py                Scrive i dati normalizzati nel database MySQL
+  validate_data.py             Riconciliazione post-import (totali di controllo, coerenza)
   add_party_alias.py           Registra una grafia alternativa per un partito esistente
   find_duplicate_parties.py    Segnala possibili duplicati nell'anagrafica partiti
   merge_parties.py             Unisce due righe duplicate dell'anagrafica in una sola
@@ -219,7 +220,16 @@ python pipeline.py --anni 2024 --dry-run
    idempotenti — ogni fonte viene registrata una sola volta (deduplicata per
    checksum SHA-256), ogni partito individuato per slug con
    `first_year`/`last_year` estesi automaticamente;
-5. `pipeline.py` richiama infine `scripts/calculate_indicators.php` e
+5. `validate_data.py` esegue i controlli di riconciliazione post-import:
+   la somma di scelte/importo per anno deve coincidere con la riga "Totale"
+   del file MEF originale (salvata nel `.meta.json`), la somma regionale di
+   ciascun partito non può superare il dato nazionale (e deve coincidere se
+   nessuna regione è oscurata), i partiti con risultati ma senza codice AdE
+   e le variazioni annue anomale (±50%) vengono segnalati. Se un controllo
+   fallisce lo step esce con errore e il riepilogo della pipeline lo marca
+   FAIL: correggi prima di pubblicare. Si può lanciare anche da solo:
+   `python validate_data.py --anni 2024`;
+6. `pipeline.py` richiama infine `scripts/calculate_indicators.php` e
    `scripts/export_open_data.php` (gli stessi script PHP usati per l'import
    manuale), così i numeri restano identici indipendentemente dal percorso
    di import scelto — non esiste una seconda implementazione dei calcoli in
@@ -252,6 +262,7 @@ python acquire_results.py --anni 2015,2016,2017,2018,2019,2020,2021,2022,2023,20
 python acquire_party_codes.py --anni 2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025
 python acquire_regional_results.py --anni 2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025
 python db_updater.py --anni 2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025
+python validate_data.py --anni 2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025
 php ../scripts/calculate_indicators.php
 php ../scripts/export_open_data.php
 ```

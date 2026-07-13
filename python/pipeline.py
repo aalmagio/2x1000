@@ -9,8 +9,10 @@ Esegue in sequenza:
   2. acquire_party_codes.py        — elenco partiti ammessi e codici dall'AdE
   3. acquire_regional_results.py   — ripartizione regionale delle scelte dal MEF
   4. db_updater.py                 — scrive i dati normalizzati nel database MySQL
-  5. scripts/calculate_indicators.php  — calcola quote, ranking, medie, concentrazione
-  6. scripts/export_open_data.php      — rigenera i CSV/JSON pubblicati in data/exports/
+  5. validate_data.py              — riconciliazione post-import (totali di controllo,
+                                     coerenza regionale/nazionale, variazioni anomale)
+  6. scripts/calculate_indicators.php  — calcola quote, ranking, medie, concentrazione
+  7. scripts/export_open_data.php      — rigenera i CSV/JSON pubblicati in data/exports/
 
 I passi 4 e 5 sono script PHP già esistenti nel progetto (scripts/): la
 pipeline Python li richiama invece di duplicarne la logica di calcolo, così
@@ -35,7 +37,7 @@ from pathlib import Path
 
 from common import REPO_ROOT, get_logger, load_config, load_dotenv
 
-STEPS_ALL = ["acquire_results", "acquire_codes", "acquire_geo", "db", "indicators", "export"]
+STEPS_ALL = ["acquire_results", "acquire_codes", "acquire_geo", "db", "validate", "indicators", "export"]
 
 PYTHON_DIR = Path(__file__).resolve().parent
 PYTHON = sys.executable or "python3"
@@ -163,6 +165,14 @@ def main():
         if args.dry_run:
             cmd += ["--dry-run"]
         results["db"] = run_step("db", cmd, PYTHON_DIR, timeouts.get("db", _DEFAULT_STEP_TIMEOUT))
+
+    if "validate" in steps and not args.dry_run:
+        cmd = [PYTHON, "validate_data.py"]
+        if args.anni:
+            cmd += ["--anni", args.anni]
+        results["validate"] = run_step(
+            "validate", cmd, PYTHON_DIR, timeouts.get("validate", _DEFAULT_STEP_TIMEOUT)
+        )
 
     if "indicators" in steps and not args.dry_run:
         cmd = [php_binary, "scripts/calculate_indicators.php"]
