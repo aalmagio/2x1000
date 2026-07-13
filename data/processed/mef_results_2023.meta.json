@@ -1,0 +1,12 @@
+{
+  "declaration_year": 2023,
+  "tax_year": 2022,
+  "institution": "Ministero dell'Economia e delle Finanze — Dipartimento delle Finanze",
+  "source_type": "risultati_annuali",
+  "url": "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2023AADUEXM0101&page=1&export=3&aggiornato=1522252800",
+  "source_file": "data/raw/2023/DUEXM2023tab_01_01_.csv",
+  "checksum": "a9d7038ce38f6bdd728fbd7d0ad88c1af69b860eff7955f0131386d6c13919d6",
+  "download_date": "2026-07-08",
+  "row_count": 29,
+  "total_taxpayers": 42026960
+}

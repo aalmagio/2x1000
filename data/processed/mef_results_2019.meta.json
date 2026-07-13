@@ -1,0 +1,12 @@
+{
+  "declaration_year": 2019,
+  "tax_year": 2018,
+  "institution": "Ministero dell'Economia e delle Finanze — Dipartimento delle Finanze",
+  "source_type": "risultati_annuali",
+  "url": "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2019AADUEXM0101&page=1&export=3&aggiornato=1522252800",
+  "source_file": "data/raw/2019/DUEXM2019tab_01_01_.csv",
+  "checksum": "57855fbd47600351ccf35c384cf279b96886a311f500503c46ebe9a9ae592152",
+  "download_date": "2026-07-08",
+  "row_count": 22,
+  "total_taxpayers": 41372851
+}

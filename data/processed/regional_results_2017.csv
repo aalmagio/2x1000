@@ -1,0 +1,541 @@
+party_name,region,declaration_year,tax_year,valid_choices,is_suppressed
+Centro Democratico,Piemonte,2017,2016,1439,0
+Conservatori e Riformisti,Piemonte,2017,2016,96,0
+Fare!,Piemonte,2017,2016,292,0
+Federazione dei Verdi,Piemonte,2017,2016,1824,0
+Fratelli d'Italia - Alleanza Nazionale,Piemonte,2017,2016,4063,0
+Idea Identita' e Azione,Piemonte,2017,2016,259,0
+Italia dei Valori,Piemonte,2017,2016,572,0
+Lega Nord per l'Indipendenza della Padania,Piemonte,2017,2016,17033,0
+Movimento Associativo Italiani all'Estero,Piemonte,2017,2016,498,0
+Movimento La Puglia in Piu',Piemonte,2017,2016,474,0
+Movimento politico Forza Italia,Piemonte,2017,2016,3848,0
+Nuovo Centro Destra,Piemonte,2017,2016,801,0
+Partito Autonomista Trentino Tirolese,Piemonte,2017,2016,183,0
+Partito della Rifondazione Comunista-Sinistra Europea,Piemonte,2017,2016,6878,0
+Partito Democratico,Piemonte,2017,2016,52050,0
+Partito Liberale Italiano,Piemonte,2017,2016,306,0
+Partito Socialista Italiano,Piemonte,2017,2016,655,0
+Popolari per l'Italia,Piemonte,2017,2016,132,0
+Possibile,Piemonte,2017,2016,1629,0
+Scelta Civica,Piemonte,2017,2016,753,0
+Sinistra Ecologia Liberta',Piemonte,2017,2016,6275,0
+Stella Alpina,Piemonte,2017,2016,627,0
+Sudtiroler Volkspartei,Piemonte,2017,2016,432,0
+Union Valdotaine,Piemonte,2017,2016,1957,0
+Unione di Centro,Piemonte,2017,2016,112,0
+Unione per il Trentino,Piemonte,2017,2016,361,0
+Unione Sudamericana Emigrati Italiani,Piemonte,2017,2016,1155,0
+Centro Democratico,Valle d'Aosta,2017,2016,114,0
+Conservatori e Riformisti,Valle d'Aosta,2017,2016,,1
+Fare!,Valle d'Aosta,2017,2016,14,0
+Federazione dei Verdi,Valle d'Aosta,2017,2016,107,0
+Fratelli d'Italia - Alleanza Nazionale,Valle d'Aosta,2017,2016,182,0
+Idea Identita' e Azione,Valle d'Aosta,2017,2016,,1
+Italia dei Valori,Valle d'Aosta,2017,2016,30,0
+Lega Nord per l'Indipendenza della Padania,Valle d'Aosta,2017,2016,879,0
+Movimento Associativo Italiani all'Estero,Valle d'Aosta,2017,2016,41,0
+Movimento La Puglia in Piu',Valle d'Aosta,2017,2016,,1
+Movimento politico Forza Italia,Valle d'Aosta,2017,2016,156,0
+Nuovo Centro Destra,Valle d'Aosta,2017,2016,43,0
+Partito Autonomista Trentino Tirolese,Valle d'Aosta,2017,2016,,1
+Partito della Rifondazione Comunista-Sinistra Europea,Valle d'Aosta,2017,2016,361,0
+Partito Democratico,Valle d'Aosta,2017,2016,3126,0
+Partito Liberale Italiano,Valle d'Aosta,2017,2016,12,0
+Partito Socialista Italiano,Valle d'Aosta,2017,2016,60,0
+Popolari per l'Italia,Valle d'Aosta,2017,2016,,1
+Possibile,Valle d'Aosta,2017,2016,98,0
+Scelta Civica,Valle d'Aosta,2017,2016,64,0
+Sinistra Ecologia Liberta',Valle d'Aosta,2017,2016,337,0
+Stella Alpina,Valle d'Aosta,2017,2016,311,0
+Sudtiroler Volkspartei,Valle d'Aosta,2017,2016,44,0
+Union Valdotaine,Valle d'Aosta,2017,2016,1496,0
+Unione di Centro,Valle d'Aosta,2017,2016,,1
+Unione per il Trentino,Valle d'Aosta,2017,2016,,1
+Unione Sudamericana Emigrati Italiani,Valle d'Aosta,2017,2016,61,0
+Centro Democratico,Lombardia,2017,2016,3053,0
+Conservatori e Riformisti,Lombardia,2017,2016,223,0
+Fare!,Lombardia,2017,2016,755,0
+Federazione dei Verdi,Lombardia,2017,2016,5382,0
+Fratelli d'Italia - Alleanza Nazionale,Lombardia,2017,2016,9364,0
+Idea Identita' e Azione,Lombardia,2017,2016,266,0
+Italia dei Valori,Lombardia,2017,2016,1208,0
+Lega Nord per l'Indipendenza della Padania,Lombardia,2017,2016,72510,0
+Movimento Associativo Italiani all'Estero,Lombardia,2017,2016,1256,0
+Movimento La Puglia in Piu',Lombardia,2017,2016,1036,0
+Movimento politico Forza Italia,Lombardia,2017,2016,12938,0
+Nuovo Centro Destra,Lombardia,2017,2016,2865,0
+Partito Autonomista Trentino Tirolese,Lombardia,2017,2016,475,0
+Partito della Rifondazione Comunista-Sinistra Europea,Lombardia,2017,2016,12889,0
+Partito Democratico,Lombardia,2017,2016,128168,0
+Partito Liberale Italiano,Lombardia,2017,2016,724,0
+Partito Socialista Italiano,Lombardia,2017,2016,2616,0
+Popolari per l'Italia,Lombardia,2017,2016,416,0
+Possibile,Lombardia,2017,2016,4443,0
+Scelta Civica,Lombardia,2017,2016,1675,0
+Sinistra Ecologia Liberta',Lombardia,2017,2016,12514,0
+Stella Alpina,Lombardia,2017,2016,566,0
+Sudtiroler Volkspartei,Lombardia,2017,2016,946,0
+Union Valdotaine,Lombardia,2017,2016,567,0
+Unione di Centro,Lombardia,2017,2016,472,0
+Unione per il Trentino,Lombardia,2017,2016,1043,0
+Unione Sudamericana Emigrati Italiani,Lombardia,2017,2016,2614,0
+Centro Democratico,Liguria,2017,2016,438,0
+Conservatori e Riformisti,Liguria,2017,2016,52,0
+Fare!,Liguria,2017,2016,74,0
+Federazione dei Verdi,Liguria,2017,2016,758,0
+Fratelli d'Italia - Alleanza Nazionale,Liguria,2017,2016,1504,0
+Idea Identita' e Azione,Liguria,2017,2016,27,0
+Italia dei Valori,Liguria,2017,2016,127,0
+Lega Nord per l'Indipendenza della Padania,Liguria,2017,2016,4803,0
+Movimento Associativo Italiani all'Estero,Liguria,2017,2016,209,0
+Movimento La Puglia in Piu',Liguria,2017,2016,103,0
+Movimento politico Forza Italia,Liguria,2017,2016,2092,0
+Nuovo Centro Destra,Liguria,2017,2016,310,0
+Partito Autonomista Trentino Tirolese,Liguria,2017,2016,68,0
+Partito della Rifondazione Comunista-Sinistra Europea,Liguria,2017,2016,2448,0
+Partito Democratico,Liguria,2017,2016,21436,0
+Partito Liberale Italiano,Liguria,2017,2016,102,0
+Partito Socialista Italiano,Liguria,2017,2016,403,0
+Popolari per l'Italia,Liguria,2017,2016,54,0
+Possibile,Liguria,2017,2016,714,0
+Scelta Civica,Liguria,2017,2016,201,0
+Sinistra Ecologia Liberta',Liguria,2017,2016,1988,0
+Stella Alpina,Liguria,2017,2016,81,0
+Sudtiroler Volkspartei,Liguria,2017,2016,158,0
+Union Valdotaine,Liguria,2017,2016,170,0
+Unione di Centro,Liguria,2017,2016,47,0
+Unione per il Trentino,Liguria,2017,2016,196,0
+Unione Sudamericana Emigrati Italiani,Liguria,2017,2016,249,0
+Centro Democratico,Trentino Alto Adige,2017,2016,250,0
+Conservatori e Riformisti,Trentino Alto Adige,2017,2016,27,0
+Fare!,Trentino Alto Adige,2017,2016,34,0
+Federazione dei Verdi,Trentino Alto Adige,2017,2016,1258,0
+Fratelli d'Italia - Alleanza Nazionale,Trentino Alto Adige,2017,2016,631,0
+Idea Identita' e Azione,Trentino Alto Adige,2017,2016,21,0
+Italia dei Valori,Trentino Alto Adige,2017,2016,100,0
+Lega Nord per l'Indipendenza della Padania,Trentino Alto Adige,2017,2016,2764,0
+Movimento Associativo Italiani all'Estero,Trentino Alto Adige,2017,2016,99,0
+Movimento La Puglia in Piu',Trentino Alto Adige,2017,2016,84,0
+Movimento politico Forza Italia,Trentino Alto Adige,2017,2016,472,0
+Nuovo Centro Destra,Trentino Alto Adige,2017,2016,128,0
+Partito Autonomista Trentino Tirolese,Trentino Alto Adige,2017,2016,1604,0
+Partito della Rifondazione Comunista-Sinistra Europea,Trentino Alto Adige,2017,2016,801,0
+Partito Democratico,Trentino Alto Adige,2017,2016,7153,0
+Partito Liberale Italiano,Trentino Alto Adige,2017,2016,39,0
+Partito Socialista Italiano,Trentino Alto Adige,2017,2016,169,0
+Popolari per l'Italia,Trentino Alto Adige,2017,2016,107,0
+Possibile,Trentino Alto Adige,2017,2016,246,0
+Scelta Civica,Trentino Alto Adige,2017,2016,149,0
+Sinistra Ecologia Liberta',Trentino Alto Adige,2017,2016,1002,0
+Stella Alpina,Trentino Alto Adige,2017,2016,109,0
+Sudtiroler Volkspartei,Trentino Alto Adige,2017,2016,19776,0
+Union Valdotaine,Trentino Alto Adige,2017,2016,53,0
+Unione di Centro,Trentino Alto Adige,2017,2016,20,0
+Unione per il Trentino,Trentino Alto Adige,2017,2016,1093,0
+Unione Sudamericana Emigrati Italiani,Trentino Alto Adige,2017,2016,189,0
+Centro Democratico,Veneto,2017,2016,1185,0
+Conservatori e Riformisti,Veneto,2017,2016,131,0
+Fare!,Veneto,2017,2016,871,0
+Federazione dei Verdi,Veneto,2017,2016,2302,0
+Fratelli d'Italia - Alleanza Nazionale,Veneto,2017,2016,3685,0
+Idea Identita' e Azione,Veneto,2017,2016,83,0
+Italia dei Valori,Veneto,2017,2016,557,0
+Lega Nord per l'Indipendenza della Padania,Veneto,2017,2016,32669,0
+Movimento Associativo Italiani all'Estero,Veneto,2017,2016,560,0
+Movimento La Puglia in Piu',Veneto,2017,2016,254,0
+Movimento politico Forza Italia,Veneto,2017,2016,3337,0
+Nuovo Centro Destra,Veneto,2017,2016,609,0
+Partito Autonomista Trentino Tirolese,Veneto,2017,2016,239,0
+Partito della Rifondazione Comunista-Sinistra Europea,Veneto,2017,2016,3574,0
+Partito Democratico,Veneto,2017,2016,41186,0
+Partito Liberale Italiano,Veneto,2017,2016,173,0
+Partito Socialista Italiano,Veneto,2017,2016,708,0
+Popolari per l'Italia,Veneto,2017,2016,120,0
+Possibile,Veneto,2017,2016,1338,0
+Scelta Civica,Veneto,2017,2016,705,0
+Sinistra Ecologia Liberta',Veneto,2017,2016,4205,0
+Stella Alpina,Veneto,2017,2016,261,0
+Sudtiroler Volkspartei,Veneto,2017,2016,471,0
+Union Valdotaine,Veneto,2017,2016,113,0
+Unione di Centro,Veneto,2017,2016,225,0
+Unione per il Trentino,Veneto,2017,2016,439,0
+Unione Sudamericana Emigrati Italiani,Veneto,2017,2016,845,0
+Centro Democratico,Friuli Venezia Giulia,2017,2016,490,0
+Conservatori e Riformisti,Friuli Venezia Giulia,2017,2016,25,0
+Fare!,Friuli Venezia Giulia,2017,2016,217,0
+Federazione dei Verdi,Friuli Venezia Giulia,2017,2016,787,0
+Fratelli d'Italia - Alleanza Nazionale,Friuli Venezia Giulia,2017,2016,2778,0
+Idea Identita' e Azione,Friuli Venezia Giulia,2017,2016,37,0
+Italia dei Valori,Friuli Venezia Giulia,2017,2016,225,0
+Lega Nord per l'Indipendenza della Padania,Friuli Venezia Giulia,2017,2016,7590,0
+Movimento Associativo Italiani all'Estero,Friuli Venezia Giulia,2017,2016,270,0
+Movimento La Puglia in Piu',Friuli Venezia Giulia,2017,2016,122,0
+Movimento politico Forza Italia,Friuli Venezia Giulia,2017,2016,1664,0
+Nuovo Centro Destra,Friuli Venezia Giulia,2017,2016,303,0
+Partito Autonomista Trentino Tirolese,Friuli Venezia Giulia,2017,2016,125,0
+Partito della Rifondazione Comunista-Sinistra Europea,Friuli Venezia Giulia,2017,2016,1733,0
+Partito Democratico,Friuli Venezia Giulia,2017,2016,13818,0
+Partito Liberale Italiano,Friuli Venezia Giulia,2017,2016,153,0
+Partito Socialista Italiano,Friuli Venezia Giulia,2017,2016,263,0
+Popolari per l'Italia,Friuli Venezia Giulia,2017,2016,63,0
+Possibile,Friuli Venezia Giulia,2017,2016,488,0
+Scelta Civica,Friuli Venezia Giulia,2017,2016,255,0
+Sinistra Ecologia Liberta',Friuli Venezia Giulia,2017,2016,1537,0
+Stella Alpina,Friuli Venezia Giulia,2017,2016,126,0
+Sudtiroler Volkspartei,Friuli Venezia Giulia,2017,2016,449,0
+Union Valdotaine,Friuli Venezia Giulia,2017,2016,86,0
+Unione di Centro,Friuli Venezia Giulia,2017,2016,95,0
+Unione per il Trentino,Friuli Venezia Giulia,2017,2016,146,0
+Unione Sudamericana Emigrati Italiani,Friuli Venezia Giulia,2017,2016,355,0
+Centro Democratico,Emilia Romagna,2017,2016,1212,0
+Conservatori e Riformisti,Emilia Romagna,2017,2016,92,0
+Fare!,Emilia Romagna,2017,2016,266,0
+Federazione dei Verdi,Emilia Romagna,2017,2016,2178,0
+Fratelli d'Italia - Alleanza Nazionale,Emilia Romagna,2017,2016,3295,0
+Idea Identita' e Azione,Emilia Romagna,2017,2016,146,0
+Italia dei Valori,Emilia Romagna,2017,2016,367,0
+Lega Nord per l'Indipendenza della Padania,Emilia Romagna,2017,2016,13190,0
+Movimento Associativo Italiani all'Estero,Emilia Romagna,2017,2016,383,0
+Movimento La Puglia in Piu',Emilia Romagna,2017,2016,350,0
+Movimento politico Forza Italia,Emilia Romagna,2017,2016,3220,0
+Nuovo Centro Destra,Emilia Romagna,2017,2016,689,0
+Partito Autonomista Trentino Tirolese,Emilia Romagna,2017,2016,168,0
+Partito della Rifondazione Comunista-Sinistra Europea,Emilia Romagna,2017,2016,4892,0
+Partito Democratico,Emilia Romagna,2017,2016,84767,0
+Partito Liberale Italiano,Emilia Romagna,2017,2016,258,0
+Partito Socialista Italiano,Emilia Romagna,2017,2016,1055,0
+Popolari per l'Italia,Emilia Romagna,2017,2016,110,0
+Possibile,Emilia Romagna,2017,2016,1918,0
+Scelta Civica,Emilia Romagna,2017,2016,640,0
+Sinistra Ecologia Liberta',Emilia Romagna,2017,2016,4971,0
+Stella Alpina,Emilia Romagna,2017,2016,170,0
+Sudtiroler Volkspartei,Emilia Romagna,2017,2016,365,0
+Union Valdotaine,Emilia Romagna,2017,2016,155,0
+Unione di Centro,Emilia Romagna,2017,2016,161,0
+Unione per il Trentino,Emilia Romagna,2017,2016,354,0
+Unione Sudamericana Emigrati Italiani,Emilia Romagna,2017,2016,723,0
+Centro Democratico,Toscana,2017,2016,1114,0
+Conservatori e Riformisti,Toscana,2017,2016,67,0
+Fare!,Toscana,2017,2016,137,0
+Federazione dei Verdi,Toscana,2017,2016,1377,0
+Fratelli d'Italia - Alleanza Nazionale,Toscana,2017,2016,3177,0
+Idea Identita' e Azione,Toscana,2017,2016,55,0
+Italia dei Valori,Toscana,2017,2016,395,0
+Lega Nord per l'Indipendenza della Padania,Toscana,2017,2016,5910,0
+Movimento Associativo Italiani all'Estero,Toscana,2017,2016,292,0
+Movimento La Puglia in Piu',Toscana,2017,2016,164,0
+Movimento politico Forza Italia,Toscana,2017,2016,2486,0
+Nuovo Centro Destra,Toscana,2017,2016,454,0
+Partito Autonomista Trentino Tirolese,Toscana,2017,2016,127,0
+Partito della Rifondazione Comunista-Sinistra Europea,Toscana,2017,2016,5609,0
+Partito Democratico,Toscana,2017,2016,61681,0
+Partito Liberale Italiano,Toscana,2017,2016,161,0
+Partito Socialista Italiano,Toscana,2017,2016,1088,0
+Popolari per l'Italia,Toscana,2017,2016,72,0
+Possibile,Toscana,2017,2016,1494,0
+Scelta Civica,Toscana,2017,2016,289,0
+Sinistra Ecologia Liberta',Toscana,2017,2016,5827,0
+Stella Alpina,Toscana,2017,2016,104,0
+Sudtiroler Volkspartei,Toscana,2017,2016,340,0
+Union Valdotaine,Toscana,2017,2016,97,0
+Unione di Centro,Toscana,2017,2016,302,0
+Unione per il Trentino,Toscana,2017,2016,190,0
+Unione Sudamericana Emigrati Italiani,Toscana,2017,2016,510,0
+Centro Democratico,Umbria,2017,2016,233,0
+Conservatori e Riformisti,Umbria,2017,2016,19,0
+Fare!,Umbria,2017,2016,39,0
+Federazione dei Verdi,Umbria,2017,2016,264,0
+Fratelli d'Italia - Alleanza Nazionale,Umbria,2017,2016,1091,0
+Idea Identita' e Azione,Umbria,2017,2016,19,0
+Italia dei Valori,Umbria,2017,2016,103,0
+Lega Nord per l'Indipendenza della Padania,Umbria,2017,2016,1418,0
+Movimento Associativo Italiani all'Estero,Umbria,2017,2016,327,0
+Movimento La Puglia in Piu',Umbria,2017,2016,37,0
+Movimento politico Forza Italia,Umbria,2017,2016,769,0
+Nuovo Centro Destra,Umbria,2017,2016,217,0
+Partito Autonomista Trentino Tirolese,Umbria,2017,2016,23,0
+Partito della Rifondazione Comunista-Sinistra Europea,Umbria,2017,2016,1260,0
+Partito Democratico,Umbria,2017,2016,12307,0
+Partito Liberale Italiano,Umbria,2017,2016,54,0
+Partito Socialista Italiano,Umbria,2017,2016,513,0
+Popolari per l'Italia,Umbria,2017,2016,38,0
+Possibile,Umbria,2017,2016,256,0
+Scelta Civica,Umbria,2017,2016,64,0
+Sinistra Ecologia Liberta',Umbria,2017,2016,1076,0
+Stella Alpina,Umbria,2017,2016,34,0
+Sudtiroler Volkspartei,Umbria,2017,2016,46,0
+Union Valdotaine,Umbria,2017,2016,36,0
+Unione di Centro,Umbria,2017,2016,55,0
+Unione per il Trentino,Umbria,2017,2016,61,0
+Unione Sudamericana Emigrati Italiani,Umbria,2017,2016,286,0
+Centro Democratico,Marche,2017,2016,352,0
+Conservatori e Riformisti,Marche,2017,2016,21,0
+Fare!,Marche,2017,2016,91,0
+Federazione dei Verdi,Marche,2017,2016,461,0
+Fratelli d'Italia - Alleanza Nazionale,Marche,2017,2016,1395,0
+Idea Identita' e Azione,Marche,2017,2016,38,0
+Italia dei Valori,Marche,2017,2016,153,0
+Lega Nord per l'Indipendenza della Padania,Marche,2017,2016,2343,0
+Movimento Associativo Italiani all'Estero,Marche,2017,2016,115,0
+Movimento La Puglia in Piu',Marche,2017,2016,83,0
+Movimento politico Forza Italia,Marche,2017,2016,1073,0
+Nuovo Centro Destra,Marche,2017,2016,327,0
+Partito Autonomista Trentino Tirolese,Marche,2017,2016,43,0
+Partito della Rifondazione Comunista-Sinistra Europea,Marche,2017,2016,1211,0
+Partito Democratico,Marche,2017,2016,15272,0
+Partito Liberale Italiano,Marche,2017,2016,60,0
+Partito Socialista Italiano,Marche,2017,2016,351,0
+Popolari per l'Italia,Marche,2017,2016,81,0
+Possibile,Marche,2017,2016,557,0
+Scelta Civica,Marche,2017,2016,105,0
+Sinistra Ecologia Liberta',Marche,2017,2016,1315,0
+Stella Alpina,Marche,2017,2016,44,0
+Sudtiroler Volkspartei,Marche,2017,2016,70,0
+Union Valdotaine,Marche,2017,2016,93,0
+Unione di Centro,Marche,2017,2016,247,0
+Unione per il Trentino,Marche,2017,2016,57,0
+Unione Sudamericana Emigrati Italiani,Marche,2017,2016,184,0
+Centro Democratico,Lazio,2017,2016,1510,0
+Conservatori e Riformisti,Lazio,2017,2016,306,0
+Fare!,Lazio,2017,2016,369,0
+Federazione dei Verdi,Lazio,2017,2016,2448,0
+Fratelli d'Italia - Alleanza Nazionale,Lazio,2017,2016,11449,0
+Idea Identita' e Azione,Lazio,2017,2016,580,0
+Italia dei Valori,Lazio,2017,2016,771,0
+Lega Nord per l'Indipendenza della Padania,Lazio,2017,2016,4776,0
+Movimento Associativo Italiani all'Estero,Lazio,2017,2016,747,0
+Movimento La Puglia in Piu',Lazio,2017,2016,451,0
+Movimento politico Forza Italia,Lazio,2017,2016,5187,0
+Nuovo Centro Destra,Lazio,2017,2016,1345,0
+Partito Autonomista Trentino Tirolese,Lazio,2017,2016,174,0
+Partito della Rifondazione Comunista-Sinistra Europea,Lazio,2017,2016,7179,0
+Partito Democratico,Lazio,2017,2016,50892,0
+Partito Liberale Italiano,Lazio,2017,2016,391,0
+Partito Socialista Italiano,Lazio,2017,2016,1571,0
+Popolari per l'Italia,Lazio,2017,2016,254,0
+Possibile,Lazio,2017,2016,2545,0
+Scelta Civica,Lazio,2017,2016,599,0
+Sinistra Ecologia Liberta',Lazio,2017,2016,8450,0
+Stella Alpina,Lazio,2017,2016,239,0
+Sudtiroler Volkspartei,Lazio,2017,2016,454,0
+Union Valdotaine,Lazio,2017,2016,267,0
+Unione di Centro,Lazio,2017,2016,244,0
+Unione per il Trentino,Lazio,2017,2016,546,0
+Unione Sudamericana Emigrati Italiani,Lazio,2017,2016,1587,0
+Centro Democratico,Abruzzo,2017,2016,187,0
+Conservatori e Riformisti,Abruzzo,2017,2016,33,0
+Fare!,Abruzzo,2017,2016,32,0
+Federazione dei Verdi,Abruzzo,2017,2016,473,0
+Fratelli d'Italia - Alleanza Nazionale,Abruzzo,2017,2016,1207,0
+Idea Identita' e Azione,Abruzzo,2017,2016,119,0
+Italia dei Valori,Abruzzo,2017,2016,125,0
+Lega Nord per l'Indipendenza della Padania,Abruzzo,2017,2016,933,0
+Movimento Associativo Italiani all'Estero,Abruzzo,2017,2016,71,0
+Movimento La Puglia in Piu',Abruzzo,2017,2016,57,0
+Movimento politico Forza Italia,Abruzzo,2017,2016,1046,0
+Nuovo Centro Destra,Abruzzo,2017,2016,173,0
+Partito Autonomista Trentino Tirolese,Abruzzo,2017,2016,,1
+Partito della Rifondazione Comunista-Sinistra Europea,Abruzzo,2017,2016,1073,0
+Partito Democratico,Abruzzo,2017,2016,5241,0
+Partito Liberale Italiano,Abruzzo,2017,2016,35,0
+Partito Socialista Italiano,Abruzzo,2017,2016,286,0
+Popolari per l'Italia,Abruzzo,2017,2016,,1
+Possibile,Abruzzo,2017,2016,199,0
+Scelta Civica,Abruzzo,2017,2016,424,0
+Sinistra Ecologia Liberta',Abruzzo,2017,2016,712,0
+Stella Alpina,Abruzzo,2017,2016,22,0
+Sudtiroler Volkspartei,Abruzzo,2017,2016,37,0
+Union Valdotaine,Abruzzo,2017,2016,24,0
+Unione di Centro,Abruzzo,2017,2016,225,0
+Unione per il Trentino,Abruzzo,2017,2016,49,0
+Unione Sudamericana Emigrati Italiani,Abruzzo,2017,2016,185,0
+Centro Democratico,Molise,2017,2016,33,0
+Conservatori e Riformisti,Molise,2017,2016,,1
+Fare!,Molise,2017,2016,0,0
+Federazione dei Verdi,Molise,2017,2016,47,0
+Fratelli d'Italia - Alleanza Nazionale,Molise,2017,2016,198,0
+Idea Identita' e Azione,Molise,2017,2016,,1
+Italia dei Valori,Molise,2017,2016,23,0
+Lega Nord per l'Indipendenza della Padania,Molise,2017,2016,118,0
+Movimento Associativo Italiani all'Estero,Molise,2017,2016,12,0
+Movimento La Puglia in Piu',Molise,2017,2016,,1
+Movimento politico Forza Italia,Molise,2017,2016,205,0
+Nuovo Centro Destra,Molise,2017,2016,22,0
+Partito Autonomista Trentino Tirolese,Molise,2017,2016,0,0
+Partito della Rifondazione Comunista-Sinistra Europea,Molise,2017,2016,146,0
+Partito Democratico,Molise,2017,2016,1260,0
+Partito Liberale Italiano,Molise,2017,2016,10,0
+Partito Socialista Italiano,Molise,2017,2016,78,0
+Popolari per l'Italia,Molise,2017,2016,56,0
+Possibile,Molise,2017,2016,50,0
+Scelta Civica,Molise,2017,2016,,1
+Sinistra Ecologia Liberta',Molise,2017,2016,136,0
+Stella Alpina,Molise,2017,2016,,1
+Sudtiroler Volkspartei,Molise,2017,2016,,1
+Union Valdotaine,Molise,2017,2016,,1
+Unione di Centro,Molise,2017,2016,20,0
+Unione per il Trentino,Molise,2017,2016,,1
+Unione Sudamericana Emigrati Italiani,Molise,2017,2016,38,0
+Centro Democratico,Campania,2017,2016,2218,0
+Conservatori e Riformisti,Campania,2017,2016,274,0
+Fare!,Campania,2017,2016,501,0
+Federazione dei Verdi,Campania,2017,2016,1870,0
+Fratelli d'Italia - Alleanza Nazionale,Campania,2017,2016,6531,0
+Idea Identita' e Azione,Campania,2017,2016,79,0
+Italia dei Valori,Campania,2017,2016,710,0
+Lega Nord per l'Indipendenza della Padania,Campania,2017,2016,1112,0
+Movimento Associativo Italiani all'Estero,Campania,2017,2016,503,0
+Movimento La Puglia in Piu',Campania,2017,2016,95,0
+Movimento politico Forza Italia,Campania,2017,2016,9419,0
+Nuovo Centro Destra,Campania,2017,2016,1069,0
+Partito Autonomista Trentino Tirolese,Campania,2017,2016,55,0
+Partito della Rifondazione Comunista-Sinistra Europea,Campania,2017,2016,3521,0
+Partito Democratico,Campania,2017,2016,32059,0
+Partito Liberale Italiano,Campania,2017,2016,207,0
+Partito Socialista Italiano,Campania,2017,2016,2979,0
+Popolari per l'Italia,Campania,2017,2016,208,0
+Possibile,Campania,2017,2016,1209,0
+Scelta Civica,Campania,2017,2016,657,0
+Sinistra Ecologia Liberta',Campania,2017,2016,3929,0
+Stella Alpina,Campania,2017,2016,118,0
+Sudtiroler Volkspartei,Campania,2017,2016,93,0
+Union Valdotaine,Campania,2017,2016,99,0
+Unione di Centro,Campania,2017,2016,1529,0
+Unione per il Trentino,Campania,2017,2016,79,0
+Unione Sudamericana Emigrati Italiani,Campania,2017,2016,634,0
+Centro Democratico,Puglia,2017,2016,1125,0
+Conservatori e Riformisti,Puglia,2017,2016,5482,0
+Fare!,Puglia,2017,2016,56,0
+Federazione dei Verdi,Puglia,2017,2016,1134,0
+Fratelli d'Italia - Alleanza Nazionale,Puglia,2017,2016,4135,0
+Idea Identita' e Azione,Puglia,2017,2016,722,0
+Italia dei Valori,Puglia,2017,2016,267,0
+Lega Nord per l'Indipendenza della Padania,Puglia,2017,2016,1016,0
+Movimento Associativo Italiani all'Estero,Puglia,2017,2016,100,0
+Movimento La Puglia in Piu',Puglia,2017,2016,2937,0
+Movimento politico Forza Italia,Puglia,2017,2016,4465,0
+Nuovo Centro Destra,Puglia,2017,2016,890,0
+Partito Autonomista Trentino Tirolese,Puglia,2017,2016,33,0
+Partito della Rifondazione Comunista-Sinistra Europea,Puglia,2017,2016,2345,0
+Partito Democratico,Puglia,2017,2016,20986,0
+Partito Liberale Italiano,Puglia,2017,2016,97,0
+Partito Socialista Italiano,Puglia,2017,2016,2149,0
+Popolari per l'Italia,Puglia,2017,2016,155,0
+Possibile,Puglia,2017,2016,589,0
+Scelta Civica,Puglia,2017,2016,304,0
+Sinistra Ecologia Liberta',Puglia,2017,2016,3274,0
+Stella Alpina,Puglia,2017,2016,30,0
+Sudtiroler Volkspartei,Puglia,2017,2016,218,0
+Union Valdotaine,Puglia,2017,2016,31,0
+Unione di Centro,Puglia,2017,2016,366,0
+Unione per il Trentino,Puglia,2017,2016,85,0
+Unione Sudamericana Emigrati Italiani,Puglia,2017,2016,596,0
+Centro Democratico,Basilicata,2017,2016,183,0
+Conservatori e Riformisti,Basilicata,2017,2016,313,0
+Fare!,Basilicata,2017,2016,10,0
+Federazione dei Verdi,Basilicata,2017,2016,81,0
+Fratelli d'Italia - Alleanza Nazionale,Basilicata,2017,2016,410,0
+Idea Identita' e Azione,Basilicata,2017,2016,,1
+Italia dei Valori,Basilicata,2017,2016,256,0
+Lega Nord per l'Indipendenza della Padania,Basilicata,2017,2016,126,0
+Movimento Associativo Italiani all'Estero,Basilicata,2017,2016,36,0
+Movimento La Puglia in Piu',Basilicata,2017,2016,28,0
+Movimento politico Forza Italia,Basilicata,2017,2016,335,0
+Nuovo Centro Destra,Basilicata,2017,2016,89,0
+Partito Autonomista Trentino Tirolese,Basilicata,2017,2016,12,0
+Partito della Rifondazione Comunista-Sinistra Europea,Basilicata,2017,2016,457,0
+Partito Democratico,Basilicata,2017,2016,4582,0
+Partito Liberale Italiano,Basilicata,2017,2016,12,0
+Partito Socialista Italiano,Basilicata,2017,2016,246,0
+Popolari per l'Italia,Basilicata,2017,2016,44,0
+Possibile,Basilicata,2017,2016,159,0
+Scelta Civica,Basilicata,2017,2016,,1
+Sinistra Ecologia Liberta',Basilicata,2017,2016,748,0
+Stella Alpina,Basilicata,2017,2016,,1
+Sudtiroler Volkspartei,Basilicata,2017,2016,,1
+Union Valdotaine,Basilicata,2017,2016,,1
+Unione di Centro,Basilicata,2017,2016,,1
+Unione per il Trentino,Basilicata,2017,2016,11,0
+Unione Sudamericana Emigrati Italiani,Basilicata,2017,2016,99,0
+Centro Democratico,Calabria,2017,2016,782,0
+Conservatori e Riformisti,Calabria,2017,2016,202,0
+Fare!,Calabria,2017,2016,189,0
+Federazione dei Verdi,Calabria,2017,2016,650,0
+Fratelli d'Italia - Alleanza Nazionale,Calabria,2017,2016,2564,0
+Idea Identita' e Azione,Calabria,2017,2016,106,0
+Italia dei Valori,Calabria,2017,2016,320,0
+Lega Nord per l'Indipendenza della Padania,Calabria,2017,2016,583,0
+Movimento Associativo Italiani all'Estero,Calabria,2017,2016,42,0
+Movimento La Puglia in Piu',Calabria,2017,2016,29,0
+Movimento politico Forza Italia,Calabria,2017,2016,3603,0
+Nuovo Centro Destra,Calabria,2017,2016,836,0
+Partito Autonomista Trentino Tirolese,Calabria,2017,2016,15,0
+Partito della Rifondazione Comunista-Sinistra Europea,Calabria,2017,2016,1135,0
+Partito Democratico,Calabria,2017,2016,10514,0
+Partito Liberale Italiano,Calabria,2017,2016,36,0
+Partito Socialista Italiano,Calabria,2017,2016,983,0
+Popolari per l'Italia,Calabria,2017,2016,31,0
+Possibile,Calabria,2017,2016,267,0
+Scelta Civica,Calabria,2017,2016,246,0
+Sinistra Ecologia Liberta',Calabria,2017,2016,1156,0
+Stella Alpina,Calabria,2017,2016,12,0
+Sudtiroler Volkspartei,Calabria,2017,2016,32,0
+Union Valdotaine,Calabria,2017,2016,23,0
+Unione di Centro,Calabria,2017,2016,590,0
+Unione per il Trentino,Calabria,2017,2016,48,0
+Unione Sudamericana Emigrati Italiani,Calabria,2017,2016,291,0
+Centro Democratico,Sicilia,2017,2016,1291,0
+Conservatori e Riformisti,Sicilia,2017,2016,34,0
+Fare!,Sicilia,2017,2016,147,0
+Federazione dei Verdi,Sicilia,2017,2016,865,0
+Fratelli d'Italia - Alleanza Nazionale,Sicilia,2017,2016,4292,0
+Idea Identita' e Azione,Sicilia,2017,2016,33,0
+Italia dei Valori,Sicilia,2017,2016,431,0
+Lega Nord per l'Indipendenza della Padania,Sicilia,2017,2016,1303,0
+Movimento Associativo Italiani all'Estero,Sicilia,2017,2016,196,0
+Movimento La Puglia in Piu',Sicilia,2017,2016,27,0
+Movimento politico Forza Italia,Sicilia,2017,2016,3890,0
+Nuovo Centro Destra,Sicilia,2017,2016,1555,0
+Partito Autonomista Trentino Tirolese,Sicilia,2017,2016,34,0
+Partito della Rifondazione Comunista-Sinistra Europea,Sicilia,2017,2016,1682,0
+Partito Democratico,Sicilia,2017,2016,18317,0
+Partito Liberale Italiano,Sicilia,2017,2016,464,0
+Partito Socialista Italiano,Sicilia,2017,2016,1170,0
+Popolari per l'Italia,Sicilia,2017,2016,121,0
+Possibile,Sicilia,2017,2016,476,0
+Scelta Civica,Sicilia,2017,2016,466,0
+Sinistra Ecologia Liberta',Sicilia,2017,2016,2604,0
+Stella Alpina,Sicilia,2017,2016,37,0
+Sudtiroler Volkspartei,Sicilia,2017,2016,77,0
+Union Valdotaine,Sicilia,2017,2016,29,0
+Unione di Centro,Sicilia,2017,2016,404,0
+Unione per il Trentino,Sicilia,2017,2016,47,0
+Unione Sudamericana Emigrati Italiani,Sicilia,2017,2016,319,0
+Centro Democratico,Sardegna,2017,2016,1344,0
+Conservatori e Riformisti,Sardegna,2017,2016,73,0
+Fare!,Sardegna,2017,2016,118,0
+Federazione dei Verdi,Sardegna,2017,2016,616,0
+Fratelli d'Italia - Alleanza Nazionale,Sardegna,2017,2016,2731,0
+Idea Identita' e Azione,Sardegna,2017,2016,36,0
+Italia dei Valori,Sardegna,2017,2016,304,0
+Lega Nord per l'Indipendenza della Padania,Sardegna,2017,2016,1695,0
+Movimento Associativo Italiani all'Estero,Sardegna,2017,2016,434,0
+Movimento La Puglia in Piu',Sardegna,2017,2016,41,0
+Movimento politico Forza Italia,Sardegna,2017,2016,2079,0
+Nuovo Centro Destra,Sardegna,2017,2016,328,0
+Partito Autonomista Trentino Tirolese,Sardegna,2017,2016,75,0
+Partito della Rifondazione Comunista-Sinistra Europea,Sardegna,2017,2016,2189,0
+Partito Democratico,Sardegna,2017,2016,17675,0
+Partito Liberale Italiano,Sardegna,2017,2016,109,0
+Partito Socialista Italiano,Sardegna,2017,2016,663,0
+Popolari per l'Italia,Sardegna,2017,2016,67,0
+Possibile,Sardegna,2017,2016,938,0
+Scelta Civica,Sardegna,2017,2016,439,0
+Sinistra Ecologia Liberta',Sardegna,2017,2016,3101,0
+Stella Alpina,Sardegna,2017,2016,78,0
+Sudtiroler Volkspartei,Sardegna,2017,2016,100,0
+Union Valdotaine,Sardegna,2017,2016,83,0
+Unione di Centro,Sardegna,2017,2016,93,0
+Unione per il Trentino,Sardegna,2017,2016,71,0
+Unione Sudamericana Emigrati Italiani,Sardegna,2017,2016,813,0

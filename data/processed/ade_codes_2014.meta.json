@@ -1,0 +1,11 @@
+{
+  "declaration_year": 2014,
+  "tax_year": 2013,
+  "institution": "Agenzia delle Entrate",
+  "source_type": "codici_dichiarazione",
+  "url": "https://www.agenziaentrate.gov.it/portale/documents/20143/380401/Elenco+partiti+ammessi+al+2+per+mille_Elenco+partiti+politici+2+permille.pdf/141d25ca-2d61-37ed-add2-beb76b46d28f",
+  "source_file": "data/raw/2014/codici/Elenco_partiti_ammessi_al_2_per_mille_Elenco_partiti_politici_2_permille.pdf",
+  "checksum": "36147de75857e4f60c97affcb226a1f355675ac2d2241bd56ffef3ee27b7528d",
+  "download_date": "2026-07-08",
+  "row_count": 19
+}

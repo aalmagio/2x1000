@@ -1,0 +1,15 @@
+{
+  "declaration_year": 2019,
+  "tax_year": 2018,
+  "institution": "Ministero dell'Economia e delle Finanze — Dipartimento delle Finanze",
+  "source_type": "ripartizione_regionale",
+  "url": "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2019AADUEXM0201&page=1&export=3&aggiornato=1522252800",
+  "source_file": "data/raw/2019/geografia/DUEXM2019tab_02_01_.csv",
+  "checksum": "e308692b05abd8b8f83d5fc2d34b0bd2a6626d0917dfbcb9ede61c82a85e776f",
+  "download_date": "2026-07-12",
+  "row_count": 462,
+  "regions": 21,
+  "parties": 22,
+  "suppressed": 16,
+  "pages": 1
+}

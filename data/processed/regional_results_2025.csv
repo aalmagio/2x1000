@@ -1,0 +1,631 @@
+party_name,region,declaration_year,tax_year,valid_choices,is_suppressed
+Azione,Piemonte,2025,2024,5853,0
+Campobase,Piemonte,2025,2024,183,0
+Centro Democratico,Piemonte,2025,2024,1702,0
+Coraggio Italia,Piemonte,2025,2024,263,0
+Democrazia Cristiana con Rotondi,Piemonte,2025,2024,205,0
+Democrazia Solidale - DemoS,Piemonte,2025,2024,320,0
+Europa Verde-Verdi,Piemonte,2025,2024,12799,0
+Fratelli d'Italia - Alleanza Nazionale,Piemonte,2025,2024,34208,0
+Italia dei Valori,Piemonte,2025,2024,491,0
+Italia Viva,Piemonte,2025,2024,4310,0
+Lega Nord per l'Indipendenza della Padania,Piemonte,2025,2024,2402,0
+Lega per Salvini Premier,Piemonte,2025,2024,8114,0
+L'Italia c'e'!,Piemonte,2025,2024,134,0
+Movimento Associativo Italiani all'Estero - MAIE,Piemonte,2025,2024,697,0
+Movimento Cinque Stelle,Piemonte,2025,2024,22305,0
+Movimento politico Forza Italia,Piemonte,2025,2024,3381,0
+Noi Moderati,Piemonte,2025,2024,535,0
+Partito Autonomista Trentino Tirolese,Piemonte,2025,2024,261,0
+Partito Democratico,Piemonte,2025,2024,52460,0
+Partito Socialista Italiano,Piemonte,2025,2024,1061,0
+Piu' Europa,Piemonte,2025,2024,8773,0
+Possibile,Piemonte,2025,2024,2974,0
+Radicali Italiani,Piemonte,2025,2024,3069,0
+Sinistra Italiana,Piemonte,2025,2024,13369,0
+Stella Alpina,Piemonte,2025,2024,821,0
+Sud chiama Nord,Piemonte,2025,2024,695,0
+Sudtiroler Volkspartei,Piemonte,2025,2024,813,0
+Union Valdotaine,Piemonte,2025,2024,1125,0
+Unione Sudamericana Emigrati Italiani,Piemonte,2025,2024,1585,0
+Volt Italia,Piemonte,2025,2024,608,0
+Azione,Valle d'Aosta,2025,2024,101,0
+Campobase,Valle d'Aosta,2025,2024,,1
+Centro Democratico,Valle d'Aosta,2025,2024,25,0
+Coraggio Italia,Valle d'Aosta,2025,2024,,1
+Democrazia Cristiana con Rotondi,Valle d'Aosta,2025,2024,,1
+Democrazia Solidale - DemoS,Valle d'Aosta,2025,2024,,1
+Europa Verde-Verdi,Valle d'Aosta,2025,2024,349,0
+Fratelli d'Italia - Alleanza Nazionale,Valle d'Aosta,2025,2024,768,0
+Italia dei Valori,Valle d'Aosta,2025,2024,10,0
+Italia Viva,Valle d'Aosta,2025,2024,69,0
+Lega Nord per l'Indipendenza della Padania,Valle d'Aosta,2025,2024,43,0
+Lega per Salvini Premier,Valle d'Aosta,2025,2024,251,0
+L'Italia c'e'!,Valle d'Aosta,2025,2024,0,0
+Movimento Associativo Italiani all'Estero - MAIE,Valle d'Aosta,2025,2024,13,0
+Movimento Cinque Stelle,Valle d'Aosta,2025,2024,368,0
+Movimento politico Forza Italia,Valle d'Aosta,2025,2024,125,0
+Noi Moderati,Valle d'Aosta,2025,2024,,1
+Partito Autonomista Trentino Tirolese,Valle d'Aosta,2025,2024,,1
+Partito Democratico,Valle d'Aosta,2025,2024,1023,0
+Partito Socialista Italiano,Valle d'Aosta,2025,2024,16,0
+Piu' Europa,Valle d'Aosta,2025,2024,130,0
+Possibile,Valle d'Aosta,2025,2024,46,0
+Radicali Italiani,Valle d'Aosta,2025,2024,85,0
+Sinistra Italiana,Valle d'Aosta,2025,2024,223,0
+Stella Alpina,Valle d'Aosta,2025,2024,241,0
+Sud chiama Nord,Valle d'Aosta,2025,2024,,1
+Sudtiroler Volkspartei,Valle d'Aosta,2025,2024,27,0
+Union Valdotaine,Valle d'Aosta,2025,2024,1654,0
+Unione Sudamericana Emigrati Italiani,Valle d'Aosta,2025,2024,35,0
+Volt Italia,Valle d'Aosta,2025,2024,13,0
+Azione,Lombardia,2025,2024,18500,0
+Campobase,Lombardia,2025,2024,442,0
+Centro Democratico,Lombardia,2025,2024,3816,0
+Coraggio Italia,Lombardia,2025,2024,616,0
+Democrazia Cristiana con Rotondi,Lombardia,2025,2024,534,0
+Democrazia Solidale - DemoS,Lombardia,2025,2024,430,0
+Europa Verde-Verdi,Lombardia,2025,2024,34364,0
+Fratelli d'Italia - Alleanza Nazionale,Lombardia,2025,2024,104118,0
+Italia dei Valori,Lombardia,2025,2024,1210,0
+Italia Viva,Lombardia,2025,2024,12847,0
+Lega Nord per l'Indipendenza della Padania,Lombardia,2025,2024,14540,0
+Lega per Salvini Premier,Lombardia,2025,2024,30814,0
+L'Italia c'e'!,Lombardia,2025,2024,306,0
+Movimento Associativo Italiani all'Estero - MAIE,Lombardia,2025,2024,1579,0
+Movimento Cinque Stelle,Lombardia,2025,2024,42625,0
+Movimento politico Forza Italia,Lombardia,2025,2024,11643,0
+Noi Moderati,Lombardia,2025,2024,3423,0
+Partito Autonomista Trentino Tirolese,Lombardia,2025,2024,854,0
+Partito Democratico,Lombardia,2025,2024,132343,0
+Partito Socialista Italiano,Lombardia,2025,2024,3137,0
+Piu' Europa,Lombardia,2025,2024,20386,0
+Possibile,Lombardia,2025,2024,6616,0
+Radicali Italiani,Lombardia,2025,2024,7913,0
+Sinistra Italiana,Lombardia,2025,2024,26982,0
+Stella Alpina,Lombardia,2025,2024,2265,0
+Sud chiama Nord,Lombardia,2025,2024,4389,0
+Sudtiroler Volkspartei,Lombardia,2025,2024,2416,0
+Union Valdotaine,Lombardia,2025,2024,1226,0
+Unione Sudamericana Emigrati Italiani,Lombardia,2025,2024,3467,0
+Volt Italia,Lombardia,2025,2024,1484,0
+Azione,Liguria,2025,2024,1591,0
+Campobase,Liguria,2025,2024,57,0
+Centro Democratico,Liguria,2025,2024,484,0
+Coraggio Italia,Liguria,2025,2024,76,0
+Democrazia Cristiana con Rotondi,Liguria,2025,2024,66,0
+Democrazia Solidale - DemoS,Liguria,2025,2024,135,0
+Europa Verde-Verdi,Liguria,2025,2024,4186,0
+Fratelli d'Italia - Alleanza Nazionale,Liguria,2025,2024,10017,0
+Italia dei Valori,Liguria,2025,2024,136,0
+Italia Viva,Liguria,2025,2024,1222,0
+Lega Nord per l'Indipendenza della Padania,Liguria,2025,2024,476,0
+Lega per Salvini Premier,Liguria,2025,2024,2438,0
+L'Italia c'e'!,Liguria,2025,2024,25,0
+Movimento Associativo Italiani all'Estero - MAIE,Liguria,2025,2024,211,0
+Movimento Cinque Stelle,Liguria,2025,2024,7494,0
+Movimento politico Forza Italia,Liguria,2025,2024,1081,0
+Noi Moderati,Liguria,2025,2024,317,0
+Partito Autonomista Trentino Tirolese,Liguria,2025,2024,110,0
+Partito Democratico,Liguria,2025,2024,20323,0
+Partito Socialista Italiano,Liguria,2025,2024,347,0
+Piu' Europa,Liguria,2025,2024,1703,0
+Possibile,Liguria,2025,2024,1104,0
+Radicali Italiani,Liguria,2025,2024,751,0
+Sinistra Italiana,Liguria,2025,2024,4227,0
+Stella Alpina,Liguria,2025,2024,206,0
+Sud chiama Nord,Liguria,2025,2024,425,0
+Sudtiroler Volkspartei,Liguria,2025,2024,325,0
+Union Valdotaine,Liguria,2025,2024,263,0
+Unione Sudamericana Emigrati Italiani,Liguria,2025,2024,361,0
+Volt Italia,Liguria,2025,2024,153,0
+Azione,Trentino Alto Adige,2025,2024,971,0
+Campobase,Trentino Alto Adige,2025,2024,856,0
+Centro Democratico,Trentino Alto Adige,2025,2024,256,0
+Coraggio Italia,Trentino Alto Adige,2025,2024,36,0
+Democrazia Cristiana con Rotondi,Trentino Alto Adige,2025,2024,26,0
+Democrazia Solidale - DemoS,Trentino Alto Adige,2025,2024,41,0
+Europa Verde-Verdi,Trentino Alto Adige,2025,2024,4942,0
+Fratelli d'Italia - Alleanza Nazionale,Trentino Alto Adige,2025,2024,6026,0
+Italia dei Valori,Trentino Alto Adige,2025,2024,60,0
+Italia Viva,Trentino Alto Adige,2025,2024,590,0
+Lega Nord per l'Indipendenza della Padania,Trentino Alto Adige,2025,2024,403,0
+Lega per Salvini Premier,Trentino Alto Adige,2025,2024,1645,0
+L'Italia c'e'!,Trentino Alto Adige,2025,2024,18,0
+Movimento Associativo Italiani all'Estero - MAIE,Trentino Alto Adige,2025,2024,101,0
+Movimento Cinque Stelle,Trentino Alto Adige,2025,2024,2527,0
+Movimento politico Forza Italia,Trentino Alto Adige,2025,2024,426,0
+Noi Moderati,Trentino Alto Adige,2025,2024,,1
+Partito Autonomista Trentino Tirolese,Trentino Alto Adige,2025,2024,1846,0
+Partito Democratico,Trentino Alto Adige,2025,2024,8503,0
+Partito Socialista Italiano,Trentino Alto Adige,2025,2024,188,0
+Piu' Europa,Trentino Alto Adige,2025,2024,1451,0
+Possibile,Trentino Alto Adige,2025,2024,360,0
+Radicali Italiani,Trentino Alto Adige,2025,2024,490,0
+Sinistra Italiana,Trentino Alto Adige,2025,2024,1451,0
+Stella Alpina,Trentino Alto Adige,2025,2024,259,0
+Sud chiama Nord,Trentino Alto Adige,2025,2024,347,0
+Sudtiroler Volkspartei,Trentino Alto Adige,2025,2024,15062,0
+Union Valdotaine,Trentino Alto Adige,2025,2024,40,0
+Unione Sudamericana Emigrati Italiani,Trentino Alto Adige,2025,2024,258,0
+Volt Italia,Trentino Alto Adige,2025,2024,160,0
+Azione,Veneto,2025,2024,7517,0
+Campobase,Veneto,2025,2024,159,0
+Centro Democratico,Veneto,2025,2024,1470,0
+Coraggio Italia,Veneto,2025,2024,500,0
+Democrazia Cristiana con Rotondi,Veneto,2025,2024,246,0
+Democrazia Solidale - DemoS,Veneto,2025,2024,244,0
+Europa Verde-Verdi,Veneto,2025,2024,16248,0
+Fratelli d'Italia - Alleanza Nazionale,Veneto,2025,2024,47860,0
+Italia dei Valori,Veneto,2025,2024,475,0
+Italia Viva,Veneto,2025,2024,3975,0
+Lega Nord per l'Indipendenza della Padania,Veneto,2025,2024,17870,0
+Lega per Salvini Premier,Veneto,2025,2024,12434,0
+L'Italia c'e'!,Veneto,2025,2024,115,0
+Movimento Associativo Italiani all'Estero - MAIE,Veneto,2025,2024,918,0
+Movimento Cinque Stelle,Veneto,2025,2024,17255,0
+Movimento politico Forza Italia,Veneto,2025,2024,3778,0
+Noi Moderati,Veneto,2025,2024,690,0
+Partito Autonomista Trentino Tirolese,Veneto,2025,2024,417,0
+Partito Democratico,Veneto,2025,2024,51326,0
+Partito Socialista Italiano,Veneto,2025,2024,1099,0
+Piu' Europa,Veneto,2025,2024,8406,0
+Possibile,Veneto,2025,2024,2509,0
+Radicali Italiani,Veneto,2025,2024,3033,0
+Sinistra Italiana,Veneto,2025,2024,9448,0
+Stella Alpina,Veneto,2025,2024,940,0
+Sud chiama Nord,Veneto,2025,2024,2191,0
+Sudtiroler Volkspartei,Veneto,2025,2024,1542,0
+Union Valdotaine,Veneto,2025,2024,285,0
+Unione Sudamericana Emigrati Italiani,Veneto,2025,2024,1765,0
+Volt Italia,Veneto,2025,2024,763,0
+Azione,Friuli Venezia Giulia,2025,2024,1827,0
+Campobase,Friuli Venezia Giulia,2025,2024,37,0
+Centro Democratico,Friuli Venezia Giulia,2025,2024,393,0
+Coraggio Italia,Friuli Venezia Giulia,2025,2024,75,0
+Democrazia Cristiana con Rotondi,Friuli Venezia Giulia,2025,2024,60,0
+Democrazia Solidale - DemoS,Friuli Venezia Giulia,2025,2024,53,0
+Europa Verde-Verdi,Friuli Venezia Giulia,2025,2024,3271,0
+Fratelli d'Italia - Alleanza Nazionale,Friuli Venezia Giulia,2025,2024,14555,0
+Italia dei Valori,Friuli Venezia Giulia,2025,2024,135,0
+Italia Viva,Friuli Venezia Giulia,2025,2024,951,0
+Lega Nord per l'Indipendenza della Padania,Friuli Venezia Giulia,2025,2024,989,0
+Lega per Salvini Premier,Friuli Venezia Giulia,2025,2024,3350,0
+L'Italia c'e'!,Friuli Venezia Giulia,2025,2024,33,0
+Movimento Associativo Italiani all'Estero - MAIE,Friuli Venezia Giulia,2025,2024,293,0
+Movimento Cinque Stelle,Friuli Venezia Giulia,2025,2024,4616,0
+Movimento politico Forza Italia,Friuli Venezia Giulia,2025,2024,1103,0
+Noi Moderati,Friuli Venezia Giulia,2025,2024,193,0
+Partito Autonomista Trentino Tirolese,Friuli Venezia Giulia,2025,2024,131,0
+Partito Democratico,Friuli Venezia Giulia,2025,2024,12056,0
+Partito Socialista Italiano,Friuli Venezia Giulia,2025,2024,319,0
+Piu' Europa,Friuli Venezia Giulia,2025,2024,2022,0
+Possibile,Friuli Venezia Giulia,2025,2024,688,0
+Radicali Italiani,Friuli Venezia Giulia,2025,2024,902,0
+Sinistra Italiana,Friuli Venezia Giulia,2025,2024,2704,0
+Stella Alpina,Friuli Venezia Giulia,2025,2024,262,0
+Sud chiama Nord,Friuli Venezia Giulia,2025,2024,165,0
+Sudtiroler Volkspartei,Friuli Venezia Giulia,2025,2024,667,0
+Union Valdotaine,Friuli Venezia Giulia,2025,2024,139,0
+Unione Sudamericana Emigrati Italiani,Friuli Venezia Giulia,2025,2024,399,0
+Volt Italia,Friuli Venezia Giulia,2025,2024,195,0
+Azione,Emilia Romagna,2025,2024,5776,0
+Campobase,Emilia Romagna,2025,2024,165,0
+Centro Democratico,Emilia Romagna,2025,2024,1602,0
+Coraggio Italia,Emilia Romagna,2025,2024,258,0
+Democrazia Cristiana con Rotondi,Emilia Romagna,2025,2024,192,0
+Democrazia Solidale - DemoS,Emilia Romagna,2025,2024,208,0
+Europa Verde-Verdi,Emilia Romagna,2025,2024,14708,0
+Fratelli d'Italia - Alleanza Nazionale,Emilia Romagna,2025,2024,32322,0
+Italia dei Valori,Emilia Romagna,2025,2024,360,0
+Italia Viva,Emilia Romagna,2025,2024,4917,0
+Lega Nord per l'Indipendenza della Padania,Emilia Romagna,2025,2024,1818,0
+Lega per Salvini Premier,Emilia Romagna,2025,2024,6596,0
+L'Italia c'e'!,Emilia Romagna,2025,2024,106,0
+Movimento Associativo Italiani all'Estero - MAIE,Emilia Romagna,2025,2024,607,0
+Movimento Cinque Stelle,Emilia Romagna,2025,2024,20476,0
+Movimento politico Forza Italia,Emilia Romagna,2025,2024,2831,0
+Noi Moderati,Emilia Romagna,2025,2024,624,0
+Partito Autonomista Trentino Tirolese,Emilia Romagna,2025,2024,333,0
+Partito Democratico,Emilia Romagna,2025,2024,94769,0
+Partito Socialista Italiano,Emilia Romagna,2025,2024,1411,0
+Piu' Europa,Emilia Romagna,2025,2024,6782,0
+Possibile,Emilia Romagna,2025,2024,3047,0
+Radicali Italiani,Emilia Romagna,2025,2024,2624,0
+Sinistra Italiana,Emilia Romagna,2025,2024,11184,0
+Stella Alpina,Emilia Romagna,2025,2024,491,0
+Sud chiama Nord,Emilia Romagna,2025,2024,1269,0
+Sudtiroler Volkspartei,Emilia Romagna,2025,2024,939,0
+Union Valdotaine,Emilia Romagna,2025,2024,290,0
+Unione Sudamericana Emigrati Italiani,Emilia Romagna,2025,2024,1128,0
+Volt Italia,Emilia Romagna,2025,2024,897,0
+Azione,Toscana,2025,2024,3693,0
+Campobase,Toscana,2025,2024,87,0
+Centro Democratico,Toscana,2025,2024,1312,0
+Coraggio Italia,Toscana,2025,2024,136,0
+Democrazia Cristiana con Rotondi,Toscana,2025,2024,153,0
+Democrazia Solidale - DemoS,Toscana,2025,2024,134,0
+Europa Verde-Verdi,Toscana,2025,2024,9595,0
+Fratelli d'Italia - Alleanza Nazionale,Toscana,2025,2024,23456,0
+Italia dei Valori,Toscana,2025,2024,251,0
+Italia Viva,Toscana,2025,2024,6189,0
+Lega Nord per l'Indipendenza della Padania,Toscana,2025,2024,504,0
+Lega per Salvini Premier,Toscana,2025,2024,3930,0
+L'Italia c'e'!,Toscana,2025,2024,53,0
+Movimento Associativo Italiani all'Estero - MAIE,Toscana,2025,2024,422,0
+Movimento Cinque Stelle,Toscana,2025,2024,16489,0
+Movimento politico Forza Italia,Toscana,2025,2024,2114,0
+Noi Moderati,Toscana,2025,2024,351,0
+Partito Autonomista Trentino Tirolese,Toscana,2025,2024,203,0
+Partito Democratico,Toscana,2025,2024,61549,0
+Partito Socialista Italiano,Toscana,2025,2024,1257,0
+Piu' Europa,Toscana,2025,2024,4176,0
+Possibile,Toscana,2025,2024,2057,0
+Radicali Italiani,Toscana,2025,2024,2067,0
+Sinistra Italiana,Toscana,2025,2024,13537,0
+Stella Alpina,Toscana,2025,2024,392,0
+Sud chiama Nord,Toscana,2025,2024,1284,0
+Sudtiroler Volkspartei,Toscana,2025,2024,539,0
+Union Valdotaine,Toscana,2025,2024,177,0
+Unione Sudamericana Emigrati Italiani,Toscana,2025,2024,836,0
+Volt Italia,Toscana,2025,2024,418,0
+Azione,Umbria,2025,2024,676,0
+Campobase,Umbria,2025,2024,17,0
+Centro Democratico,Umbria,2025,2024,222,0
+Coraggio Italia,Umbria,2025,2024,26,0
+Democrazia Cristiana con Rotondi,Umbria,2025,2024,39,0
+Democrazia Solidale - DemoS,Umbria,2025,2024,65,0
+Europa Verde-Verdi,Umbria,2025,2024,1257,0
+Fratelli d'Italia - Alleanza Nazionale,Umbria,2025,2024,5719,0
+Italia dei Valori,Umbria,2025,2024,54,0
+Italia Viva,Umbria,2025,2024,703,0
+Lega Nord per l'Indipendenza della Padania,Umbria,2025,2024,74,0
+Lega per Salvini Premier,Umbria,2025,2024,855,0
+L'Italia c'e'!,Umbria,2025,2024,11,0
+Movimento Associativo Italiani all'Estero - MAIE,Umbria,2025,2024,73,0
+Movimento Cinque Stelle,Umbria,2025,2024,3508,0
+Movimento politico Forza Italia,Umbria,2025,2024,535,0
+Noi Moderati,Umbria,2025,2024,94,0
+Partito Autonomista Trentino Tirolese,Umbria,2025,2024,28,0
+Partito Democratico,Umbria,2025,2024,9032,0
+Partito Socialista Italiano,Umbria,2025,2024,271,0
+Piu' Europa,Umbria,2025,2024,600,0
+Possibile,Umbria,2025,2024,258,0
+Radicali Italiani,Umbria,2025,2024,381,0
+Sinistra Italiana,Umbria,2025,2024,2152,0
+Stella Alpina,Umbria,2025,2024,48,0
+Sud chiama Nord,Umbria,2025,2024,362,0
+Sudtiroler Volkspartei,Umbria,2025,2024,80,0
+Union Valdotaine,Umbria,2025,2024,48,0
+Unione Sudamericana Emigrati Italiani,Umbria,2025,2024,164,0
+Volt Italia,Umbria,2025,2024,64,0
+Azione,Marche,2025,2024,1178,0
+Campobase,Marche,2025,2024,34,0
+Centro Democratico,Marche,2025,2024,311,0
+Coraggio Italia,Marche,2025,2024,58,0
+Democrazia Cristiana con Rotondi,Marche,2025,2024,45,0
+Democrazia Solidale - DemoS,Marche,2025,2024,57,0
+Europa Verde-Verdi,Marche,2025,2024,2267,0
+Fratelli d'Italia - Alleanza Nazionale,Marche,2025,2024,8680,0
+Italia dei Valori,Marche,2025,2024,82,0
+Italia Viva,Marche,2025,2024,1214,0
+Lega Nord per l'Indipendenza della Padania,Marche,2025,2024,138,0
+Lega per Salvini Premier,Marche,2025,2024,1427,0
+L'Italia c'e'!,Marche,2025,2024,14,0
+Movimento Associativo Italiani all'Estero - MAIE,Marche,2025,2024,131,0
+Movimento Cinque Stelle,Marche,2025,2024,6107,0
+Movimento politico Forza Italia,Marche,2025,2024,782,0
+Noi Moderati,Marche,2025,2024,186,0
+Partito Autonomista Trentino Tirolese,Marche,2025,2024,53,0
+Partito Democratico,Marche,2025,2024,12991,0
+Partito Socialista Italiano,Marche,2025,2024,385,0
+Piu' Europa,Marche,2025,2024,1134,0
+Possibile,Marche,2025,2024,640,0
+Radicali Italiani,Marche,2025,2024,541,0
+Sinistra Italiana,Marche,2025,2024,2526,0
+Stella Alpina,Marche,2025,2024,95,0
+Sud chiama Nord,Marche,2025,2024,,1
+Sudtiroler Volkspartei,Marche,2025,2024,164,0
+Union Valdotaine,Marche,2025,2024,148,0
+Unione Sudamericana Emigrati Italiani,Marche,2025,2024,251,0
+Volt Italia,Marche,2025,2024,89,0
+Azione,Lazio,2025,2024,9125,0
+Campobase,Lazio,2025,2024,190,0
+Centro Democratico,Lazio,2025,2024,1843,0
+Coraggio Italia,Lazio,2025,2024,279,0
+Democrazia Cristiana con Rotondi,Lazio,2025,2024,409,0
+Democrazia Solidale - DemoS,Lazio,2025,2024,1160,0
+Europa Verde-Verdi,Lazio,2025,2024,14300,0
+Fratelli d'Italia - Alleanza Nazionale,Lazio,2025,2024,62115,0
+Italia dei Valori,Lazio,2025,2024,583,0
+Italia Viva,Lazio,2025,2024,6112,0
+Lega Nord per l'Indipendenza della Padania,Lazio,2025,2024,274,0
+Lega per Salvini Premier,Lazio,2025,2024,5137,0
+L'Italia c'e'!,Lazio,2025,2024,128,0
+Movimento Associativo Italiani all'Estero - MAIE,Lazio,2025,2024,997,0
+Movimento Cinque Stelle,Lazio,2025,2024,38373,0
+Movimento politico Forza Italia,Lazio,2025,2024,3952,0
+Noi Moderati,Lazio,2025,2024,1145,0
+Partito Autonomista Trentino Tirolese,Lazio,2025,2024,279,0
+Partito Democratico,Lazio,2025,2024,67291,0
+Partito Socialista Italiano,Lazio,2025,2024,1583,0
+Piu' Europa,Lazio,2025,2024,7860,0
+Possibile,Lazio,2025,2024,2884,0
+Radicali Italiani,Lazio,2025,2024,4631,0
+Sinistra Italiana,Lazio,2025,2024,18755,0
+Stella Alpina,Lazio,2025,2024,727,0
+Sud chiama Nord,Lazio,2025,2024,1174,0
+Sudtiroler Volkspartei,Lazio,2025,2024,882,0
+Union Valdotaine,Lazio,2025,2024,316,0
+Unione Sudamericana Emigrati Italiani,Lazio,2025,2024,1500,0
+Volt Italia,Lazio,2025,2024,514,0
+Azione,Abruzzo,2025,2024,1062,0
+Campobase,Abruzzo,2025,2024,19,0
+Centro Democratico,Abruzzo,2025,2024,186,0
+Coraggio Italia,Abruzzo,2025,2024,30,0
+Democrazia Cristiana con Rotondi,Abruzzo,2025,2024,42,0
+Democrazia Solidale - DemoS,Abruzzo,2025,2024,21,0
+Europa Verde-Verdi,Abruzzo,2025,2024,1534,0
+Fratelli d'Italia - Alleanza Nazionale,Abruzzo,2025,2024,6570,0
+Italia dei Valori,Abruzzo,2025,2024,56,0
+Italia Viva,Abruzzo,2025,2024,888,0
+Lega Nord per l'Indipendenza della Padania,Abruzzo,2025,2024,40,0
+Lega per Salvini Premier,Abruzzo,2025,2024,892,0
+L'Italia c'e'!,Abruzzo,2025,2024,15,0
+Movimento Associativo Italiani all'Estero - MAIE,Abruzzo,2025,2024,88,0
+Movimento Cinque Stelle,Abruzzo,2025,2024,4556,0
+Movimento politico Forza Italia,Abruzzo,2025,2024,770,0
+Noi Moderati,Abruzzo,2025,2024,175,0
+Partito Autonomista Trentino Tirolese,Abruzzo,2025,2024,22,0
+Partito Democratico,Abruzzo,2025,2024,6945,0
+Partito Socialista Italiano,Abruzzo,2025,2024,280,0
+Piu' Europa,Abruzzo,2025,2024,684,0
+Possibile,Abruzzo,2025,2024,320,0
+Radicali Italiani,Abruzzo,2025,2024,482,0
+Sinistra Italiana,Abruzzo,2025,2024,1619,0
+Stella Alpina,Abruzzo,2025,2024,39,0
+Sud chiama Nord,Abruzzo,2025,2024,211,0
+Sudtiroler Volkspartei,Abruzzo,2025,2024,45,0
+Union Valdotaine,Abruzzo,2025,2024,42,0
+Unione Sudamericana Emigrati Italiani,Abruzzo,2025,2024,163,0
+Volt Italia,Abruzzo,2025,2024,62,0
+Azione,Molise,2025,2024,91,0
+Campobase,Molise,2025,2024,,1
+Centro Democratico,Molise,2025,2024,52,0
+Coraggio Italia,Molise,2025,2024,,1
+Democrazia Cristiana con Rotondi,Molise,2025,2024,,1
+Democrazia Solidale - DemoS,Molise,2025,2024,,1
+Europa Verde-Verdi,Molise,2025,2024,239,0
+Fratelli d'Italia - Alleanza Nazionale,Molise,2025,2024,1006,0
+Italia dei Valori,Molise,2025,2024,37,0
+Italia Viva,Molise,2025,2024,143,0
+Lega Nord per l'Indipendenza della Padania,Molise,2025,2024,,1
+Lega per Salvini Premier,Molise,2025,2024,120,0
+L'Italia c'e'!,Molise,2025,2024,,1
+Movimento Associativo Italiani all'Estero - MAIE,Molise,2025,2024,17,0
+Movimento Cinque Stelle,Molise,2025,2024,1096,0
+Movimento politico Forza Italia,Molise,2025,2024,154,0
+Noi Moderati,Molise,2025,2024,95,0
+Partito Autonomista Trentino Tirolese,Molise,2025,2024,,1
+Partito Democratico,Molise,2025,2024,1516,0
+Partito Socialista Italiano,Molise,2025,2024,112,0
+Piu' Europa,Molise,2025,2024,95,0
+Possibile,Molise,2025,2024,57,0
+Radicali Italiani,Molise,2025,2024,50,0
+Sinistra Italiana,Molise,2025,2024,310,0
+Stella Alpina,Molise,2025,2024,,1
+Sud chiama Nord,Molise,2025,2024,117,0
+Sudtiroler Volkspartei,Molise,2025,2024,,1
+Union Valdotaine,Molise,2025,2024,,1
+Unione Sudamericana Emigrati Italiani,Molise,2025,2024,21,0
+Volt Italia,Molise,2025,2024,19,0
+Azione,Campania,2025,2024,2819,0
+Campobase,Campania,2025,2024,105,0
+Centro Democratico,Campania,2025,2024,1858,0
+Coraggio Italia,Campania,2025,2024,184,0
+Democrazia Cristiana con Rotondi,Campania,2025,2024,446,0
+Democrazia Solidale - DemoS,Campania,2025,2024,173,0
+Europa Verde-Verdi,Campania,2025,2024,7458,0
+Fratelli d'Italia - Alleanza Nazionale,Campania,2025,2024,21084,0
+Italia dei Valori,Campania,2025,2024,380,0
+Italia Viva,Campania,2025,2024,3356,0
+Lega Nord per l'Indipendenza della Padania,Campania,2025,2024,76,0
+Lega per Salvini Premier,Campania,2025,2024,1624,0
+L'Italia c'e'!,Campania,2025,2024,119,0
+Movimento Associativo Italiani all'Estero - MAIE,Campania,2025,2024,396,0
+Movimento Cinque Stelle,Campania,2025,2024,26572,0
+Movimento politico Forza Italia,Campania,2025,2024,4399,0
+Noi Moderati,Campania,2025,2024,2654,0
+Partito Autonomista Trentino Tirolese,Campania,2025,2024,57,0
+Partito Democratico,Campania,2025,2024,30324,0
+Partito Socialista Italiano,Campania,2025,2024,3181,0
+Piu' Europa,Campania,2025,2024,2070,0
+Possibile,Campania,2025,2024,887,0
+Radicali Italiani,Campania,2025,2024,1103,0
+Sinistra Italiana,Campania,2025,2024,6998,0
+Stella Alpina,Campania,2025,2024,129,0
+Sud chiama Nord,Campania,2025,2024,4157,0
+Sudtiroler Volkspartei,Campania,2025,2024,147,0
+Union Valdotaine,Campania,2025,2024,88,0
+Unione Sudamericana Emigrati Italiani,Campania,2025,2024,592,0
+Volt Italia,Campania,2025,2024,226,0
+Azione,Puglia,2025,2024,1543,0
+Campobase,Puglia,2025,2024,48,0
+Centro Democratico,Puglia,2025,2024,640,0
+Coraggio Italia,Puglia,2025,2024,159,0
+Democrazia Cristiana con Rotondi,Puglia,2025,2024,130,0
+Democrazia Solidale - DemoS,Puglia,2025,2024,142,0
+Europa Verde-Verdi,Puglia,2025,2024,3292,0
+Fratelli d'Italia - Alleanza Nazionale,Puglia,2025,2024,17489,0
+Italia dei Valori,Puglia,2025,2024,211,0
+Italia Viva,Puglia,2025,2024,2180,0
+Lega Nord per l'Indipendenza della Padania,Puglia,2025,2024,56,0
+Lega per Salvini Premier,Puglia,2025,2024,1368,0
+L'Italia c'e'!,Puglia,2025,2024,113,0
+Movimento Associativo Italiani all'Estero - MAIE,Puglia,2025,2024,466,0
+Movimento Cinque Stelle,Puglia,2025,2024,17288,0
+Movimento politico Forza Italia,Puglia,2025,2024,2532,0
+Noi Moderati,Puglia,2025,2024,1710,0
+Partito Autonomista Trentino Tirolese,Puglia,2025,2024,34,0
+Partito Democratico,Puglia,2025,2024,21272,0
+Partito Socialista Italiano,Puglia,2025,2024,1466,0
+Piu' Europa,Puglia,2025,2024,1597,0
+Possibile,Puglia,2025,2024,654,0
+Radicali Italiani,Puglia,2025,2024,755,0
+Sinistra Italiana,Puglia,2025,2024,5031,0
+Stella Alpina,Puglia,2025,2024,67,0
+Sud chiama Nord,Puglia,2025,2024,3906,0
+Sudtiroler Volkspartei,Puglia,2025,2024,105,0
+Union Valdotaine,Puglia,2025,2024,36,0
+Unione Sudamericana Emigrati Italiani,Puglia,2025,2024,295,0
+Volt Italia,Puglia,2025,2024,123,0
+Azione,Basilicata,2025,2024,326,0
+Campobase,Basilicata,2025,2024,,1
+Centro Democratico,Basilicata,2025,2024,107,0
+Coraggio Italia,Basilicata,2025,2024,13,0
+Democrazia Cristiana con Rotondi,Basilicata,2025,2024,22,0
+Democrazia Solidale - DemoS,Basilicata,2025,2024,,1
+Europa Verde-Verdi,Basilicata,2025,2024,459,0
+Fratelli d'Italia - Alleanza Nazionale,Basilicata,2025,2024,1849,0
+Italia dei Valori,Basilicata,2025,2024,32,0
+Italia Viva,Basilicata,2025,2024,330,0
+Lega Nord per l'Indipendenza della Padania,Basilicata,2025,2024,,1
+Lega per Salvini Premier,Basilicata,2025,2024,165,0
+L'Italia c'e'!,Basilicata,2025,2024,,1
+Movimento Associativo Italiani all'Estero - MAIE,Basilicata,2025,2024,21,0
+Movimento Cinque Stelle,Basilicata,2025,2024,2858,0
+Movimento politico Forza Italia,Basilicata,2025,2024,236,0
+Noi Moderati,Basilicata,2025,2024,467,0
+Partito Autonomista Trentino Tirolese,Basilicata,2025,2024,,1
+Partito Democratico,Basilicata,2025,2024,3144,0
+Partito Socialista Italiano,Basilicata,2025,2024,271,0
+Piu' Europa,Basilicata,2025,2024,191,0
+Possibile,Basilicata,2025,2024,108,0
+Radicali Italiani,Basilicata,2025,2024,269,0
+Sinistra Italiana,Basilicata,2025,2024,659,0
+Stella Alpina,Basilicata,2025,2024,,1
+Sud chiama Nord,Basilicata,2025,2024,165,0
+Sudtiroler Volkspartei,Basilicata,2025,2024,,1
+Union Valdotaine,Basilicata,2025,2024,,1
+Unione Sudamericana Emigrati Italiani,Basilicata,2025,2024,38,0
+Volt Italia,Basilicata,2025,2024,55,0
+Azione,Calabria,2025,2024,579,0
+Campobase,Calabria,2025,2024,13,0
+Centro Democratico,Calabria,2025,2024,251,0
+Coraggio Italia,Calabria,2025,2024,46,0
+Democrazia Cristiana con Rotondi,Calabria,2025,2024,69,0
+Democrazia Solidale - DemoS,Calabria,2025,2024,47,0
+Europa Verde-Verdi,Calabria,2025,2024,1120,0
+Fratelli d'Italia - Alleanza Nazionale,Calabria,2025,2024,8014,0
+Italia dei Valori,Calabria,2025,2024,77,0
+Italia Viva,Calabria,2025,2024,1300,0
+Lega Nord per l'Indipendenza della Padania,Calabria,2025,2024,22,0
+Lega per Salvini Premier,Calabria,2025,2024,656,0
+L'Italia c'e'!,Calabria,2025,2024,24,0
+Movimento Associativo Italiani all'Estero - MAIE,Calabria,2025,2024,76,0
+Movimento Cinque Stelle,Calabria,2025,2024,6832,0
+Movimento politico Forza Italia,Calabria,2025,2024,1433,0
+Noi Moderati,Calabria,2025,2024,322,0
+Partito Autonomista Trentino Tirolese,Calabria,2025,2024,18,0
+Partito Democratico,Calabria,2025,2024,8294,0
+Partito Socialista Italiano,Calabria,2025,2024,1060,0
+Piu' Europa,Calabria,2025,2024,419,0
+Possibile,Calabria,2025,2024,264,0
+Radicali Italiani,Calabria,2025,2024,400,0
+Sinistra Italiana,Calabria,2025,2024,1827,0
+Stella Alpina,Calabria,2025,2024,24,0
+Sud chiama Nord,Calabria,2025,2024,1152,0
+Sudtiroler Volkspartei,Calabria,2025,2024,40,0
+Union Valdotaine,Calabria,2025,2024,18,0
+Unione Sudamericana Emigrati Italiani,Calabria,2025,2024,330,0
+Volt Italia,Calabria,2025,2024,43,0
+Azione,Sicilia,2025,2024,1964,0
+Campobase,Sicilia,2025,2024,70,0
+Centro Democratico,Sicilia,2025,2024,966,0
+Coraggio Italia,Sicilia,2025,2024,127,0
+Democrazia Cristiana con Rotondi,Sicilia,2025,2024,196,0
+Democrazia Solidale - DemoS,Sicilia,2025,2024,79,0
+Europa Verde-Verdi,Sicilia,2025,2024,4196,0
+Fratelli d'Italia - Alleanza Nazionale,Sicilia,2025,2024,19298,0
+Italia dei Valori,Sicilia,2025,2024,405,0
+Italia Viva,Sicilia,2025,2024,2930,0
+Lega Nord per l'Indipendenza della Padania,Sicilia,2025,2024,79,0
+Lega per Salvini Premier,Sicilia,2025,2024,4155,0
+L'Italia c'e'!,Sicilia,2025,2024,71,0
+Movimento Associativo Italiani all'Estero - MAIE,Sicilia,2025,2024,399,0
+Movimento Cinque Stelle,Sicilia,2025,2024,19824,0
+Movimento politico Forza Italia,Sicilia,2025,2024,2372,0
+Noi Moderati,Sicilia,2025,2024,539,0
+Partito Autonomista Trentino Tirolese,Sicilia,2025,2024,60,0
+Partito Democratico,Sicilia,2025,2024,22477,0
+Partito Socialista Italiano,Sicilia,2025,2024,1353,0
+Piu' Europa,Sicilia,2025,2024,1634,0
+Possibile,Sicilia,2025,2024,609,0
+Radicali Italiani,Sicilia,2025,2024,951,0
+Sinistra Italiana,Sicilia,2025,2024,5239,0
+Stella Alpina,Sicilia,2025,2024,107,0
+Sud chiama Nord,Sicilia,2025,2024,17957,0
+Sudtiroler Volkspartei,Sicilia,2025,2024,106,0
+Union Valdotaine,Sicilia,2025,2024,72,0
+Unione Sudamericana Emigrati Italiani,Sicilia,2025,2024,495,0
+Volt Italia,Sicilia,2025,2024,151,0
+Azione,Sardegna,2025,2024,1083,0
+Campobase,Sardegna,2025,2024,50,0
+Centro Democratico,Sardegna,2025,2024,602,0
+Coraggio Italia,Sardegna,2025,2024,70,0
+Democrazia Cristiana con Rotondi,Sardegna,2025,2024,63,0
+Democrazia Solidale - DemoS,Sardegna,2025,2024,118,0
+Europa Verde-Verdi,Sardegna,2025,2024,2919,0
+Fratelli d'Italia - Alleanza Nazionale,Sardegna,2025,2024,10701,0
+Italia dei Valori,Sardegna,2025,2024,131,0
+Italia Viva,Sardegna,2025,2024,1087,0
+Lega Nord per l'Indipendenza della Padania,Sardegna,2025,2024,65,0
+Lega per Salvini Premier,Sardegna,2025,2024,1056,0
+L'Italia c'e'!,Sardegna,2025,2024,30,0
+Movimento Associativo Italiani all'Estero - MAIE,Sardegna,2025,2024,288,0
+Movimento Cinque Stelle,Sardegna,2025,2024,11711,0
+Movimento politico Forza Italia,Sardegna,2025,2024,970,0
+Noi Moderati,Sardegna,2025,2024,141,0
+Partito Autonomista Trentino Tirolese,Sardegna,2025,2024,52,0
+Partito Democratico,Sardegna,2025,2024,15165,0
+Partito Socialista Italiano,Sardegna,2025,2024,652,0
+Piu' Europa,Sardegna,2025,2024,1446,0
+Possibile,Sardegna,2025,2024,1059,0
+Radicali Italiani,Sardegna,2025,2024,961,0
+Sinistra Italiana,Sardegna,2025,2024,3779,0
+Stella Alpina,Sardegna,2025,2024,104,0
+Sud chiama Nord,Sardegna,2025,2024,122,0
+Sudtiroler Volkspartei,Sardegna,2025,2024,193,0
+Union Valdotaine,Sardegna,2025,2024,84,0
+Unione Sudamericana Emigrati Italiani,Sardegna,2025,2024,597,0
+Volt Italia,Sardegna,2025,2024,120,0
+Azione,Non indicata,2025,2024,0,0
+Campobase,Non indicata,2025,2024,0,0
+Centro Democratico,Non indicata,2025,2024,0,0
+Coraggio Italia,Non indicata,2025,2024,0,0
+Democrazia Cristiana con Rotondi,Non indicata,2025,2024,0,0
+Democrazia Solidale - DemoS,Non indicata,2025,2024,0,0
+Europa Verde-Verdi,Non indicata,2025,2024,0,0
+Fratelli d'Italia - Alleanza Nazionale,Non indicata,2025,2024,0,0
+Italia dei Valori,Non indicata,2025,2024,0,0
+Italia Viva,Non indicata,2025,2024,0,0
+Lega Nord per l'Indipendenza della Padania,Non indicata,2025,2024,0,0
+Lega per Salvini Premier,Non indicata,2025,2024,0,0
+L'Italia c'e'!,Non indicata,2025,2024,0,0
+Movimento Associativo Italiani all'Estero - MAIE,Non indicata,2025,2024,0,0
+Movimento Cinque Stelle,Non indicata,2025,2024,0,0
+Movimento politico Forza Italia,Non indicata,2025,2024,0,0
+Noi Moderati,Non indicata,2025,2024,0,0
+Partito Autonomista Trentino Tirolese,Non indicata,2025,2024,0,0
+Partito Democratico,Non indicata,2025,2024,0,0
+Partito Socialista Italiano,Non indicata,2025,2024,0,0
+Piu' Europa,Non indicata,2025,2024,0,0
+Possibile,Non indicata,2025,2024,0,0
+Radicali Italiani,Non indicata,2025,2024,0,0
+Sinistra Italiana,Non indicata,2025,2024,0,0
+Stella Alpina,Non indicata,2025,2024,0,0
+Sud chiama Nord,Non indicata,2025,2024,0,0
+Sudtiroler Volkspartei,Non indicata,2025,2024,0,0
+Union Valdotaine,Non indicata,2025,2024,0,0
+Unione Sudamericana Emigrati Italiani,Non indicata,2025,2024,0,0
+Volt Italia,Non indicata,2025,2024,0,0

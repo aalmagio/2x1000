@@ -1,0 +1,11 @@
+{
+  "declaration_year": 2022,
+  "tax_year": 2021,
+  "institution": "Agenzia delle Entrate",
+  "source_type": "codici_dichiarazione",
+  "url": "https://www.agenziaentrate.gov.it/portale/documents/20143/4124889/730_2022_tab_partiti+politici.pdf/516f4b43-1e2c-0563-8cf7-b4f34ddbb8a6",
+  "source_file": "data/raw/2022/codici/730_2022_tab_partiti_politici.pdf",
+  "checksum": "7ac7b336a403d9e31a3eba560689449723d063f1c300430165c282e4f86e4849",
+  "download_date": "2026-07-08",
+  "row_count": 29
+}

@@ -1,0 +1,11 @@
+{
+  "declaration_year": 2017,
+  "tax_year": 2016,
+  "institution": "Agenzia delle Entrate",
+  "source_type": "codici_dichiarazione",
+  "url": "https://www.agenziaentrate.gov.it/portale/documents/20143/367669/Tabella+partiti+730+2017_Codici_partiti+politici_da_Mod.730.pdf/4ec56bc9-8ff9-8b7b-15f4-4c47d9aaa9dd",
+  "source_file": "data/raw/2017/codici/Tabella_partiti_730_2017_Codici_partiti_politici_da_Mod.730.pdf",
+  "checksum": "5376389c0663e2be4523f03bb73849733f20546e15545bd443887bc8c4dd32ed",
+  "download_date": "2026-07-08",
+  "row_count": 27
+}

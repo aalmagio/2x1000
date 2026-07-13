@@ -1,0 +1,11 @@
+{
+  "declaration_year": 2023,
+  "tax_year": 2022,
+  "institution": "Agenzia delle Entrate",
+  "source_type": "codici_dichiarazione",
+  "url": "https://www.agenziaentrate.gov.it/portale/documents/20143/5082843/PF_2023_tabella_partiti_politici.pdf/7f2b9935-30e8-e918-5c79-55eff480ec96",
+  "source_file": "data/raw/2023/codici/PF_2023_tabella_partiti_politici.pdf",
+  "checksum": "654d67bb8ad887fcd2848d18ffa6f29ae6fd7a715b11e29be52eb2b4c8c66384",
+  "download_date": "2026-07-08",
+  "row_count": 29
+}

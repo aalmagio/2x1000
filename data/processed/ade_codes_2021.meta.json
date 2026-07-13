@@ -1,0 +1,11 @@
+{
+  "declaration_year": 2021,
+  "tax_year": 2020,
+  "institution": "Agenzia delle Entrate",
+  "source_type": "codici_dichiarazione",
+  "url": "https://www.agenziaentrate.gov.it/portale/documents/20143/3188954/REDDITI_2021_tabella_partiti_politici.pdf/9efde4d8-2c7f-95f0-2e88-d30c4c546375",
+  "source_file": "data/raw/2021/codici/REDDITI_2021_tabella_partiti_politici.pdf",
+  "checksum": "9c3f800dab168f5c7600431eab5bb5ecc3a8af691e8d7dfd1e08eb00fa53536c",
+  "download_date": "2026-07-08",
+  "row_count": 30
+}

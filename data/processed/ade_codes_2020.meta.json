@@ -1,0 +1,11 @@
+{
+  "declaration_year": 2020,
+  "tax_year": 2019,
+  "institution": "Agenzia delle Entrate",
+  "source_type": "codici_dichiarazione",
+  "url": "https://www.agenziaentrate.gov.it/portale/documents/20143/373633/Tabella+partiti+politici_Tabella+partiti+politici.pdf/0cddc6ef-4211-bd86-d704-751e0c7cd244",
+  "source_file": "data/raw/2020/codici/Tabella_partiti_politici_Tabella_partiti_politici.pdf",
+  "checksum": "add4fb08b815ee67c10d5cbf3d3f5484f98866e364c9e084952da0bf0252b118",
+  "download_date": "2026-07-08",
+  "row_count": 21
+}

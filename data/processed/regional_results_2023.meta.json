@@ -1,0 +1,15 @@
+{
+  "declaration_year": 2023,
+  "tax_year": 2022,
+  "institution": "Ministero dell'Economia e delle Finanze — Dipartimento delle Finanze",
+  "source_type": "ripartizione_regionale",
+  "url": "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2023AADUEXM0201&page=1&export=3&aggiornato=1522252800",
+  "source_file": "data/raw/2023/geografia/DUEXM2023tab_02_01_.csv",
+  "checksum": "8bf574dbb021f523a46223fe75c28fb408e6bbf3619e0d8460fb9e83597a52a7",
+  "download_date": "2026-07-12",
+  "row_count": 609,
+  "regions": 21,
+  "parties": 29,
+  "suppressed": 24,
+  "pages": 1
+}

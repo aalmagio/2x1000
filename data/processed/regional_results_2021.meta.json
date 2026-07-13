@@ -1,0 +1,15 @@
+{
+  "declaration_year": 2021,
+  "tax_year": 2020,
+  "institution": "Ministero dell'Economia e delle Finanze — Dipartimento delle Finanze",
+  "source_type": "ripartizione_regionale",
+  "url": "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2021AADUEXM0201&page=1&export=3&aggiornato=1522252800",
+  "source_file": "data/raw/2021/geografia/DUEXM2021tab_02_01_.csv",
+  "checksum": "01ca84cf8c309f19c711b6fe0f993542b0e4b79080970c09e5a1252be1807d40",
+  "download_date": "2026-07-12",
+  "row_count": 630,
+  "regions": 21,
+  "parties": 30,
+  "suppressed": 25,
+  "pages": 1
+}
