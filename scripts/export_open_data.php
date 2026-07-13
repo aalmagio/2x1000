@@ -131,4 +131,48 @@ foreach ($datasets as $name => $spec) {
 
 file_put_contents("$exportDir/manifest.json", json_encode($manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 echo "Manifest aggiornato: $exportDir/manifest.json\n";
+
+// ---------------------------------------------------------------------------
+// sitemap.xml (pagine statiche + una scheda per partito) e robots.txt.
+// Richiedono APP_URL in .env: le sitemap vogliono URL assoluti. Rigenerata a
+// ogni export perché l'elenco dei partiti può essere cambiato con l'import.
+// robots.txt viene creato solo se assente (non sovrascrive personalizzazioni).
+// ---------------------------------------------------------------------------
+$appUrl = rtrim((string) env('APP_URL', ''), '/');
+if ($appUrl === '') {
+    echo "APP_URL non configurato in .env: sitemap.xml non generata.\n";
+} else {
+    $publicDir = __DIR__ . '/../public';
+    $staticPaths = [
+        '/', '/dashboard.php', '/partiti.php', '/classifiche.php', '/regioni.php',
+        '/confronta.php', '/open-data.php', '/metodo.php', '/fonti.php',
+    ];
+    $urls = array_map(fn(string $p) => $appUrl . $p, $staticPaths);
+    $slugs = $pdo->query('SELECT slug FROM parties ORDER BY slug ASC')->fetchAll(PDO::FETCH_COLUMN);
+    foreach ($slugs as $slug) {
+        $urls[] = $appUrl . '/partito.php?slug=' . rawurlencode((string) $slug);
+    }
+
+    $today = date('Y-m-d');
+    $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+    $xml .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+    foreach ($urls as $u) {
+        $xml .= '  <url><loc>' . htmlspecialchars($u, ENT_XML1) . "</loc><lastmod>$today</lastmod></url>\n";
+    }
+    $xml .= "</urlset>\n";
+
+    if (@file_put_contents("$publicDir/sitemap.xml", $xml) !== false) {
+        echo 'Sitemap generata: public/sitemap.xml (' . count($urls) . " URL)\n";
+    } else {
+        fwrite(STDERR, "Avviso: impossibile scrivere public/sitemap.xml (permessi sulla cartella public/?)\n");
+    }
+
+    if (!is_file("$publicDir/robots.txt")) {
+        $robots = "User-agent: *\nAllow: /\n\nSitemap: $appUrl/sitemap.xml\n";
+        if (@file_put_contents("$publicDir/robots.txt", $robots) !== false) {
+            echo "robots.txt creato: public/robots.txt\n";
+        }
+    }
+}
+
 echo "Completato.\n";

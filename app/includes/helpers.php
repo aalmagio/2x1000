@@ -114,3 +114,19 @@ function current_path(): string
 {
     return parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 }
+
+/**
+ * URL canonico della pagina corrente (assoluto, basato su APP_URL).
+ * I parametri di filtro volatili (anno, regione, soglie) sono esclusi di
+ * proposito: il canonico punta alla vista di default della pagina. L'unico
+ * parametro che identifica un contenuto distinto è lo slug del partito.
+ */
+function canonical_url(): string
+{
+    $query = '';
+    $slug = clean_slug($_GET['slug'] ?? null);
+    if ($slug !== null) {
+        $query = '?slug=' . rawurlencode($slug);
+    }
+    return base_url(current_path() . $query);
+}

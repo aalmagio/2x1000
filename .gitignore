@@ -7,6 +7,10 @@ Thumbs.db
 /data/raw/*
 !/data/raw/.gitkeep
 
+# Generati per-ambiente da scripts/export_open_data.php (dipendono da APP_URL)
+/public/sitemap.xml
+/public/robots.txt
+
 # Pipeline Python (python/)
 /python/.venv/
 /python/__pycache__/

@@ -2,7 +2,25 @@
 declare(strict_types=1);
 /** @var array $files */
 /** @var string|null $generatedAt */
+/** @var array $datasetsLd */
 ?>
+<?php if (($datasetsLd ?? []) !== []): ?>
+<script type="application/ld+json">
+<?= json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'DataCatalog',
+    'name' => '2x1000 Open Data — Partiti politici',
+    'url' => base_url('/open-data.php'),
+    'license' => 'https://creativecommons.org/licenses/by/4.0/',
+    'creator' => [
+        '@type' => 'Organization',
+        'name' => 'Osservatorio ASSIF sul 5, 2 e 8 per mille',
+        'url' => 'https://osservatorio.assif.it',
+    ],
+    'dataset' => $datasetsLd,
+], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?>
+</script>
+<?php endif; ?>
 <div class="container section">
   <nav class="breadcrumb"><a href="/">Home</a> / <span aria-current="page">Open data</span></nav>
   <h1>Open data</h1>

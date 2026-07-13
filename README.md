@@ -394,7 +394,15 @@ convertirla in stringa romperebbe qualunque consumo automatico dei file.
 
 Questi file sono scaricabili dal pubblico tramite la pagina `/open-data.php`,
 che li serve attraverso `public/download.php` (whitelist rigorosa sul nome
-file, nessun accesso diretto alla cartella `data/`).
+file, nessun accesso diretto alla cartella `data/`). La pagina espone anche
+il markup **schema.org/Dataset** (JSON-LD) che rende i dataset indicizzabili
+su Google Dataset Search (richiede `APP_URL` configurato in `.env`).
+
+Se `APP_URL` è configurato, lo stesso script genera/aggiorna anche
+`public/sitemap.xml` (pagine statiche + una scheda per partito) e crea
+`public/robots.txt` se assente (senza mai sovrascriverlo). Entrambi i file
+sono per-ambiente e non versionati: serve che `public/` sia scrivibile
+dall'utente con cui gira lo script.
 
 ## API
 

@@ -16,13 +16,33 @@ $navItems = [
 ];
 $currentPath = current_path();
 ?>
+<?php
+$metaTitle = ($pageTitle ?? '') !== '' ? $pageTitle : '2x1000 Open Data — Partiti politici';
+$metaDescription = ($pageDescription ?? '') !== ''
+    ? $pageDescription
+    : 'Dati ufficiali sulla destinazione del 2 per mille IRPEF ai partiti politici, a cura dell\'Osservatorio ASSIF sul 5, 2 e 8 per mille.';
+// Canonico e og:url solo se APP_URL è configurato: devono essere assoluti.
+$canonicalUrl = (env('APP_URL', '') ?? '') !== '' ? canonical_url() : null;
+?>
 <!DOCTYPE html>
 <html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><?= h($pageTitle ?? '2x1000 Open Data — Partiti politici') ?></title>
-<meta name="description" content="<?= h($pageDescription ?? 'Dati ufficiali sulla destinazione del 2 per mille IRPEF ai partiti politici, a cura dell\'Osservatorio ASSIF sul 5, 2 e 8 per mille.') ?>">
+<title><?= h($metaTitle) ?></title>
+<meta name="description" content="<?= h($metaDescription) ?>">
+<?php if ($canonicalUrl !== null): ?>
+<link rel="canonical" href="<?= h($canonicalUrl) ?>">
+<meta property="og:url" content="<?= h($canonicalUrl) ?>">
+<?php endif; ?>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="2x1000 Open Data — Partiti politici">
+<meta property="og:title" content="<?= h($metaTitle) ?>">
+<meta property="og:description" content="<?= h($metaDescription) ?>">
+<meta property="og:locale" content="it_IT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="<?= h($metaTitle) ?>">
+<meta name="twitter:description" content="<?= h($metaDescription) ?>">
 <link rel="stylesheet" href="/assets/css/main.css">
 <script src="/assets/js/vendor/chart.umd.min.js"></script>
 </head>
