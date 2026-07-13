@@ -17,6 +17,20 @@ from __future__ import annotations
 
 from common import slugify
 
+# Gli slug canonici seminati in database/regions (database/schema.sql): la
+# copia statica serve dove il database non è disponibile o non ancora migrato
+# (es. la deduplicazione in acquire_regional_results.py). Il test
+# test_region_resolver.py verifica che questa lista e quella usata nei test
+# restino allineate.
+CANONICAL_REGION_SLUGS = frozenset({
+    "piemonte", "valle-d-aosta", "lombardia",
+    "trentino-alto-adige", "trentino-alto-adige-pa-trento", "trentino-alto-adige-pa-bolzano",
+    "veneto", "friuli-venezia-giulia", "liguria", "emilia-romagna",
+    "toscana", "umbria", "marche", "lazio", "abruzzo", "molise",
+    "campania", "puglia", "basilicata", "calabria", "sicilia", "sardegna",
+    "non-residenti",
+})
+
 # Grafie alternative note (slug dell'etichetta di fonte -> slug canonico in
 # `regions`). Il match esatto sullo slug canonico copre già i casi comuni
 # ("Valle d'Aosta", "Friuli Venezia Giulia", "Trentino Alto Adige (PA

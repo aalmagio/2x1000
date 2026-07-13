@@ -2,7 +2,7 @@
 
 import pytest
 
-from region_resolver import resolve_region_slug
+from region_resolver import CANONICAL_REGION_SLUGS, resolve_region_slug
 
 # Gli slug seminati in database/schema.sql (tabella `regions`)
 KNOWN_SLUGS = {
@@ -46,3 +46,9 @@ def test_known_labels_resolved(label, expected):
 ])
 def test_unknown_labels_return_none(label):
     assert resolve_region_slug(label, KNOWN_SLUGS) is None
+
+
+def test_canonical_slugs_match_schema_seed_list():
+    # la copia statica in region_resolver.py deve restare allineata agli slug
+    # seminati in database/schema.sql (rappresentati qui da KNOWN_SLUGS)
+    assert CANONICAL_REGION_SLUGS == frozenset(KNOWN_SLUGS)

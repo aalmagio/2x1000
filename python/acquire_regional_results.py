@@ -38,6 +38,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import difflib
 import json
 import logging
 import re
@@ -47,6 +48,7 @@ from pathlib import Path
 
 from common import REPO_ROOT, get_logger, load_config
 from extract import fetch_source_file, is_footer_row, locate_header, parse_int, read_table, sha256_file
+from region_resolver import CANONICAL_REGION_SLUGS, resolve_region_slug
 
 REGION_ALIASES = frozenset({"regioni", "regione"})
 
@@ -180,6 +182,55 @@ def parse_regional_table(header: "list[str]", rows: "list[list[str]]") -> "list[
             })
 
     return records
+
+
+def dedup_duplicate_regions(records: "list[dict]") -> "list[dict]":
+    """
+    I file 2015/2016 del MEF contengono la stessa riga-regione due volte con
+    due grafie diverse ("Veneto"/"Venero", "Friuli Venezia Giulia"/"Friulia
+    Venezia Giulia"): stessi identici valori partito per partito, quindi la
+    regione veniva contata due volte in ogni aggregazione (scoperto in
+    produzione da validate_data.py: somma regionale > dato nazionale per
+    quasi tutti i partiti di quegli anni).
+
+    Due regioni sono considerate la stessa riga duplicata solo se valgono
+    ENTRAMBE le condizioni:
+      1. firma identica: stessi partiti con stessi valori/oscuramenti;
+      2. etichette molto simili (ratio ≥ 0.75), per non accorpare mai due
+         regioni vere che per coincidenza avessero gli stessi numeri.
+    Si tiene l'etichetta che risolve a una regione nota (region_resolver);
+    a parità, la prima incontrata.
+    """
+    by_region: "dict[str, dict]" = {}
+    for r in records:
+        by_region.setdefault(r["region"], {})[r["party_name"]] = (r["valid_choices"], r["is_suppressed"])
+
+    regions = list(by_region)
+    dropped: "dict[str, str]" = {}
+    for i, a in enumerate(regions):
+        if a in dropped:
+            continue
+        for b in regions[i + 1:]:
+            if b in dropped:
+                continue
+            if by_region[a] != by_region[b]:
+                continue
+            if difflib.SequenceMatcher(None, a.lower(), b.lower()).ratio() < 0.75:
+                continue
+            a_known = resolve_region_slug(a, CANONICAL_REGION_SLUGS) is not None
+            b_known = resolve_region_slug(b, CANONICAL_REGION_SLUGS) is not None
+            drop, keep = (a, b) if (b_known and not a_known) else (b, a)
+            dropped[drop] = keep
+
+    if not dropped:
+        return records
+
+    for drop, keep in sorted(dropped.items()):
+        logging.warning(
+            f"  Regione duplicata nella fonte: {drop!r} ha esattamente gli stessi "
+            f"valori di {keep!r} — righe scartate (la regione sarebbe contata due volte)"
+        )
+    return [r for r in records if r["region"] not in dropped]
 
 
 def write_normalized_csv(records: "list[dict]", declaration_year: int, tax_year: int, out_path: Path) -> None:
@@ -345,7 +396,7 @@ def process_year(year: int, args, raw_dir: Path, processed_dir: Path, session=No
         known_parties |= page_parties
         used_paths.append(file_path)
 
-    records = list(merged.values())
+    records = dedup_duplicate_regions(list(merged.values()))
     if not records:
         logging.warning(f"[{year}] Nessun dato estratto")
         return "error"
