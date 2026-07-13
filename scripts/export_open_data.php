@@ -94,7 +94,15 @@ $datasets = [
     ],
     '2x1000_partiti_ripartizione_regionale' => [
         'sql' => 'SELECT rr.id, rr.party_id, p.slug AS party_slug, p.canonical_name, rr.declaration_year, rr.tax_year,
-                          rr.region, rr.valid_choices, rr.is_suppressed, rr.source_id
+                          rr.region, rg.istat_code AS region_istat_code, rr.valid_choices, rr.is_suppressed, rr.source_id
+                   FROM regional_results rr
+                   JOIN parties p ON p.id = rr.party_id
+                   LEFT JOIN regions rg ON rg.id = rr.region_id
+                   ORDER BY rr.declaration_year DESC, p.canonical_name ASC, rr.region ASC',
+        // Database non ancora migrato (tabella regions / colonna region_id assenti):
+        // esporta senza codice ISTAT invece di interrompere la rigenerazione.
+        'fallback_sql' => 'SELECT rr.id, rr.party_id, p.slug AS party_slug, p.canonical_name, rr.declaration_year, rr.tax_year,
+                          rr.region, NULL AS region_istat_code, rr.valid_choices, rr.is_suppressed, rr.source_id
                    FROM regional_results rr JOIN parties p ON p.id = rr.party_id
                    ORDER BY rr.declaration_year DESC, p.canonical_name ASC, rr.region ASC',
         'decimals' => ['valid_choices' => 0],
@@ -104,7 +112,16 @@ $datasets = [
 $manifest = ['generated_at' => date('c'), 'files' => []];
 
 foreach ($datasets as $name => $spec) {
-    $rows = $pdo->query($spec['sql'])->fetchAll();
+    try {
+        $rows = $pdo->query($spec['sql'])->fetchAll();
+    } catch (PDOException $e) {
+        if (!isset($spec['fallback_sql'])) {
+            throw $e;
+        }
+        fwrite(STDERR, "Avviso: query principale fallita per $name (database non migrato? " .
+            $e->getMessage() . "), uso il fallback.\n");
+        $rows = $pdo->query($spec['fallback_sql'])->fetchAll();
+    }
     write_csv("$exportDir/$name.csv", $rows, $spec['decimals']);
     write_json("$exportDir/$name.json", $rows);
     $manifest['files'][] = "$name.csv";

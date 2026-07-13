@@ -132,6 +132,52 @@ CREATE TABLE IF NOT EXISTS annual_totals (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ---------------------------------------------------------------------------
+-- regions: anagrafica normalizzata delle regioni (codici ISTAT).
+-- `regional_results.region` resta il testo libero come da fonte (provenienza);
+-- questa tabella dà a ogni etichetta un'identità stabile e il codice ISTAT,
+-- prerequisito per mappa coropletica e incroci con altri open data regionali.
+-- map_code è il codice della regione su cui la mappa aggrega il dato: le due
+-- Province Autonome di Trento e Bolzano (pubblicate separatamente dal MEF)
+-- confluiscono entrambe sul Trentino-Alto Adige ('04'); NULL = non
+-- rappresentabile sulla mappa (es. "Non residenti").
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS regions (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  canonical_name VARCHAR(80) NOT NULL,
+  slug VARCHAR(80) NOT NULL,
+  istat_code CHAR(2) NULL COMMENT 'codice ISTAT della regione (NULL per righe speciali: PA, non residenti)',
+  map_code CHAR(2) NULL COMMENT 'codice regione su cui la mappa aggrega il dato (PA Trento/Bolzano -> 04)',
+  PRIMARY KEY (id),
+  UNIQUE KEY uniq_regions_slug (slug)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dati di riferimento (INSERT IGNORE: rieseguibile senza effetti collaterali).
+INSERT IGNORE INTO regions (canonical_name, slug, istat_code, map_code) VALUES
+  ('Piemonte', 'piemonte', '01', '01'),
+  ('Valle d''Aosta', 'valle-d-aosta', '02', '02'),
+  ('Lombardia', 'lombardia', '03', '03'),
+  ('Trentino-Alto Adige', 'trentino-alto-adige', '04', '04'),
+  ('Trentino-Alto Adige (PA Trento)', 'trentino-alto-adige-pa-trento', NULL, '04'),
+  ('Trentino-Alto Adige (PA Bolzano)', 'trentino-alto-adige-pa-bolzano', NULL, '04'),
+  ('Veneto', 'veneto', '05', '05'),
+  ('Friuli-Venezia Giulia', 'friuli-venezia-giulia', '06', '06'),
+  ('Liguria', 'liguria', '07', '07'),
+  ('Emilia-Romagna', 'emilia-romagna', '08', '08'),
+  ('Toscana', 'toscana', '09', '09'),
+  ('Umbria', 'umbria', '10', '10'),
+  ('Marche', 'marche', '11', '11'),
+  ('Lazio', 'lazio', '12', '12'),
+  ('Abruzzo', 'abruzzo', '13', '13'),
+  ('Molise', 'molise', '14', '14'),
+  ('Campania', 'campania', '15', '15'),
+  ('Puglia', 'puglia', '16', '16'),
+  ('Basilicata', 'basilicata', '17', '17'),
+  ('Calabria', 'calabria', '18', '18'),
+  ('Sicilia', 'sicilia', '19', '19'),
+  ('Sardegna', 'sardegna', '20', '20'),
+  ('Non residenti', 'non-residenti', NULL, NULL);
+
+-- ---------------------------------------------------------------------------
 -- regional_results: ripartizione regionale delle scelte per partito e anno
 -- (fonte: Dipartimento delle Finanze, tabella a sviluppo orizzontale
 -- regione x partito). is_suppressed distingue "0 scelte reali" da "dato
@@ -146,6 +192,7 @@ CREATE TABLE IF NOT EXISTS regional_results (
   declaration_year SMALLINT UNSIGNED NOT NULL,
   tax_year SMALLINT UNSIGNED NOT NULL,
   region VARCHAR(60) NOT NULL COMMENT 'nome regione come da fonte, es. "Trentino Alto Adige (PA Trento)", "Non residenti"',
+  region_id INT UNSIGNED NULL COMMENT 'FK verso regions: risolto da db_updater.py, NULL se etichetta non riconosciuta',
   valid_choices BIGINT UNSIGNED NULL COMMENT 'NULL se oscurato per riservatezza (vedi is_suppressed)',
   is_suppressed TINYINT(1) NOT NULL DEFAULT 0,
   source_id INT UNSIGNED NULL,
@@ -155,8 +202,10 @@ CREATE TABLE IF NOT EXISTS regional_results (
   UNIQUE KEY uniq_regional_party_year_region (party_id, declaration_year, region),
   KEY idx_regional_declaration_year (declaration_year),
   KEY idx_regional_region (region),
+  KEY idx_regional_region_id (region_id),
   KEY idx_regional_source (source_id),
   CONSTRAINT fk_regional_party FOREIGN KEY (party_id) REFERENCES parties (id) ON DELETE CASCADE,
+  CONSTRAINT fk_regional_region FOREIGN KEY (region_id) REFERENCES regions (id) ON DELETE SET NULL,
   CONSTRAINT fk_regional_source FOREIGN KEY (source_id) REFERENCES sources (id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

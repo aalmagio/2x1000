@@ -44,7 +44,8 @@ declare(strict_types=1);
         <tr><td>pct_valid_choices / pct_amount</td><td>Quota percentuale sul totale delle scelte valide / dell'importo</td></tr>
         <tr><td>avg_amount_per_choice</td><td>Importo medio per scelta: indicatore aggregato, non un reddito medio</td></tr>
         <tr><td>rank_choices / rank_amount / rank_avg_amount</td><td>Posizione in classifica per l'anno, rispettivamente per scelte, importo, importo medio</td></tr>
-        <tr><td>region</td><td>Regione di residenza del contribuente (dataset ripartizione regionale)</td></tr>
+        <tr><td>region</td><td>Regione di residenza del contribuente, come riportata dalla fonte (dataset ripartizione regionale)</td></tr>
+        <tr><td>region_istat_code</td><td>Codice ISTAT a 2 cifre della regione (vuoto per le righe non territoriali, es. "Non residenti", e per le Province Autonome di Trento e Bolzano, pubblicate separatamente dalla fonte)</td></tr>
         <tr><td>is_suppressed</td><td>1 se il dato di quella regione/partito/anno è oscurato dalla fonte per tutela della riservatezza (valid_choices resta vuoto in quel caso, non 0)</td></tr>
       </tbody>
     </table>

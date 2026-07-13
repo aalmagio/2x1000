@@ -214,6 +214,30 @@ select, input[type=text], input[type=search], input[type=number] {
 }
 .box-source { border-left-color: var(--color-accent); }
 
+/* Mappa regioni (SVG inline, vedi app/includes/italy-map.php + regions.js) */
+.map-wrap { max-width: 560px; margin: 0 auto; }
+#italy-map { display: block; width: 100%; height: auto; }
+.map-region { fill: #eceff3; stroke: #ffffff; stroke-width: 1; }
+.map-region.has-data { cursor: pointer; }
+.map-region.has-data:hover, .map-region.has-data:focus { stroke: #1c2530; stroke-width: 1.5; outline: none; }
+.map-tooltip {
+  position: fixed;
+  display: none;
+  background: #1c2530;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: .85rem;
+  line-height: 1.45;
+  pointer-events: none;
+  z-index: 100;
+  max-width: 280px;
+  box-shadow: var(--shadow-md);
+}
+.map-legend { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: .82rem; color: var(--color-text-muted); margin-top: 10px; }
+.map-legend-bar { display: inline-block; width: 150px; height: 10px; border-radius: 5px; background: linear-gradient(90deg, #ffe3e3, #a30000); }
+.map-credits { font-size: .78rem; margin-top: 1rem; }
+
 /* Breadcrumb */
 .breadcrumb { font-size: .85rem; color: var(--color-text-muted); margin-bottom: 1rem; }
 .breadcrumb a { color: var(--color-text-muted); }

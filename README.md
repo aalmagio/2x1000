@@ -76,6 +76,9 @@ python/
   add_party_alias.py           Registra una grafia alternativa per un partito esistente
   find_duplicate_parties.py    Segnala possibili duplicati nell'anagrafica partiti
   merge_parties.py             Unisce due righe duplicate dell'anagrafica in una sola
+  region_resolver.py           Risolve le etichette regione delle fonti alla tabella regions (codici ISTAT)
+  backfill_region_ids.py       Valorizza region_id sulle righe regionali importate prima della normalizzazione
+  tools/generate_italy_map.py  Rigenera la mappa SVG delle regioni (app/includes/italy-map.php)
   pipeline.py                  Orchestratore: acquisizione → DB → indicatori → export
   config.yaml                  URL per anno delle fonti ufficiali (da compilare)
 ```
@@ -107,6 +110,12 @@ python/
    ```
    mysql -u <utente> -p <database> < database/migrations.sql
    ```
+   Dopo la migrazione che introduce la tabella `regions` e la colonna
+   `regional_results.region_id`, valorizza le righe regionali già importate
+   con `cd python && python backfill_region_ids.py` (le importazioni
+   successive lo fanno da sole). Senza questo passaggio la mappa in
+   `/regioni.php` resta nascosta e i codici ISTAT nell'export regionale
+   restano vuoti.
 6. **Popola il database con i dati reali.** Due percorsi possibili:
    - **Consigliato:** la [pipeline Python](#pipeline-python-di-acquisizione-dati),
      che scarica dalle fonti ufficiali, normalizza e scrive nel database in
@@ -277,8 +286,14 @@ automaticamente sul sito, senza nessuna azione aggiuntiva:
   "Ripartizione regionale delle scelte": selettore anno, grafico a barre per
   regione, tabella con le quote) e nella relativa API
   (`/api/party.php?slug=...`, chiave `regional_results`);
-- sulla pagina `/regioni.php` (selettore anno, totale scelte per regione,
-  partito più scelto in ciascuna, link alla classifica completa);
+- sulla pagina `/regioni.php` (selettore anno, mappa coropletica dell'Italia
+  con intensità proporzionale alle scelte — le Province Autonome di Trento e
+  Bolzano sono sommate sul Trentino-Alto Adige — totale scelte per regione,
+  partito più scelto in ciascuna, link alla classifica completa). La mappa
+  richiede che `regional_results.region_id` sia valorizzato (vedi tabella
+  `regions` e `backfill_region_ids.py`); i confini SVG sono generati con
+  `python/tools/generate_italy_map.py` da openpolis/geojson-italy (dati
+  ISTAT, CC-BY 4.0);
 - come filtro "Regione" in `/classifiche.php`: se impostato, la sezione
   "Più scelti" usa i dati regionali invece di quelli nazionali (le altre
   classifiche — importo, crescita, concentrazione — restano nazionali,
