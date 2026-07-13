@@ -1,0 +1,39 @@
+# CI del progetto 2x1000: lint di sintassi di tutti i file PHP e test pytest
+# della pipeline Python (incluso il golden test di parità slugify PHP↔Python,
+# che richiede il binario php anche nel job Python).
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  php-lint:
+    name: Lint PHP
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+      - name: php -l su tutti i file
+        run: |
+          set -e
+          find app public scripts -name '*.php' -print0 | xargs -0 -n1 php -l > /dev/null
+          echo "Sintassi PHP OK"
+
+  python-tests:
+    name: Test pipeline Python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Installa pytest
+        run: pip install pytest
+      - name: Esegui i test
+        run: python -m pytest python/tests -v

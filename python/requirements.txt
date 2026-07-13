@@ -16,3 +16,6 @@ PyYAML>=6.0
 
 # --- Database (db_updater.py, pipeline.py) ---
 pymysql>=1.1.0
+
+# --- Test (python/tests/, eseguiti anche in CI) ---
+pytest>=7.4.0

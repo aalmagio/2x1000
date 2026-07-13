@@ -438,14 +438,12 @@ def find_col(header_norm: "list[str]", aliases: "frozenset[str] | set[str]") -> 
         if c in aliases:
             return i
     for i, c in enumerate(header_norm):
-        if not c:
-            # Una cella vuota è "contenuta" in qualsiasi alias (c in a è
-            # sempre vero se c == ""): senza questo controllo farebbe
-            # scattare un match falso per la prima colonna vuota incontrata,
-            # indipendentemente dall'alias cercato.
-            continue
         for a in aliases:
-            if len(a) > 4 and (a in c or c in a):
+            # La direzione "cella contenuta nell'alias" richiede una cella di
+            # almeno 5 caratteri: celle vuote o brevissime ("z", "n.") sono
+            # "contenute" per coincidenza in quasi qualsiasi alias e farebbero
+            # scattare un match falso sulla prima colonna spuria incontrata.
+            if len(a) > 4 and (a in c or (len(c) > 4 and c in a)):
                 return i
     return None
 
