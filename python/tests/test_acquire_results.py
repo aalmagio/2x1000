@@ -72,3 +72,24 @@ def test_2015_format_amount_from_teorico_column():
     assert records[0]["valid_choices"] == 19958
     assert records[0]["amount"] == 177420.0  # dal "2‰ teorico", non dall'erogato parziale
     assert control == {"control_total_choices": 22907, "control_total_amount": 205528.0}
+
+
+def test_2016_format_amount_from_totale_erogato():
+    # Formato MEF 2016: un'unica colonna importo "Totale 2‰  erogato" (doppio
+    # spazio nell'originale, niente colonna "teorico" né art. 11), più righe
+    # di titolo iniziali e colonna vuota finale (';' a fine riga).
+    header = ["Analisi statistiche - Due per mille"]
+    rows = [
+        ["Ripartizione del gettito derivante dal due per mille dell'IRPEF"],
+        ["Dichiarazioni 2016 - redditi 2015"],
+        ["Partiti politici", "Scelte valide", "% scelte sul numero contribuenti",
+         "% sul totale scelte", "Totale 2‰ erogato", ""],
+        ["Centro Democratico", "16.065", "0,04%", "1,65%", "160.916", ""],
+        ["Federazione dei verdi", "15.217", "0,04%", "1,57%", "167.865", ""],
+        ["Totale", "31.282", "", "", "328.781", ""],
+    ]
+    records, _, control = parse_results_table(header, rows)
+    assert [r["party_name"] for r in records] == ["Centro Democratico", "Federazione dei verdi"]
+    assert records[0]["valid_choices"] == 16065
+    assert records[0]["amount"] == 160916.0
+    assert control == {"control_total_choices": 31282, "control_total_amount": 328781.0}

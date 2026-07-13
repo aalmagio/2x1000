@@ -54,20 +54,26 @@ CHOICES_ALIASES = frozenset({
 # alla colonna sbagliata. Le frasi sotto sono quelle viste nei PDF reali del
 # Dipartimento delle Finanze (export=1) e nelle fonti CSV/Excel più comuni.
 #
-# Anni 2015/2016: il MEF non pubblica una colonna "Importo" ma tre colonne
-# ("2‰ teorico", "Totale 2‰ erogato nel <anno>", "Somme erogate nel <anno+1>
-# in base all'art. 11 D.L. 149/2013"): l'importo spettante fu erogato in due
-# tranche per il tetto di bilancio, e teorico ≈ erogato anno + erogato anno
-# successivo. La colonna semanticamente equivalente all'"Importo" degli anni
-# successivi è quindi "2‰ teorico": l'alias "teorico" (match parziale) la
-# aggancia in tutte le varianti di punteggiatura, e non compare in nessuna
-# altra colonna di quei report.
+# Anno 2015: il MEF non pubblica una colonna "Importo" ma tre colonne
+# ("2‰ teorico", "Totale 2‰ erogato nel 2015", "Somme erogate nel 2016 in
+# base all'art. 11 D.L. 149/2013"): l'importo spettante fu erogato in due
+# tranche per il tetto di bilancio, e teorico ≈ erogato 2015 + erogato 2016.
+# La colonna semanticamente equivalente all'"Importo" degli anni successivi
+# è quindi "2‰ teorico": l'alias "teorico" (match parziale) la aggancia in
+# tutte le varianti di punteggiatura e, scansionando le celle da sinistra,
+# vince sempre sulla colonna "erogato" parziale che le sta a destra.
+#
+# Anno 2016: un'unica colonna "Totale 2‰ erogato" (niente teorico, niente
+# art. 11: erogazione piena in un'unica soluzione, ~10 €/scelta in linea col
+# teorico 2015). Gli alias "erogato" sotto valgono solo quando non esiste
+# una colonna teorico.
 AMOUNT_ALIASES = frozenset({
     "importo", "importo (euro)", "importo euro", "importo totale",
     "importo assegnato", "ammontare",
     "totale 2‰ spettante", "totale 2 per mille spettante",
     "totale spettante", "importo spettante",
     "2‰ teorico", "2 per mille teorico", "teorico",
+    "totale 2‰ erogato", "totale 2 per mille erogato", "2‰ erogato",
 })
 
 # URL per anno (Dipartimento delle Finanze / MEF). Vuoto di default: va
