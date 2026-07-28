@@ -382,12 +382,17 @@ toccare AdE/MEF:
 ```bash
 cd python
 python db_updater.py                    # partiti, risultati, codici dai CSV committati
-python sync_party_aliases.py --import   # ripristina gli alias
+python sync_party_aliases.py --import   # ripristina gli alias e riunisce i duplicati ricreati
 python db_updater.py                    # ora anche le righe regionali risolvono
 python validate_data.py
 php ../scripts/calculate_indicators.php
 php ../scripts/export_open_data.php
 ```
+Nota sul primo `db_updater.py`: `party_aliases` è ancora vuota a quel punto,
+quindi ogni grafia storica già unita in passato (es. "Federazione dei
+Verdi" -> "Europa Verde-Verdi") viene ricreata come un partito a sé —
+`sync_party_aliases.py --import` lo rileva e la riunisce automaticamente,
+non serve rilanciare `merge_parties.py` a mano.
 
 Un URL può essere sia una pagina HTML da scansionare per trovare i link ai
 file, sia un link diretto a un file (PDF/CSV/XLSX, anche con l'estensione a

@@ -11,6 +11,15 @@ ogni nuova installazione. Questo script li rende un asset del repository:
   --export   database -> data/reference/party_aliases.csv (da committare)
   --import   data/reference/party_aliases.csv -> database (upsert, mai delete)
 
+Sul primo `db_updater.py` di un'installazione da zero, `party_aliases` è
+ancora vuota: l'euristica di risoluzione dei nomi ricrea come partiti nuovi
+proprio le grafie che i merge storici avevano già unito. Per questo
+`--import` non si limita a scrivere gli alias: prima verifica se lo slug di
+un `alias_name` corrisponde a un partito realmente esistente diverso da
+quello di destinazione e, in quel caso, lo unisce con la stessa logica di
+`merge_parties.py` (spostando risultati/codici/ripartizione regionale,
+bloccandosi se ci sono conflitti da risolvere a mano).
+
 Il CSV usa lo slug del partito (stabile tra installazioni) e non l'id.
 Flusso di ricostruzione di un database da zero, senza toccare AdE/MEF:
 
@@ -29,8 +38,9 @@ import logging
 import sys
 from pathlib import Path
 
-from common import REPO_ROOT, get_logger, load_dotenv
+from common import REPO_ROOT, get_logger, load_dotenv, slugify
 from db import db_available, get_connection
+from merge_parties import fetch_party, merge_parties
 
 REFERENCE_CSV = REPO_ROOT / "data" / "reference" / "party_aliases.csv"
 FIELDNAMES = ["party_slug", "alias_name", "year_from", "year_to", "source", "notes"]
@@ -60,13 +70,60 @@ def export_aliases(cur, out_path: Path) -> int:
     return len(rows)
 
 
-def import_aliases(cur, in_path: Path) -> "tuple[int, int, list[str]]":
-    """Restituisce (inseriti, già_presenti, slug_non_risolti)."""
+def reconcile_recreated_duplicates(cur, rows: "list[dict]", party_by_slug: "dict[str, int]") -> "list[str]":
+    """
+    Su un'installazione da zero, il primo `db_updater.py` crea i partiti
+    (compresi i doppioni) PRIMA che questo script abbia importato gli alias:
+    per quel primo giro, `party_aliases` è vuota, quindi l'euristica di
+    risoluzione dei nomi in `upsert_party()` non ha nulla su cui appoggiarsi
+    e ricrea come partito nuovo ogni grafia già unita in passato con
+    `merge_parties.py`. Qui si rileva il caso — lo slug di un `alias_name`
+    corrisponde a un partito ESISTENTE diverso da quello di destinazione
+    dell'alias — e si applica lo stesso merge, così l'anagrafica torna
+    pulita senza intervento manuale. Muta `party_by_slug` in place.
+    """
+    merged: list[str] = []
+    for row in rows:
+        target_slug = (row.get("party_slug") or "").strip()
+        alias_name = (row.get("alias_name") or "").strip()
+        if not target_slug or not alias_name:
+            continue
+        target_id = party_by_slug.get(target_slug)
+        if target_id is None:
+            continue
+        dup_slug = slugify(alias_name)
+        if dup_slug == target_slug:
+            continue
+        dup_id = party_by_slug.get(dup_slug)
+        if dup_id is None or dup_id == target_id:
+            continue
+
+        keep = fetch_party(cur, target_slug)
+        merge = fetch_party(cur, dup_slug)
+        if keep is None or merge is None:
+            continue
+
+        logging.warning(
+            f"Partito duplicato ricreato dal primo giro di db_updater.py: #{merge['id']} "
+            f"({merge['slug']!r}) corrisponde alla grafia storica {alias_name!r} già "
+            f"associata a #{keep['id']} ({keep['slug']!r}) — unione automatica."
+        )
+        if merge_parties(cur, keep, merge):
+            del party_by_slug[dup_slug]
+            merged.append(dup_slug)
+
+    return merged
+
+
+def import_aliases(cur, in_path: Path) -> "tuple[int, int, list[str], list[str]]":
+    """Restituisce (inseriti, già_presenti, slug_non_risolti, duplicati_ricreati_uniti)."""
     with open(in_path, "r", encoding="utf-8", newline="") as f:
         rows = list(csv.DictReader(f))
 
     cur.execute("SELECT slug, id FROM parties")
     party_by_slug = {slug: pid for slug, pid in cur.fetchall()}
+
+    reconciled = reconcile_recreated_duplicates(cur, rows, party_by_slug)
 
     inserted, existing = 0, 0
     unresolved: list[str] = []
@@ -103,7 +160,7 @@ def import_aliases(cur, in_path: Path) -> "tuple[int, int, list[str]]":
         )
         inserted += 1
 
-    return inserted, existing, sorted(set(unresolved))
+    return inserted, existing, sorted(set(unresolved)), reconciled
 
 
 def main():
@@ -138,9 +195,14 @@ def main():
                 if not csv_path.is_file():
                     logging.error(f"File non trovato: {csv_path}")
                     sys.exit(1)
-                inserted, existing, unresolved = import_aliases(cur, csv_path)
+                inserted, existing, unresolved, reconciled = import_aliases(cur, csv_path)
                 conn.commit()
                 logging.info(f"Import completato: {inserted} alias inseriti, {existing} già presenti.")
+                if reconciled:
+                    logging.info(
+                        f"{len(reconciled)} partiti duplicati (ricreati dal primo giro di db_updater.py) "
+                        f"uniti automaticamente: {reconciled}."
+                    )
                 if unresolved:
                     logging.warning(
                         f"{len(unresolved)} slug non trovati in `parties` (alias saltati): {unresolved}. "
