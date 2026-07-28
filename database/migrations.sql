@@ -19,3 +19,19 @@ ALTER TABLE sources
     'risultati_annuali', 'elenco_ammessi', 'codici_dichiarazione',
     'ripartizione_regionale', 'comunicato', 'altro'
   ) NOT NULL DEFAULT 'altro';
+
+-- ----------------------------------------------------------------------------
+-- 2026-07: normalizzazione delle regioni. La tabella `regions` (con i suoi
+-- dati di riferimento) viene creata rieseguendo database/schema.sql — usa
+-- CREATE TABLE IF NOT EXISTS + INSERT IGNORE, quindi è sicuro. Qui restano
+-- solo le ALTER sulla tabella già esistente `regional_results`.
+-- Dopo la migrazione, per valorizzare region_id sulle righe già importate:
+--   cd python && python backfill_region_ids.py
+-- (le importazioni successive lo valorizzano da sole).
+-- ----------------------------------------------------------------------------
+ALTER TABLE regional_results
+  ADD COLUMN region_id INT UNSIGNED NULL
+    COMMENT 'FK verso regions: risolto da db_updater.py, NULL se etichetta non riconosciuta'
+    AFTER region,
+  ADD KEY idx_regional_region_id (region_id),
+  ADD CONSTRAINT fk_regional_region FOREIGN KEY (region_id) REFERENCES regions (id) ON DELETE SET NULL;

@@ -1,0 +1,12 @@
+{
+  "declaration_year": 2025,
+  "tax_year": 2024,
+  "institution": "Ministero dell'Economia e delle Finanze — Dipartimento delle Finanze",
+  "source_type": "risultati_annuali",
+  "url": "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2025AADUEXM0101&page=1&export=3&aggiornato=1522252800",
+  "source_file": "data/raw/2025/DUEXM2025tab_01_01_.csv",
+  "checksum": "f12a0bc610ff90c9a92ced815352f3bfebb01cfd3fb762d15094395063cc0fe3",
+  "download_date": "2026-07-08",
+  "row_count": 30,
+  "total_taxpayers": 42570078
+}

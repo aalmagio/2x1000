@@ -32,20 +32,44 @@ final class RegionalResult
         return db()->query('SELECT DISTINCT region FROM regional_results ORDER BY region ASC')->fetchAll(PDO::FETCH_COLUMN);
     }
 
-    /** Totale scelte (non oscurate) per regione, per un anno. */
+    /**
+     * Totale scelte (non oscurate) per regione, per un anno. Include codice
+     * ISTAT e map_code dalla tabella `regions` (per la mappa coropletica);
+     * se il database non è ancora migrato (regions/region_id assenti) ricade
+     * sulla query storica senza codici, così la pagina resta funzionante.
+     */
     public static function totalsByYear(int $year): array
     {
-        $stmt = db()->prepare(
-            'SELECT region,
-                    SUM(CASE WHEN is_suppressed = 0 THEN valid_choices ELSE 0 END) AS total_choices,
-                    SUM(CASE WHEN is_suppressed = 1 THEN 1 ELSE 0 END) AS suppressed_count
-             FROM regional_results
-             WHERE declaration_year = :year
-             GROUP BY region
-             ORDER BY total_choices DESC'
-        );
-        $stmt->execute(['year' => $year]);
-        return $stmt->fetchAll();
+        try {
+            $stmt = db()->prepare(
+                'SELECT rr.region,
+                        MAX(rg.istat_code) AS istat_code,
+                        MAX(rg.map_code) AS map_code,
+                        SUM(CASE WHEN rr.is_suppressed = 0 THEN rr.valid_choices ELSE 0 END) AS total_choices,
+                        SUM(CASE WHEN rr.is_suppressed = 1 THEN 1 ELSE 0 END) AS suppressed_count
+                 FROM regional_results rr
+                 LEFT JOIN regions rg ON rg.id = rr.region_id
+                 WHERE rr.declaration_year = :year
+                 GROUP BY rr.region
+                 ORDER BY total_choices DESC'
+            );
+            $stmt->execute(['year' => $year]);
+            return $stmt->fetchAll();
+        } catch (PDOException) {
+            $stmt = db()->prepare(
+                'SELECT region,
+                        NULL AS istat_code,
+                        NULL AS map_code,
+                        SUM(CASE WHEN is_suppressed = 0 THEN valid_choices ELSE 0 END) AS total_choices,
+                        SUM(CASE WHEN is_suppressed = 1 THEN 1 ELSE 0 END) AS suppressed_count
+                 FROM regional_results
+                 WHERE declaration_year = :year
+                 GROUP BY region
+                 ORDER BY total_choices DESC'
+            );
+            $stmt->execute(['year' => $year]);
+            return $stmt->fetchAll();
+        }
     }
 
     /**

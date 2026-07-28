@@ -56,7 +56,9 @@ public/
   download.php             Streaming controllato dei file in data/exports/
 data/
   raw/                     File grezzi delle fonti (CSV/HTML/PDF), non versionati
-  processed/               CSV normalizzati pronti per l'import
+  processed/               CSV normalizzati pronti per l'import — da COMMITTARE
+                           dopo ogni acquisizione verificata (archivio del progetto)
+  reference/               Dati di riferimento versionati (party_aliases.csv)
   exports/                 Dataset open data generati (CSV/JSON + manifest.json)
 database/
   schema.sql               Schema completo (tabelle + indici)
@@ -72,9 +74,14 @@ python/
   acquire_party_codes.py       Scarica/estrae elenco partiti ammessi e codici dall'AdE
   acquire_regional_results.py  Scarica/estrae la ripartizione regionale delle scelte dal MEF
   db_updater.py                Scrive i dati normalizzati nel database MySQL
+  validate_data.py             Riconciliazione post-import (totali di controllo, coerenza)
   add_party_alias.py           Registra una grafia alternativa per un partito esistente
   find_duplicate_parties.py    Segnala possibili duplicati nell'anagrafica partiti
   merge_parties.py             Unisce due righe duplicate dell'anagrafica in una sola
+  region_resolver.py           Risolve le etichette regione delle fonti alla tabella regions (codici ISTAT)
+  sync_party_aliases.py        Esporta/importa gli alias da/verso data/reference/ (archivio versionato)
+  backfill_region_ids.py       Valorizza region_id sulle righe regionali importate prima della normalizzazione
+  tools/generate_italy_map.py  Rigenera la mappa SVG delle regioni (app/includes/italy-map.php)
   pipeline.py                  Orchestratore: acquisizione → DB → indicatori → export
   config.yaml                  URL per anno delle fonti ufficiali (da compilare)
 ```
@@ -106,6 +113,12 @@ python/
    ```
    mysql -u <utente> -p <database> < database/migrations.sql
    ```
+   Dopo la migrazione che introduce la tabella `regions` e la colonna
+   `regional_results.region_id`, valorizza le righe regionali già importate
+   con `cd python && python backfill_region_ids.py` (le importazioni
+   successive lo fanno da sole). Senza questo passaggio la mappa in
+   `/regioni.php` resta nascosta e i codici ISTAT nell'export regionale
+   restano vuoti.
 6. **Popola il database con i dati reali.** Due percorsi possibili:
    - **Consigliato:** la [pipeline Python](#pipeline-python-di-acquisizione-dati),
      che scarica dalle fonti ufficiali, normalizza e scrive nel database in
@@ -219,7 +232,16 @@ python pipeline.py --anni 2024 --dry-run
    idempotenti — ogni fonte viene registrata una sola volta (deduplicata per
    checksum SHA-256), ogni partito individuato per slug con
    `first_year`/`last_year` estesi automaticamente;
-5. `pipeline.py` richiama infine `scripts/calculate_indicators.php` e
+5. `validate_data.py` esegue i controlli di riconciliazione post-import:
+   la somma di scelte/importo per anno deve coincidere con la riga "Totale"
+   del file MEF originale (salvata nel `.meta.json`), la somma regionale di
+   ciascun partito non può superare il dato nazionale (e deve coincidere se
+   nessuna regione è oscurata), i partiti con risultati ma senza codice AdE
+   e le variazioni annue anomale (±50%) vengono segnalati. Se un controllo
+   fallisce lo step esce con errore e il riepilogo della pipeline lo marca
+   FAIL: correggi prima di pubblicare. Si può lanciare anche da solo:
+   `python validate_data.py --anni 2024`;
+6. `pipeline.py` richiama infine `scripts/calculate_indicators.php` e
    `scripts/export_open_data.php` (gli stessi script PHP usati per l'import
    manuale), così i numeri restano identici indipendentemente dal percorso
    di import scelto — non esiste una seconda implementazione dei calcoli in
@@ -252,6 +274,7 @@ python acquire_results.py --anni 2015,2016,2017,2018,2019,2020,2021,2022,2023,20
 python acquire_party_codes.py --anni 2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025
 python acquire_regional_results.py --anni 2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025
 python db_updater.py --anni 2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025
+python validate_data.py --anni 2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025
 php ../scripts/calculate_indicators.php
 php ../scripts/export_open_data.php
 ```
@@ -266,8 +289,14 @@ automaticamente sul sito, senza nessuna azione aggiuntiva:
   "Ripartizione regionale delle scelte": selettore anno, grafico a barre per
   regione, tabella con le quote) e nella relativa API
   (`/api/party.php?slug=...`, chiave `regional_results`);
-- sulla pagina `/regioni.php` (selettore anno, totale scelte per regione,
-  partito più scelto in ciascuna, link alla classifica completa);
+- sulla pagina `/regioni.php` (selettore anno, mappa coropletica dell'Italia
+  con intensità proporzionale alle scelte — le Province Autonome di Trento e
+  Bolzano sono sommate sul Trentino-Alto Adige — totale scelte per regione,
+  partito più scelto in ciascuna, link alla classifica completa). La mappa
+  richiede che `regional_results.region_id` sia valorizzato (vedi tabella
+  `regions` e `backfill_region_ids.py`); i confini SVG sono generati con
+  `python/tools/generate_italy_map.py` da openpolis/geojson-italy (dati
+  ISTAT, CC-BY 4.0);
 - come filtro "Regione" in `/classifiche.php`: se impostato, la sezione
   "Più scelti" usa i dati regionali invece di quelli nazionali (le altre
   classifiche — importo, crescita, concentrazione — restano nazionali,
@@ -326,9 +355,39 @@ salvato in `data/raw/<anno>/` (risultati), `data/raw/<anno>/codici/`
 (elenco/codici) o `data/raw/<anno>/geografia/` (ripartizione regionale),
 usando `--no-download`.
 
-Nota per gli anni 2016/2020 di `url_anni_codici`: i due URL puntano allo
-stesso file AdE — se l'Agenzia ne pubblica uno nuovo per uno dei due anni,
-aggiorna il link corrispondente.
+Nota per l'anno 2020 di `url_anni_codici`: l'AdE non pubblica la tabella
+2020 come file a sé (il vecchio link puntava in realtà al file del 2016,
+scoperto in produzione da `validate_data.py`). La tabella è dentro le
+istruzioni del modello 730/2020: la voce di config usa la forma
+`{url: ..., pages: "N"}` che limita l'estrazione del PDF alle pagine
+indicate — verifica il numero di pagina nel PDF prima di importare. Lo
+stesso meccanismo è disponibile da CLI con `--pages "203-206"` per
+qualunque tabella pubblicata dentro un documento lungo.
+
+**Archivio versionato dei dati normalizzati.** Le fonti istituzionali non
+garantiscono un archivio storico stabile (link che cambiano, file
+sostituiti, tabelle inglobate in altri documenti): il repository fa da
+archivio a sé stesso. La convenzione è:
+- i CSV normalizzati e i `.meta.json` in `data/processed/` vanno
+  **committati** dopo ogni acquisizione verificata (contengono già URL,
+  checksum e data di download della fonte originale: la provenienza resta
+  tracciata anche se la fonte sparisce);
+- gli **alias dei partiti** (creati con `add_party_alias.py` o dai merge)
+  vivono nel database: dopo ogni modifica esportali nell'archivio con
+  `python sync_party_aliases.py --export` e committa
+  `data/reference/party_aliases.csv`.
+
+Con questi file nel repository, un database si ricostruisce da zero senza
+toccare AdE/MEF:
+```bash
+cd python
+python db_updater.py                    # partiti, risultati, codici dai CSV committati
+python sync_party_aliases.py --import   # ripristina gli alias
+python db_updater.py                    # ora anche le righe regionali risolvono
+python validate_data.py
+php ../scripts/calculate_indicators.php
+php ../scripts/export_open_data.php
+```
 
 Un URL può essere sia una pagina HTML da scansionare per trovare i link ai
 file, sia un link diretto a un file (PDF/CSV/XLSX, anche con l'estensione a
@@ -368,7 +427,15 @@ convertirla in stringa romperebbe qualunque consumo automatico dei file.
 
 Questi file sono scaricabili dal pubblico tramite la pagina `/open-data.php`,
 che li serve attraverso `public/download.php` (whitelist rigorosa sul nome
-file, nessun accesso diretto alla cartella `data/`).
+file, nessun accesso diretto alla cartella `data/`). La pagina espone anche
+il markup **schema.org/Dataset** (JSON-LD) che rende i dataset indicizzabili
+su Google Dataset Search (richiede `APP_URL` configurato in `.env`).
+
+Se `APP_URL` è configurato, lo stesso script genera/aggiorna anche
+`public/sitemap.xml` (pagine statiche + una scheda per partito) e crea
+`public/robots.txt` se assente (senza mai sovrascriverlo). Entrambi i file
+sono per-ambiente e non versionati: serve che `public/` sia scrivibile
+dall'utente con cui gira lo script.
 
 ## API
 

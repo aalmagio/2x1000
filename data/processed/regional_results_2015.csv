@@ -1,0 +1,402 @@
+party_name,region,declaration_year,tax_year,valid_choices,is_suppressed
+Centro Democratico,Piemonte,2015,2014,1480,0
+Die Freiheitlichen,Piemonte,2015,2014,99,0
+Fratelli d'Italia Alleanza Nazionale,Piemonte,2015,2014,3295,0
+Lega Nord per l'Indipendenza della Padania,Piemonte,2015,2014,12760,0
+Movimento Associativo Italiani all'Estero - MAIE,Piemonte,2015,2014,356,0
+Movimento Politico Forza Italia,Piemonte,2015,2014,3335,0
+Movimento Stella Alpina,Piemonte,2015,2014,606,0
+Nuovo Centro Destra,Piemonte,2015,2014,778,0
+PATT - Partito Autonomista Trentino Tirolese,Piemonte,2015,2014,92,0
+Partito della Rifondazione Comunista - Sinistra Europea,Piemonte,2015,2014,5746,0
+Partito Democratico,Piemonte,2015,2014,47391,0
+Partito Liberale Italiano,Piemonte,2015,2014,229,0
+Partito Socialista Italiano,Piemonte,2015,2014,592,0
+Popolari per l'Italia,Piemonte,2015,2014,130,0
+Scelta Civica,Piemonte,2015,2014,798,0
+Sinistra Ecologia Liberta',Piemonte,2015,2014,10299,0
+SVP - Sudtiroler Volkspartei,Piemonte,2015,2014,282,0
+Union Valdotaine,Piemonte,2015,2014,582,0
+Unione per il Trentino,Piemonte,2015,2014,367,0
+Centro Democratico,Valle d'Aosta,2015,2014,30,0
+Die Freiheitlichen,Valle d'Aosta,2015,2014,,1
+Fratelli d'Italia Alleanza Nazionale,Valle d'Aosta,2015,2014,61,0
+Lega Nord per l'Indipendenza della Padania,Valle d'Aosta,2015,2014,340,0
+Movimento Associativo Italiani all'Estero - MAIE,Valle d'Aosta,2015,2014,,1
+Movimento Politico Forza Italia,Valle d'Aosta,2015,2014,,1
+Movimento Stella Alpina,Valle d'Aosta,2015,2014,407,0
+Nuovo Centro Destra,Valle d'Aosta,2015,2014,20,0
+PATT - Partito Autonomista Trentino Tirolese,Valle d'Aosta,2015,2014,,1
+Partito della Rifondazione Comunista - Sinistra Europea,Valle d'Aosta,2015,2014,116,0
+Partito Democratico,Valle d'Aosta,2015,2014,1118,0
+Partito Liberale Italiano,Valle d'Aosta,2015,2014,,1
+Partito Socialista Italiano,Valle d'Aosta,2015,2014,48,0
+Popolari per l'Italia,Valle d'Aosta,2015,2014,,1
+Scelta Civica,Valle d'Aosta,2015,2014,36,0
+Sinistra Ecologia Liberta',Valle d'Aosta,2015,2014,211,0
+SVP - Sudtiroler Volkspartei,Valle d'Aosta,2015,2014,,1
+Union Valdotaine,Valle d'Aosta,2015,2014,1476,0
+Unione per il Trentino,Valle d'Aosta,2015,2014,,1
+Centro Democratico,Lombardia,2015,2014,2756,0
+Die Freiheitlichen,Lombardia,2015,2014,242,0
+Fratelli d'Italia Alleanza Nazionale,Lombardia,2015,2014,7344,0
+Lega Nord per l'Indipendenza della Padania,Lombardia,2015,2014,52941,0
+Movimento Associativo Italiani all'Estero - MAIE,Lombardia,2015,2014,811,0
+Movimento Politico Forza Italia,Lombardia,2015,2014,10721,0
+Movimento Stella Alpina,Lombardia,2015,2014,751,0
+Nuovo Centro Destra,Lombardia,2015,2014,3633,0
+PATT - Partito Autonomista Trentino Tirolese,Lombardia,2015,2014,302,0
+Partito della Rifondazione Comunista - Sinistra Europea,Lombardia,2015,2014,8788,0
+Partito Democratico,Lombardia,2015,2014,114787,0
+Partito Liberale Italiano,Lombardia,2015,2014,427,0
+Partito Socialista Italiano,Lombardia,2015,2014,2087,0
+Popolari per l'Italia,Lombardia,2015,2014,496,0
+Scelta Civica,Lombardia,2015,2014,1907,0
+Sinistra Ecologia Liberta',Lombardia,2015,2014,18743,0
+SVP - Sudtiroler Volkspartei,Lombardia,2015,2014,721,0
+Union Valdotaine,Lombardia,2015,2014,507,0
+Unione per il Trentino,Lombardia,2015,2014,968,0
+Centro Democratico,Liguria,2015,2014,331,0
+Die Freiheitlichen,Liguria,2015,2014,37,0
+Fratelli d'Italia Alleanza Nazionale,Liguria,2015,2014,1029,0
+Lega Nord per l'Indipendenza della Padania,Liguria,2015,2014,3564,0
+Movimento Associativo Italiani all'Estero - MAIE,Liguria,2015,2014,157,0
+Movimento Politico Forza Italia,Liguria,2015,2014,1739,0
+Movimento Stella Alpina,Liguria,2015,2014,183,0
+Nuovo Centro Destra,Liguria,2015,2014,259,0
+PATT - Partito Autonomista Trentino Tirolese,Liguria,2015,2014,29,0
+Partito della Rifondazione Comunista - Sinistra Europea,Liguria,2015,2014,1671,0
+Partito Democratico,Liguria,2015,2014,18279,0
+Partito Liberale Italiano,Liguria,2015,2014,84,0
+Partito Socialista Italiano,Liguria,2015,2014,294,0
+Popolari per l'Italia,Liguria,2015,2014,47,0
+Scelta Civica,Liguria,2015,2014,187,0
+Sinistra Ecologia Liberta',Liguria,2015,2014,3333,0
+SVP - Sudtiroler Volkspartei,Liguria,2015,2014,134,0
+Union Valdotaine,Liguria,2015,2014,172,0
+Unione per il Trentino,Liguria,2015,2014,151,0
+Centro Democratico,Trentino Alto Adige (P.A. Trento),2015,2014,70,0
+Die Freiheitlichen,Trentino Alto Adige (P.A. Trento),2015,2014,66,0
+Fratelli d'Italia Alleanza Nazionale,Trentino Alto Adige (P.A. Trento),2015,2014,241,0
+Lega Nord per l'Indipendenza della Padania,Trentino Alto Adige (P.A. Trento),2015,2014,1593,0
+Movimento Associativo Italiani all'Estero - MAIE,Trentino Alto Adige (P.A. Trento),2015,2014,36,0
+Movimento Politico Forza Italia,Trentino Alto Adige (P.A. Trento),2015,2014,238,0
+Movimento Stella Alpina,Trentino Alto Adige (P.A. Trento),2015,2014,51,0
+Nuovo Centro Destra,Trentino Alto Adige (P.A. Trento),2015,2014,79,0
+PATT - Partito Autonomista Trentino Tirolese,Trentino Alto Adige (P.A. Trento),2015,2014,1557,0
+Partito della Rifondazione Comunista - Sinistra Europea,Trentino Alto Adige (P.A. Trento),2015,2014,326,0
+Partito Democratico,Trentino Alto Adige (P.A. Trento),2015,2014,4449,0
+Partito Liberale Italiano,Trentino Alto Adige (P.A. Trento),2015,2014,,1
+Partito Socialista Italiano,Trentino Alto Adige (P.A. Trento),2015,2014,52,0
+Popolari per l'Italia,Trentino Alto Adige (P.A. Trento),2015,2014,16,0
+Scelta Civica,Trentino Alto Adige (P.A. Trento),2015,2014,90,0
+Sinistra Ecologia Liberta',Trentino Alto Adige (P.A. Trento),2015,2014,661,0
+SVP - Sudtiroler Volkspartei,Trentino Alto Adige (P.A. Trento),2015,2014,90,0
+Union Valdotaine,Trentino Alto Adige (P.A. Trento),2015,2014,19,0
+Unione per il Trentino,Trentino Alto Adige (P.A. Trento),2015,2014,828,0
+Centro Democratico,Trentino Alto Adige (P.A. Bolzano),2015,2014,63,0
+Die Freiheitlichen,Trentino Alto Adige (P.A. Bolzano),2015,2014,1487,0
+Fratelli d'Italia Alleanza Nazionale,Trentino Alto Adige (P.A. Bolzano),2015,2014,164,0
+Lega Nord per l'Indipendenza della Padania,Trentino Alto Adige (P.A. Bolzano),2015,2014,473,0
+Movimento Associativo Italiani all'Estero - MAIE,Trentino Alto Adige (P.A. Bolzano),2015,2014,29,0
+Movimento Politico Forza Italia,Trentino Alto Adige (P.A. Bolzano),2015,2014,137,0
+Movimento Stella Alpina,Trentino Alto Adige (P.A. Bolzano),2015,2014,22,0
+Nuovo Centro Destra,Trentino Alto Adige (P.A. Bolzano),2015,2014,41,0
+PATT - Partito Autonomista Trentino Tirolese,Trentino Alto Adige (P.A. Bolzano),2015,2014,31,0
+Partito della Rifondazione Comunista - Sinistra Europea,Trentino Alto Adige (P.A. Bolzano),2015,2014,178,0
+Partito Democratico,Trentino Alto Adige (P.A. Bolzano),2015,2014,1597,0
+Partito Liberale Italiano,Trentino Alto Adige (P.A. Bolzano),2015,2014,10,0
+Partito Socialista Italiano,Trentino Alto Adige (P.A. Bolzano),2015,2014,56,0
+Popolari per l'Italia,Trentino Alto Adige (P.A. Bolzano),2015,2014,,1
+Scelta Civica,Trentino Alto Adige (P.A. Bolzano),2015,2014,128,0
+Sinistra Ecologia Liberta',Trentino Alto Adige (P.A. Bolzano),2015,2014,808,0
+SVP - Sudtiroler Volkspartei,Trentino Alto Adige (P.A. Bolzano),2015,2014,8484,0
+Union Valdotaine,Trentino Alto Adige (P.A. Bolzano),2015,2014,13,0
+Unione per il Trentino,Trentino Alto Adige (P.A. Bolzano),2015,2014,23,0
+Centro Democratico,Venero,2015,2014,1662,0
+Die Freiheitlichen,Venero,2015,2014,146,0
+Fratelli d'Italia Alleanza Nazionale,Venero,2015,2014,3654,0
+Lega Nord per l'Indipendenza della Padania,Venero,2015,2014,30599,0
+Movimento Associativo Italiani all'Estero - MAIE,Venero,2015,2014,436,0
+Movimento Politico Forza Italia,Venero,2015,2014,3548,0
+Movimento Stella Alpina,Venero,2015,2014,363,0
+Nuovo Centro Destra,Venero,2015,2014,1004,0
+PATT - Partito Autonomista Trentino Tirolese,Venero,2015,2014,188,0
+Partito della Rifondazione Comunista - Sinistra Europea,Venero,2015,2014,2994,0
+Partito Democratico,Venero,2015,2014,44792,0
+Partito Liberale Italiano,Venero,2015,2014,179,0
+Partito Socialista Italiano,Venero,2015,2014,704,0
+Popolari per l'Italia,Venero,2015,2014,145,0
+Scelta Civica,Venero,2015,2014,870,0
+Sinistra Ecologia Liberta',Venero,2015,2014,7262,0
+SVP - Sudtiroler Volkspartei,Venero,2015,2014,485,0
+Union Valdotaine,Venero,2015,2014,137,0
+Unione per il Trentino,Venero,2015,2014,555,0
+Centro Democratico,Friuli Venezia Giulia,2015,2014,550,0
+Die Freiheitlichen,Friuli Venezia Giulia,2015,2014,59,0
+Fratelli d'Italia Alleanza Nazionale,Friuli Venezia Giulia,2015,2014,1950,0
+Lega Nord per l'Indipendenza della Padania,Friuli Venezia Giulia,2015,2014,5316,0
+Movimento Associativo Italiani all'Estero - MAIE,Friuli Venezia Giulia,2015,2014,157,0
+Movimento Politico Forza Italia,Friuli Venezia Giulia,2015,2014,1186,0
+Movimento Stella Alpina,Friuli Venezia Giulia,2015,2014,146,0
+Nuovo Centro Destra,Friuli Venezia Giulia,2015,2014,371,0
+PATT - Partito Autonomista Trentino Tirolese,Friuli Venezia Giulia,2015,2014,50,0
+Partito della Rifondazione Comunista - Sinistra Europea,Friuli Venezia Giulia,2015,2014,1174,0
+Partito Democratico,Friuli Venezia Giulia,2015,2014,11110,0
+Partito Liberale Italiano,Friuli Venezia Giulia,2015,2014,90,0
+Partito Socialista Italiano,Friuli Venezia Giulia,2015,2014,204,0
+Popolari per l'Italia,Friuli Venezia Giulia,2015,2014,42,0
+Scelta Civica,Friuli Venezia Giulia,2015,2014,213,0
+Sinistra Ecologia Liberta',Friuli Venezia Giulia,2015,2014,2286,0
+SVP - Sudtiroler Volkspartei,Friuli Venezia Giulia,2015,2014,328,0
+Union Valdotaine,Friuli Venezia Giulia,2015,2014,55,0
+Unione per il Trentino,Friuli Venezia Giulia,2015,2014,138,0
+Centro Democratico,Emilia Romagna,2015,2014,1227,0
+Die Freiheitlichen,Emilia Romagna,2015,2014,118,0
+Fratelli d'Italia Alleanza Nazionale,Emilia Romagna,2015,2014,2835,0
+Lega Nord per l'Indipendenza della Padania,Emilia Romagna,2015,2014,11672,0
+Movimento Associativo Italiani all'Estero - MAIE,Emilia Romagna,2015,2014,343,0
+Movimento Politico Forza Italia,Emilia Romagna,2015,2014,3083,0
+Movimento Stella Alpina,Emilia Romagna,2015,2014,388,0
+Nuovo Centro Destra,Emilia Romagna,2015,2014,1008,0
+PATT - Partito Autonomista Trentino Tirolese,Emilia Romagna,2015,2014,144,0
+Partito della Rifondazione Comunista - Sinistra Europea,Emilia Romagna,2015,2014,4382,0
+Partito Democratico,Emilia Romagna,2015,2014,87440,0
+Partito Liberale Italiano,Emilia Romagna,2015,2014,206,0
+Partito Socialista Italiano,Emilia Romagna,2015,2014,931,0
+Popolari per l'Italia,Emilia Romagna,2015,2014,228,0
+Scelta Civica,Emilia Romagna,2015,2014,655,0
+Sinistra Ecologia Liberta',Emilia Romagna,2015,2014,8595,0
+SVP - Sudtiroler Volkspartei,Emilia Romagna,2015,2014,427,0
+Union Valdotaine,Emilia Romagna,2015,2014,190,0
+Unione per il Trentino,Emilia Romagna,2015,2014,457,0
+Centro Democratico,Toscana,2015,2014,1058,0
+Die Freiheitlichen,Toscana,2015,2014,63,0
+Fratelli d'Italia Alleanza Nazionale,Toscana,2015,2014,2639,0
+Lega Nord per l'Indipendenza della Padania,Toscana,2015,2014,5184,0
+Movimento Associativo Italiani all'Estero - MAIE,Toscana,2015,2014,219,0
+Movimento Politico Forza Italia,Toscana,2015,2014,2554,0
+Movimento Stella Alpina,Toscana,2015,2014,249,0
+Nuovo Centro Destra,Toscana,2015,2014,581,0
+PATT - Partito Autonomista Trentino Tirolese,Toscana,2015,2014,72,0
+Partito della Rifondazione Comunista - Sinistra Europea,Toscana,2015,2014,4714,0
+Partito Democratico,Toscana,2015,2014,64129,0
+Partito Liberale Italiano,Toscana,2015,2014,107,0
+Partito Socialista Italiano,Toscana,2015,2014,1081,0
+Popolari per l'Italia,Toscana,2015,2014,100,0
+Scelta Civica,Toscana,2015,2014,375,0
+Sinistra Ecologia Liberta',Toscana,2015,2014,8806,0
+SVP - Sudtiroler Volkspartei,Toscana,2015,2014,329,0
+Union Valdotaine,Toscana,2015,2014,108,0
+Unione per il Trentino,Toscana,2015,2014,242,0
+Centro Democratico,Umbria,2015,2014,210,0
+Die Freiheitlichen,Umbria,2015,2014,17,0
+Fratelli d'Italia Alleanza Nazionale,Umbria,2015,2014,799,0
+Lega Nord per l'Indipendenza della Padania,Umbria,2015,2014,1049,0
+Movimento Associativo Italiani all'Estero - MAIE,Umbria,2015,2014,47,0
+Movimento Politico Forza Italia,Umbria,2015,2014,636,0
+Movimento Stella Alpina,Umbria,2015,2014,31,0
+Nuovo Centro Destra,Umbria,2015,2014,207,0
+PATT - Partito Autonomista Trentino Tirolese,Umbria,2015,2014,11,0
+Partito della Rifondazione Comunista - Sinistra Europea,Umbria,2015,2014,833,0
+Partito Democratico,Umbria,2015,2014,10979,0
+Partito Liberale Italiano,Umbria,2015,2014,20,0
+Partito Socialista Italiano,Umbria,2015,2014,323,0
+Popolari per l'Italia,Umbria,2015,2014,22,0
+Scelta Civica,Umbria,2015,2014,92,0
+Sinistra Ecologia Liberta',Umbria,2015,2014,1245,0
+SVP - Sudtiroler Volkspartei,Umbria,2015,2014,32,0
+Union Valdotaine,Umbria,2015,2014,,1
+Unione per il Trentino,Umbria,2015,2014,37,0
+Centro Democratico,Marche,2015,2014,376,0
+Die Freiheitlichen,Marche,2015,2014,17,0
+Fratelli d'Italia Alleanza Nazionale,Marche,2015,2014,1346,0
+Lega Nord per l'Indipendenza della Padania,Marche,2015,2014,2189,0
+Movimento Associativo Italiani all'Estero - MAIE,Marche,2015,2014,85,0
+Movimento Politico Forza Italia,Marche,2015,2014,1072,0
+Movimento Stella Alpina,Marche,2015,2014,80,0
+Nuovo Centro Destra,Marche,2015,2014,313,0
+PATT - Partito Autonomista Trentino Tirolese,Marche,2015,2014,36,0
+Partito della Rifondazione Comunista - Sinistra Europea,Marche,2015,2014,983,0
+Partito Democratico,Marche,2015,2014,16177,0
+Partito Liberale Italiano,Marche,2015,2014,38,0
+Partito Socialista Italiano,Marche,2015,2014,271,0
+Popolari per l'Italia,Marche,2015,2014,67,0
+Scelta Civica,Marche,2015,2014,169,0
+Sinistra Ecologia Liberta',Marche,2015,2014,2186,0
+SVP - Sudtiroler Volkspartei,Marche,2015,2014,61,0
+Union Valdotaine,Marche,2015,2014,83,0
+Unione per il Trentino,Marche,2015,2014,73,0
+Centro Democratico,Lazio,2015,2014,1519,0
+Die Freiheitlichen,Lazio,2015,2014,209,0
+Fratelli d'Italia Alleanza Nazionale,Lazio,2015,2014,10226,0
+Lega Nord per l'Indipendenza della Padania,Lazio,2015,2014,5130,0
+Movimento Associativo Italiani all'Estero - MAIE,Lazio,2015,2014,554,0
+Movimento Politico Forza Italia,Lazio,2015,2014,5729,0
+Movimento Stella Alpina,Lazio,2015,2014,430,0
+Nuovo Centro Destra,Lazio,2015,2014,1469,0
+PATT - Partito Autonomista Trentino Tirolese,Lazio,2015,2014,144,0
+Partito della Rifondazione Comunista - Sinistra Europea,Lazio,2015,2014,5544,0
+Partito Democratico,Lazio,2015,2014,47662,0
+Partito Liberale Italiano,Lazio,2015,2014,258,0
+Partito Socialista Italiano,Lazio,2015,2014,1176,0
+Popolari per l'Italia,Lazio,2015,2014,217,0
+Scelta Civica,Lazio,2015,2014,756,0
+Sinistra Ecologia Liberta',Lazio,2015,2014,12878,0
+SVP - Sudtiroler Volkspartei,Lazio,2015,2014,446,0
+Union Valdotaine,Lazio,2015,2014,281,0
+Unione per il Trentino,Lazio,2015,2014,585,0
+Centro Democratico,Abruzzo,2015,2014,191,0
+Die Freiheitlichen,Abruzzo,2015,2014,20,0
+Fratelli d'Italia Alleanza Nazionale,Abruzzo,2015,2014,899,0
+Lega Nord per l'Indipendenza della Padania,Abruzzo,2015,2014,1237,0
+Movimento Associativo Italiani all'Estero - MAIE,Abruzzo,2015,2014,50,0
+Movimento Politico Forza Italia,Abruzzo,2015,2014,1074,0
+Movimento Stella Alpina,Abruzzo,2015,2014,22,0
+Nuovo Centro Destra,Abruzzo,2015,2014,185,0
+PATT - Partito Autonomista Trentino Tirolese,Abruzzo,2015,2014,,1
+Partito della Rifondazione Comunista - Sinistra Europea,Abruzzo,2015,2014,612,0
+Partito Democratico,Abruzzo,2015,2014,5261,0
+Partito Liberale Italiano,Abruzzo,2015,2014,32,0
+Partito Socialista Italiano,Abruzzo,2015,2014,164,0
+Popolari per l'Italia,Abruzzo,2015,2014,18,0
+Scelta Civica,Abruzzo,2015,2014,98,0
+Sinistra Ecologia Liberta',Abruzzo,2015,2014,1658,0
+SVP - Sudtiroler Volkspartei,Abruzzo,2015,2014,45,0
+Union Valdotaine,Abruzzo,2015,2014,22,0
+Unione per il Trentino,Abruzzo,2015,2014,37,0
+Centro Democratico,Molise,2015,2014,75,0
+Die Freiheitlichen,Molise,2015,2014,,1
+Fratelli d'Italia Alleanza Nazionale,Molise,2015,2014,320,0
+Lega Nord per l'Indipendenza della Padania,Molise,2015,2014,91,0
+Movimento Associativo Italiani all'Estero - MAIE,Molise,2015,2014,,1
+Movimento Politico Forza Italia,Molise,2015,2014,154,0
+Movimento Stella Alpina,Molise,2015,2014,,1
+Nuovo Centro Destra,Molise,2015,2014,53,0
+PATT - Partito Autonomista Trentino Tirolese,Molise,2015,2014,,1
+Partito della Rifondazione Comunista - Sinistra Europea,Molise,2015,2014,109,0
+Partito Democratico,Molise,2015,2014,,1
+Partito Liberale Italiano,Molise,2015,2014,,1
+Partito Socialista Italiano,Molise,2015,2014,62,0
+Popolari per l'Italia,Molise,2015,2014,11,0
+Scelta Civica,Molise,2015,2014,19,0
+Sinistra Ecologia Liberta',Molise,2015,2014,306,0
+SVP - Sudtiroler Volkspartei,Molise,2015,2014,,1
+Union Valdotaine,Molise,2015,2014,,1
+Unione per il Trentino,Molise,2015,2014,,1
+Centro Democratico,Campania,2015,2014,2214,0
+Die Freiheitlichen,Campania,2015,2014,68,0
+Fratelli d'Italia Alleanza Nazionale,Campania,2015,2014,7830,0
+Lega Nord per l'Indipendenza della Padania,Campania,2015,2014,825,0
+Movimento Associativo Italiani all'Estero - MAIE,Campania,2015,2014,346,0
+Movimento Politico Forza Italia,Campania,2015,2014,11081,0
+Movimento Stella Alpina,Campania,2015,2014,169,0
+Nuovo Centro Destra,Campania,2015,2014,1548,0
+PATT - Partito Autonomista Trentino Tirolese,Campania,2015,2014,34,0
+Partito della Rifondazione Comunista - Sinistra Europea,Campania,2015,2014,2871,0
+Partito Democratico,Campania,2015,2014,40500,0
+Partito Liberale Italiano,Campania,2015,2014,129,0
+Partito Socialista Italiano,Campania,2015,2014,2128,0
+Popolari per l'Italia,Campania,2015,2014,323,0
+Scelta Civica,Campania,2015,2014,749,0
+Sinistra Ecologia Liberta',Campania,2015,2014,5626,0
+SVP - Sudtiroler Volkspartei,Campania,2015,2014,62,0
+Union Valdotaine,Campania,2015,2014,125,0
+Unione per il Trentino,Campania,2015,2014,130,0
+Centro Democratico,Puglia,2015,2014,1622,0
+Die Freiheitlichen,Puglia,2015,2014,42,0
+Fratelli d'Italia Alleanza Nazionale,Puglia,2015,2014,3539,0
+Lega Nord per l'Indipendenza della Padania,Puglia,2015,2014,725,0
+Movimento Associativo Italiani all'Estero - MAIE,Puglia,2015,2014,115,0
+Movimento Politico Forza Italia,Puglia,2015,2014,4698,0
+Movimento Stella Alpina,Puglia,2015,2014,391,0
+Nuovo Centro Destra,Puglia,2015,2014,1609,0
+PATT - Partito Autonomista Trentino Tirolese,Puglia,2015,2014,39,0
+Partito della Rifondazione Comunista - Sinistra Europea,Puglia,2015,2014,1467,0
+Partito Democratico,Puglia,2015,2014,24123,0
+Partito Liberale Italiano,Puglia,2015,2014,208,0
+Partito Socialista Italiano,Puglia,2015,2014,2298,0
+Popolari per l'Italia,Puglia,2015,2014,416,0
+Scelta Civica,Puglia,2015,2014,661,0
+Sinistra Ecologia Liberta',Puglia,2015,2014,5657,0
+SVP - Sudtiroler Volkspartei,Puglia,2015,2014,49,0
+Union Valdotaine,Puglia,2015,2014,27,0
+Unione per il Trentino,Puglia,2015,2014,57,0
+Centro Democratico,Basilicata,2015,2014,259,0
+Die Freiheitlichen,Basilicata,2015,2014,,1
+Fratelli d'Italia Alleanza Nazionale,Basilicata,2015,2014,367,0
+Lega Nord per l'Indipendenza della Padania,Basilicata,2015,2014,106,0
+Movimento Associativo Italiani all'Estero - MAIE,Basilicata,2015,2014,43,0
+Movimento Politico Forza Italia,Basilicata,2015,2014,348,0
+Movimento Stella Alpina,Basilicata,2015,2014,,1
+Nuovo Centro Destra,Basilicata,2015,2014,125,0
+PATT - Partito Autonomista Trentino Tirolese,Basilicata,2015,2014,,1
+Partito della Rifondazione Comunista - Sinistra Europea,Basilicata,2015,2014,272,0
+Partito Democratico,Basilicata,2015,2014,5187,0
+Partito Liberale Italiano,Basilicata,2015,2014,17,0
+Partito Socialista Italiano,Basilicata,2015,2014,167,0
+Popolari per l'Italia,Basilicata,2015,2014,128,0
+Scelta Civica,Basilicata,2015,2014,104,0
+Sinistra Ecologia Liberta',Basilicata,2015,2014,1120,0
+SVP - Sudtiroler Volkspartei,Basilicata,2015,2014,,1
+Union Valdotaine,Basilicata,2015,2014,135,0
+Unione per il Trentino,Basilicata,2015,2014,,1
+Centro Democratico,Calabria,2015,2014,986,0
+Die Freiheitlichen,Calabria,2015,2014,21,0
+Fratelli d'Italia Alleanza Nazionale,Calabria,2015,2014,2009,0
+Lega Nord per l'Indipendenza della Padania,Calabria,2015,2014,440,0
+Movimento Associativo Italiani all'Estero - MAIE,Calabria,2015,2014,49,0
+Movimento Politico Forza Italia,Calabria,2015,2014,2417,0
+Movimento Stella Alpina,Calabria,2015,2014,297,0
+Nuovo Centro Destra,Calabria,2015,2014,700,0
+PATT - Partito Autonomista Trentino Tirolese,Calabria,2015,2014,31,0
+Partito della Rifondazione Comunista - Sinistra Europea,Calabria,2015,2014,1064,0
+Partito Democratico,Calabria,2015,2014,15413,0
+Partito Liberale Italiano,Calabria,2015,2014,29,0
+Partito Socialista Italiano,Calabria,2015,2014,3551,0
+Popolari per l'Italia,Calabria,2015,2014,53,0
+Scelta Civica,Calabria,2015,2014,336,0
+Sinistra Ecologia Liberta',Calabria,2015,2014,1393,0
+SVP - Sudtiroler Volkspartei,Calabria,2015,2014,15,0
+Union Valdotaine,Calabria,2015,2014,19,0
+Unione per il Trentino,Calabria,2015,2014,50,0
+Centro Democratico,Sicilia,2015,2014,2415,0
+Die Freiheitlichen,Sicilia,2015,2014,207,0
+Fratelli d'Italia Alleanza Nazionale,Sicilia,2015,2014,4360,0
+Lega Nord per l'Indipendenza della Padania,Sicilia,2015,2014,1803,0
+Movimento Associativo Italiani all'Estero - MAIE,Sicilia,2015,2014,294,0
+Movimento Politico Forza Italia,Sicilia,2015,2014,5501,0
+Movimento Stella Alpina,Sicilia,2015,2014,595,0
+Nuovo Centro Destra,Sicilia,2015,2014,2425,0
+PATT - Partito Autonomista Trentino Tirolese,Sicilia,2015,2014,44,0
+Partito della Rifondazione Comunista - Sinistra Europea,Sicilia,2015,2014,1641,0
+Partito Democratico,Sicilia,2015,2014,23239,0
+Partito Liberale Italiano,Sicilia,2015,2014,484,0
+Partito Socialista Italiano,Sicilia,2015,2014,1664,0
+Popolari per l'Italia,Sicilia,2015,2014,159,0
+Scelta Civica,Sicilia,2015,2014,719,0
+Sinistra Ecologia Liberta',Sicilia,2015,2014,4665,0
+SVP - Sudtiroler Volkspartei,Sicilia,2015,2014,112,0
+Union Valdotaine,Sicilia,2015,2014,55,0
+Unione per il Trentino,Sicilia,2015,2014,140,0
+Centro Democratico,Sardegna,2015,2014,864,0
+Die Freiheitlichen,Sardegna,2015,2014,17,0
+Fratelli d'Italia Alleanza Nazionale,Sardegna,2015,2014,1455,0
+Lega Nord per l'Indipendenza della Padania,Sardegna,2015,2014,904,0
+Movimento Associativo Italiani all'Estero - MAIE,Sardegna,2015,2014,277,0
+Movimento Politico Forza Italia,Sardegna,2015,2014,1470,0
+Movimento Stella Alpina,Sardegna,2015,2014,58,0
+Nuovo Centro Destra,Sardegna,2015,2014,356,0
+PATT - Partito Autonomista Trentino Tirolese,Sardegna,2015,2014,181,0
+Partito della Rifondazione Comunista - Sinistra Europea,Sardegna,2015,2014,1079,0
+Partito Democratico,Sardegna,2015,2014,11644,0
+Partito Liberale Italiano,Sardegna,2015,2014,46,0
+Partito Socialista Italiano,Sardegna,2015,2014,404,0
+Popolari per l'Italia,Sardegna,2015,2014,27,0
+Scelta Civica,Sardegna,2015,2014,267,0
+Sinistra Ecologia Liberta',Sardegna,2015,2014,3253,0
+SVP - Sudtiroler Volkspartei,Sardegna,2015,2014,73,0
+Union Valdotaine,Sardegna,2015,2014,63,0
+Unione per il Trentino,Sardegna,2015,2014,89,0
+Movimento Politico Forza Italia,Non residenti,2015,2014,,1
+Partito Democratico,Non residenti,2015,2014,,1

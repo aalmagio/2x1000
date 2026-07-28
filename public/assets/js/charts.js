@@ -5,28 +5,23 @@
 (function (global) {
   'use strict';
 
-  var PALETTE_LIGHT = ['#2a78d6', '#1baf7a', '#eda100', '#008300', '#4a3aa7', '#e34948', '#e87ba4', '#eb6834'];
-  var PALETTE_DARK = ['#3987e5', '#199e70', '#c98500', '#008300', '#9085e9', '#e66767', '#d55181', '#d95926'];
-
-  function isDark() {
-    return global.matchMedia && global.matchMedia('(prefers-color-scheme: dark)').matches;
-  }
-
-  function palette() {
-    return isDark() ? PALETTE_DARK : PALETTE_LIGHT;
-  }
+  // Il sito è dichiaratamente solo-chiaro (main.css: color-scheme: light,
+  // nessun tema scuro): i grafici usano sempre la palette chiara. Seguire
+  // prefers-color-scheme qui — come accadeva in passato — produceva assi ed
+  // etichette grigio chiaro su pagina bianca per gli utenti con il sistema
+  // operativo in tema scuro.
+  var PALETTE = ['#2a78d6', '#1baf7a', '#eda100', '#008300', '#4a3aa7', '#e34948', '#e87ba4', '#eb6834'];
 
   function seriesColor(index) {
-    var p = palette();
-    return p[index % p.length];
+    return PALETTE[index % PALETTE.length];
   }
 
   function chromeColor() {
-    return isDark() ? '#c3c2b7' : '#52514e';
+    return '#52514e';
   }
 
   function gridColor() {
-    return isDark() ? '#2c2c2a' : '#e1e0d9';
+    return '#e1e0d9';
   }
 
   Chart.defaults.font.family = 'inherit';

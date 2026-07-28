@@ -94,7 +94,15 @@ $datasets = [
     ],
     '2x1000_partiti_ripartizione_regionale' => [
         'sql' => 'SELECT rr.id, rr.party_id, p.slug AS party_slug, p.canonical_name, rr.declaration_year, rr.tax_year,
-                          rr.region, rr.valid_choices, rr.is_suppressed, rr.source_id
+                          rr.region, rg.istat_code AS region_istat_code, rr.valid_choices, rr.is_suppressed, rr.source_id
+                   FROM regional_results rr
+                   JOIN parties p ON p.id = rr.party_id
+                   LEFT JOIN regions rg ON rg.id = rr.region_id
+                   ORDER BY rr.declaration_year DESC, p.canonical_name ASC, rr.region ASC',
+        // Database non ancora migrato (tabella regions / colonna region_id assenti):
+        // esporta senza codice ISTAT invece di interrompere la rigenerazione.
+        'fallback_sql' => 'SELECT rr.id, rr.party_id, p.slug AS party_slug, p.canonical_name, rr.declaration_year, rr.tax_year,
+                          rr.region, NULL AS region_istat_code, rr.valid_choices, rr.is_suppressed, rr.source_id
                    FROM regional_results rr JOIN parties p ON p.id = rr.party_id
                    ORDER BY rr.declaration_year DESC, p.canonical_name ASC, rr.region ASC',
         'decimals' => ['valid_choices' => 0],
@@ -104,7 +112,16 @@ $datasets = [
 $manifest = ['generated_at' => date('c'), 'files' => []];
 
 foreach ($datasets as $name => $spec) {
-    $rows = $pdo->query($spec['sql'])->fetchAll();
+    try {
+        $rows = $pdo->query($spec['sql'])->fetchAll();
+    } catch (PDOException $e) {
+        if (!isset($spec['fallback_sql'])) {
+            throw $e;
+        }
+        fwrite(STDERR, "Avviso: query principale fallita per $name (database non migrato? " .
+            $e->getMessage() . "), uso il fallback.\n");
+        $rows = $pdo->query($spec['fallback_sql'])->fetchAll();
+    }
     write_csv("$exportDir/$name.csv", $rows, $spec['decimals']);
     write_json("$exportDir/$name.json", $rows);
     $manifest['files'][] = "$name.csv";
@@ -114,4 +131,48 @@ foreach ($datasets as $name => $spec) {
 
 file_put_contents("$exportDir/manifest.json", json_encode($manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 echo "Manifest aggiornato: $exportDir/manifest.json\n";
+
+// ---------------------------------------------------------------------------
+// sitemap.xml (pagine statiche + una scheda per partito) e robots.txt.
+// Richiedono APP_URL in .env: le sitemap vogliono URL assoluti. Rigenerata a
+// ogni export perché l'elenco dei partiti può essere cambiato con l'import.
+// robots.txt viene creato solo se assente (non sovrascrive personalizzazioni).
+// ---------------------------------------------------------------------------
+$appUrl = rtrim((string) env('APP_URL', ''), '/');
+if ($appUrl === '') {
+    echo "APP_URL non configurato in .env: sitemap.xml non generata.\n";
+} else {
+    $publicDir = __DIR__ . '/../public';
+    $staticPaths = [
+        '/', '/dashboard.php', '/partiti.php', '/classifiche.php', '/regioni.php',
+        '/confronta.php', '/open-data.php', '/metodo.php', '/fonti.php',
+    ];
+    $urls = array_map(fn(string $p) => $appUrl . $p, $staticPaths);
+    $slugs = $pdo->query('SELECT slug FROM parties ORDER BY slug ASC')->fetchAll(PDO::FETCH_COLUMN);
+    foreach ($slugs as $slug) {
+        $urls[] = $appUrl . '/partito.php?slug=' . rawurlencode((string) $slug);
+    }
+
+    $today = date('Y-m-d');
+    $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+    $xml .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+    foreach ($urls as $u) {
+        $xml .= '  <url><loc>' . htmlspecialchars($u, ENT_XML1) . "</loc><lastmod>$today</lastmod></url>\n";
+    }
+    $xml .= "</urlset>\n";
+
+    if (@file_put_contents("$publicDir/sitemap.xml", $xml) !== false) {
+        echo 'Sitemap generata: public/sitemap.xml (' . count($urls) . " URL)\n";
+    } else {
+        fwrite(STDERR, "Avviso: impossibile scrivere public/sitemap.xml (permessi sulla cartella public/?)\n");
+    }
+
+    if (!is_file("$publicDir/robots.txt")) {
+        $robots = "User-agent: *\nAllow: /\n\nSitemap: $appUrl/sitemap.xml\n";
+        if (@file_put_contents("$publicDir/robots.txt", $robots) !== false) {
+            echo "robots.txt creato: public/robots.txt\n";
+        }
+    }
+}
+
 echo "Completato.\n";

@@ -1,0 +1,14 @@
+{
+  "declaration_year": 2016,
+  "tax_year": 2015,
+  "institution": "Ministero dell'Economia e delle Finanze — Dipartimento delle Finanze",
+  "source_type": "risultati_annuali",
+  "url": "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2016AADUEXM0101&page=1&export=3&aggiornato=1522252800",
+  "source_file": "data/raw/2016/DUEXM2016tab_01_01_.csv",
+  "checksum": "d63baaa169b01155b3e2bee0738557a3d05670cdcfd313a7e68e48d4def8f2c9",
+  "download_date": "2026-07-13",
+  "row_count": 21,
+  "total_taxpayers": 40770277,
+  "control_total_choices": 971983,
+  "control_total_amount": 11763227.0
+}

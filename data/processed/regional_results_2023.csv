@@ -1,0 +1,610 @@
+party_name,region,declaration_year,tax_year,valid_choices,is_suppressed
+Articolo 1 - Movimento Democratico e Progressista,Piemonte,2023,2022,3732,0
+Azione,Piemonte,2023,2022,3523,0
+Centro Democratico,Piemonte,2023,2022,755,0
+Coraggio Italia,Piemonte,2023,2022,183,0
+Democrazia Solidale - DemoS,Piemonte,2023,2022,291,0
+Europa Verde-Verdi,Piemonte,2023,2022,6833,0
+Fratelli d'Italia - Alleanza Nazionale,Piemonte,2023,2022,27424,0
+Italia al Centro,Piemonte,2023,2022,94,0
+Italia dei Valori,Piemonte,2023,2022,314,0
+Italia Viva,Piemonte,2023,2022,4485,0
+Lega Nord per l'Indipendenza della Padania,Piemonte,2023,2022,2369,0
+Lega per Salvini Premier,Piemonte,2023,2022,8737,0
+Movimento Associativo Italiani all'Estero - MAIE,Piemonte,2023,2022,514,0
+Movimento Cinque Stelle,Piemonte,2023,2022,14223,0
+Movimento politico Forza Italia,Piemonte,2023,2022,2636,0
+Noi con l'Italia,Piemonte,2023,2022,215,0
+Partito Autonomista Trentino Tirolese,Piemonte,2023,2022,244,0
+Partito Democratico,Piemonte,2023,2022,44506,0
+Partito Socialista Italiano,Piemonte,2023,2022,955,0
+Piu' Europa,Piemonte,2023,2022,6404,0
+Possibile,Piemonte,2023,2022,2449,0
+Radicali Italiani,Piemonte,2023,2022,2300,0
+Sinistra Italiana,Piemonte,2023,2022,7452,0
+Stella Alpina,Piemonte,2023,2022,485,0
+Sud chiama Nord,Piemonte,2023,2022,740,0
+Sudtiroler Volkspartei,Piemonte,2023,2022,566,0
+UDC - Unione di centro,Piemonte,2023,2022,116,0
+Unione Sudamericana Emigrati Italiani,Piemonte,2023,2022,1390,0
+Union Valdotaine,Piemonte,2023,2022,937,0
+Articolo 1 - Movimento Democratico e Progressista,Valle d'Aosta,2023,2022,60,0
+Azione,Valle d'Aosta,2023,2022,53,0
+Centro Democratico,Valle d'Aosta,2023,2022,,1
+Coraggio Italia,Valle d'Aosta,2023,2022,,1
+Democrazia Solidale - DemoS,Valle d'Aosta,2023,2022,,1
+Europa Verde-Verdi,Valle d'Aosta,2023,2022,206,0
+Fratelli d'Italia - Alleanza Nazionale,Valle d'Aosta,2023,2022,739,0
+Italia al Centro,Valle d'Aosta,2023,2022,,1
+Italia dei Valori,Valle d'Aosta,2023,2022,,1
+Italia Viva,Valle d'Aosta,2023,2022,76,0
+Lega Nord per l'Indipendenza della Padania,Valle d'Aosta,2023,2022,67,0
+Lega per Salvini Premier,Valle d'Aosta,2023,2022,289,0
+Movimento Associativo Italiani all'Estero - MAIE,Valle d'Aosta,2023,2022,11,0
+Movimento Cinque Stelle,Valle d'Aosta,2023,2022,213,0
+Movimento politico Forza Italia,Valle d'Aosta,2023,2022,109,0
+Noi con l'Italia,Valle d'Aosta,2023,2022,,1
+Partito Autonomista Trentino Tirolese,Valle d'Aosta,2023,2022,14,0
+Partito Democratico,Valle d'Aosta,2023,2022,919,0
+Partito Socialista Italiano,Valle d'Aosta,2023,2022,33,0
+Piu' Europa,Valle d'Aosta,2023,2022,119,0
+Possibile,Valle d'Aosta,2023,2022,39,0
+Radicali Italiani,Valle d'Aosta,2023,2022,68,0
+Sinistra Italiana,Valle d'Aosta,2023,2022,161,0
+Stella Alpina,Valle d'Aosta,2023,2022,220,0
+Sud chiama Nord,Valle d'Aosta,2023,2022,,1
+Sudtiroler Volkspartei,Valle d'Aosta,2023,2022,18,0
+UDC - Unione di centro,Valle d'Aosta,2023,2022,,1
+Unione Sudamericana Emigrati Italiani,Valle d'Aosta,2023,2022,41,0
+Union Valdotaine,Valle d'Aosta,2023,2022,1301,0
+Articolo 1 - Movimento Democratico e Progressista,Lombardia,2023,2022,7514,0
+Azione,Lombardia,2023,2022,11011,0
+Centro Democratico,Lombardia,2023,2022,1727,0
+Coraggio Italia,Lombardia,2023,2022,370,0
+Democrazia Solidale - DemoS,Lombardia,2023,2022,356,0
+Europa Verde-Verdi,Lombardia,2023,2022,20628,0
+Fratelli d'Italia - Alleanza Nazionale,Lombardia,2023,2022,81172,0
+Italia al Centro,Lombardia,2023,2022,279,0
+Italia dei Valori,Lombardia,2023,2022,749,0
+Italia Viva,Lombardia,2023,2022,12954,0
+Lega Nord per l'Indipendenza della Padania,Lombardia,2023,2022,14000,0
+Lega per Salvini Premier,Lombardia,2023,2022,35419,0
+Movimento Associativo Italiani all'Estero - MAIE,Lombardia,2023,2022,1100,0
+Movimento Cinque Stelle,Lombardia,2023,2022,26613,0
+Movimento politico Forza Italia,Lombardia,2023,2022,9390,0
+Noi con l'Italia,Lombardia,2023,2022,1548,0
+Partito Autonomista Trentino Tirolese,Lombardia,2023,2022,800,0
+Partito Democratico,Lombardia,2023,2022,116214,0
+Partito Socialista Italiano,Lombardia,2023,2022,2654,0
+Piu' Europa,Lombardia,2023,2022,15185,0
+Possibile,Lombardia,2023,2022,5988,0
+Radicali Italiani,Lombardia,2023,2022,5875,0
+Sinistra Italiana,Lombardia,2023,2022,15287,0
+Stella Alpina,Lombardia,2023,2022,1275,0
+Sud chiama Nord,Lombardia,2023,2022,2588,0
+Sudtiroler Volkspartei,Lombardia,2023,2022,1823,0
+UDC - Unione di centro,Lombardia,2023,2022,447,0
+Unione Sudamericana Emigrati Italiani,Lombardia,2023,2022,2883,0
+Union Valdotaine,Lombardia,2023,2022,1039,0
+Articolo 1 - Movimento Democratico e Progressista,Liguria,2023,2022,1332,0
+Azione,Liguria,2023,2022,974,0
+Centro Democratico,Liguria,2023,2022,201,0
+Coraggio Italia,Liguria,2023,2022,86,0
+Democrazia Solidale - DemoS,Liguria,2023,2022,139,0
+Europa Verde-Verdi,Liguria,2023,2022,2128,0
+Fratelli d'Italia - Alleanza Nazionale,Liguria,2023,2022,7893,0
+Italia al Centro,Liguria,2023,2022,63,0
+Italia dei Valori,Liguria,2023,2022,95,0
+Italia Viva,Liguria,2023,2022,1459,0
+Lega Nord per l'Indipendenza della Padania,Liguria,2023,2022,533,0
+Lega per Salvini Premier,Liguria,2023,2022,2764,0
+Movimento Associativo Italiani all'Estero - MAIE,Liguria,2023,2022,132,0
+Movimento Cinque Stelle,Liguria,2023,2022,4862,0
+Movimento politico Forza Italia,Liguria,2023,2022,1083,0
+Noi con l'Italia,Liguria,2023,2022,78,0
+Partito Autonomista Trentino Tirolese,Liguria,2023,2022,106,0
+Partito Democratico,Liguria,2023,2022,15797,0
+Partito Socialista Italiano,Liguria,2023,2022,332,0
+Piu' Europa,Liguria,2023,2022,1386,0
+Possibile,Liguria,2023,2022,715,0
+Radicali Italiani,Liguria,2023,2022,611,0
+Sinistra Italiana,Liguria,2023,2022,2331,0
+Stella Alpina,Liguria,2023,2022,128,0
+Sud chiama Nord,Liguria,2023,2022,906,0
+Sudtiroler Volkspartei,Liguria,2023,2022,207,0
+UDC - Unione di centro,Liguria,2023,2022,61,0
+Unione Sudamericana Emigrati Italiani,Liguria,2023,2022,378,0
+Union Valdotaine,Liguria,2023,2022,241,0
+Articolo 1 - Movimento Democratico e Progressista,Trentino Alto Adige,2023,2022,404,0
+Azione,Trentino Alto Adige,2023,2022,558,0
+Centro Democratico,Trentino Alto Adige,2023,2022,135,0
+Coraggio Italia,Trentino Alto Adige,2023,2022,29,0
+Democrazia Solidale - DemoS,Trentino Alto Adige,2023,2022,36,0
+Europa Verde-Verdi,Trentino Alto Adige,2023,2022,3229,0
+Fratelli d'Italia - Alleanza Nazionale,Trentino Alto Adige,2023,2022,4550,0
+Italia al Centro,Trentino Alto Adige,2023,2022,16,0
+Italia dei Valori,Trentino Alto Adige,2023,2022,57,0
+Italia Viva,Trentino Alto Adige,2023,2022,618,0
+Lega Nord per l'Indipendenza della Padania,Trentino Alto Adige,2023,2022,384,0
+Lega per Salvini Premier,Trentino Alto Adige,2023,2022,1791,0
+Movimento Associativo Italiani all'Estero - MAIE,Trentino Alto Adige,2023,2022,90,0
+Movimento Cinque Stelle,Trentino Alto Adige,2023,2022,1633,0
+Movimento politico Forza Italia,Trentino Alto Adige,2023,2022,366,0
+Noi con l'Italia,Trentino Alto Adige,2023,2022,39,0
+Partito Autonomista Trentino Tirolese,Trentino Alto Adige,2023,2022,1587,0
+Partito Democratico,Trentino Alto Adige,2023,2022,7299,0
+Partito Socialista Italiano,Trentino Alto Adige,2023,2022,270,0
+Piu' Europa,Trentino Alto Adige,2023,2022,1164,0
+Possibile,Trentino Alto Adige,2023,2022,352,0
+Radicali Italiani,Trentino Alto Adige,2023,2022,370,0
+Sinistra Italiana,Trentino Alto Adige,2023,2022,842,0
+Stella Alpina,Trentino Alto Adige,2023,2022,185,0
+Sud chiama Nord,Trentino Alto Adige,2023,2022,72,0
+Sudtiroler Volkspartei,Trentino Alto Adige,2023,2022,12639,0
+UDC - Unione di centro,Trentino Alto Adige,2023,2022,31,0
+Unione Sudamericana Emigrati Italiani,Trentino Alto Adige,2023,2022,253,0
+Union Valdotaine,Trentino Alto Adige,2023,2022,35,0
+Articolo 1 - Movimento Democratico e Progressista,Veneto,2023,2022,3448,0
+Azione,Veneto,2023,2022,4290,0
+Centro Democratico,Veneto,2023,2022,699,0
+Coraggio Italia,Veneto,2023,2022,456,0
+Democrazia Solidale - DemoS,Veneto,2023,2022,230,0
+Europa Verde-Verdi,Veneto,2023,2022,9673,0
+Fratelli d'Italia - Alleanza Nazionale,Veneto,2023,2022,37951,0
+Italia al Centro,Veneto,2023,2022,76,0
+Italia dei Valori,Veneto,2023,2022,305,0
+Italia Viva,Veneto,2023,2022,4058,0
+Lega Nord per l'Indipendenza della Padania,Veneto,2023,2022,16533,0
+Lega per Salvini Premier,Veneto,2023,2022,13963,0
+Movimento Associativo Italiani all'Estero - MAIE,Veneto,2023,2022,569,0
+Movimento Cinque Stelle,Veneto,2023,2022,10534,0
+Movimento politico Forza Italia,Veneto,2023,2022,2827,0
+Noi con l'Italia,Veneto,2023,2022,256,0
+Partito Autonomista Trentino Tirolese,Veneto,2023,2022,388,0
+Partito Democratico,Veneto,2023,2022,44546,0
+Partito Socialista Italiano,Veneto,2023,2022,1005,0
+Piu' Europa,Veneto,2023,2022,6289,0
+Possibile,Veneto,2023,2022,2238,0
+Radicali Italiani,Veneto,2023,2022,2362,0
+Sinistra Italiana,Veneto,2023,2022,5259,0
+Stella Alpina,Veneto,2023,2022,632,0
+Sud chiama Nord,Veneto,2023,2022,2381,0
+Sudtiroler Volkspartei,Veneto,2023,2022,1027,0
+UDC - Unione di centro,Veneto,2023,2022,230,0
+Unione Sudamericana Emigrati Italiani,Veneto,2023,2022,1528,0
+Union Valdotaine,Veneto,2023,2022,324,0
+Articolo 1 - Movimento Democratico e Progressista,Friuli Venezia Giulia,2023,2022,945,0
+Azione,Friuli Venezia Giulia,2023,2022,990,0
+Centro Democratico,Friuli Venezia Giulia,2023,2022,176,0
+Coraggio Italia,Friuli Venezia Giulia,2023,2022,63,0
+Democrazia Solidale - DemoS,Friuli Venezia Giulia,2023,2022,33,0
+Europa Verde-Verdi,Friuli Venezia Giulia,2023,2022,2197,0
+Fratelli d'Italia - Alleanza Nazionale,Friuli Venezia Giulia,2023,2022,12277,0
+Italia al Centro,Friuli Venezia Giulia,2023,2022,31,0
+Italia dei Valori,Friuli Venezia Giulia,2023,2022,99,0
+Italia Viva,Friuli Venezia Giulia,2023,2022,1009,0
+Lega Nord per l'Indipendenza della Padania,Friuli Venezia Giulia,2023,2022,1004,0
+Lega per Salvini Premier,Friuli Venezia Giulia,2023,2022,3450,0
+Movimento Associativo Italiani all'Estero - MAIE,Friuli Venezia Giulia,2023,2022,181,0
+Movimento Cinque Stelle,Friuli Venezia Giulia,2023,2022,2857,0
+Movimento politico Forza Italia,Friuli Venezia Giulia,2023,2022,942,0
+Noi con l'Italia,Friuli Venezia Giulia,2023,2022,83,0
+Partito Autonomista Trentino Tirolese,Friuli Venezia Giulia,2023,2022,164,0
+Partito Democratico,Friuli Venezia Giulia,2023,2022,10788,0
+Partito Socialista Italiano,Friuli Venezia Giulia,2023,2022,263,0
+Piu' Europa,Friuli Venezia Giulia,2023,2022,1528,0
+Possibile,Friuli Venezia Giulia,2023,2022,605,0
+Radicali Italiani,Friuli Venezia Giulia,2023,2022,707,0
+Sinistra Italiana,Friuli Venezia Giulia,2023,2022,1634,0
+Stella Alpina,Friuli Venezia Giulia,2023,2022,216,0
+Sud chiama Nord,Friuli Venezia Giulia,2023,2022,279,0
+Sudtiroler Volkspartei,Friuli Venezia Giulia,2023,2022,493,0
+UDC - Unione di centro,Friuli Venezia Giulia,2023,2022,47,0
+Unione Sudamericana Emigrati Italiani,Friuli Venezia Giulia,2023,2022,415,0
+Union Valdotaine,Friuli Venezia Giulia,2023,2022,124,0
+Articolo 1 - Movimento Democratico e Progressista,Emilia Romagna,2023,2022,4714,0
+Azione,Emilia Romagna,2023,2022,3527,0
+Centro Democratico,Emilia Romagna,2023,2022,796,0
+Coraggio Italia,Emilia Romagna,2023,2022,141,0
+Democrazia Solidale - DemoS,Emilia Romagna,2023,2022,171,0
+Europa Verde-Verdi,Emilia Romagna,2023,2022,8188,0
+Fratelli d'Italia - Alleanza Nazionale,Emilia Romagna,2023,2022,25107,0
+Italia al Centro,Emilia Romagna,2023,2022,89,0
+Italia dei Valori,Emilia Romagna,2023,2022,255,0
+Italia Viva,Emilia Romagna,2023,2022,5299,0
+Lega Nord per l'Indipendenza della Padania,Emilia Romagna,2023,2022,1816,0
+Lega per Salvini Premier,Emilia Romagna,2023,2022,7183,0
+Movimento Associativo Italiani all'Estero - MAIE,Emilia Romagna,2023,2022,363,0
+Movimento Cinque Stelle,Emilia Romagna,2023,2022,12610,0
+Movimento politico Forza Italia,Emilia Romagna,2023,2022,2281,0
+Noi con l'Italia,Emilia Romagna,2023,2022,267,0
+Partito Autonomista Trentino Tirolese,Emilia Romagna,2023,2022,316,0
+Partito Democratico,Emilia Romagna,2023,2022,79695,0
+Partito Socialista Italiano,Emilia Romagna,2023,2022,1191,0
+Piu' Europa,Emilia Romagna,2023,2022,5467,0
+Possibile,Emilia Romagna,2023,2022,2609,0
+Radicali Italiani,Emilia Romagna,2023,2022,1936,0
+Sinistra Italiana,Emilia Romagna,2023,2022,5548,0
+Stella Alpina,Emilia Romagna,2023,2022,368,0
+Sud chiama Nord,Emilia Romagna,2023,2022,409,0
+Sudtiroler Volkspartei,Emilia Romagna,2023,2022,666,0
+UDC - Unione di centro,Emilia Romagna,2023,2022,138,0
+Unione Sudamericana Emigrati Italiani,Emilia Romagna,2023,2022,1019,0
+Union Valdotaine,Emilia Romagna,2023,2022,279,0
+Articolo 1 - Movimento Democratico e Progressista,Toscana,2023,2022,2765,0
+Azione,Toscana,2023,2022,2086,0
+Centro Democratico,Toscana,2023,2022,508,0
+Coraggio Italia,Toscana,2023,2022,95,0
+Democrazia Solidale - DemoS,Toscana,2023,2022,103,0
+Europa Verde-Verdi,Toscana,2023,2022,5155,0
+Fratelli d'Italia - Alleanza Nazionale,Toscana,2023,2022,18399,0
+Italia al Centro,Toscana,2023,2022,102,0
+Italia dei Valori,Toscana,2023,2022,174,0
+Italia Viva,Toscana,2023,2022,6350,0
+Lega Nord per l'Indipendenza della Padania,Toscana,2023,2022,599,0
+Lega per Salvini Premier,Toscana,2023,2022,3877,0
+Movimento Associativo Italiani all'Estero - MAIE,Toscana,2023,2022,256,0
+Movimento Cinque Stelle,Toscana,2023,2022,10240,0
+Movimento politico Forza Italia,Toscana,2023,2022,1745,0
+Noi con l'Italia,Toscana,2023,2022,101,0
+Partito Autonomista Trentino Tirolese,Toscana,2023,2022,196,0
+Partito Democratico,Toscana,2023,2022,52476,0
+Partito Socialista Italiano,Toscana,2023,2022,1018,0
+Piu' Europa,Toscana,2023,2022,3096,0
+Possibile,Toscana,2023,2022,1744,0
+Radicali Italiani,Toscana,2023,2022,1524,0
+Sinistra Italiana,Toscana,2023,2022,7886,0
+Stella Alpina,Toscana,2023,2022,257,0
+Sud chiama Nord,Toscana,2023,2022,702,0
+Sudtiroler Volkspartei,Toscana,2023,2022,408,0
+UDC - Unione di centro,Toscana,2023,2022,137,0
+Unione Sudamericana Emigrati Italiani,Toscana,2023,2022,731,0
+Union Valdotaine,Toscana,2023,2022,207,0
+Articolo 1 - Movimento Democratico e Progressista,Umbria,2023,2022,592,0
+Azione,Umbria,2023,2022,412,0
+Centro Democratico,Umbria,2023,2022,94,0
+Coraggio Italia,Umbria,2023,2022,12,0
+Democrazia Solidale - DemoS,Umbria,2023,2022,57,0
+Europa Verde-Verdi,Umbria,2023,2022,721,0
+Fratelli d'Italia - Alleanza Nazionale,Umbria,2023,2022,4395,0
+Italia al Centro,Umbria,2023,2022,32,0
+Italia dei Valori,Umbria,2023,2022,37,0
+Italia Viva,Umbria,2023,2022,818,0
+Lega Nord per l'Indipendenza della Padania,Umbria,2023,2022,144,0
+Lega per Salvini Premier,Umbria,2023,2022,926,0
+Movimento Associativo Italiani all'Estero - MAIE,Umbria,2023,2022,58,0
+Movimento Cinque Stelle,Umbria,2023,2022,2381,0
+Movimento politico Forza Italia,Umbria,2023,2022,394,0
+Noi con l'Italia,Umbria,2023,2022,28,0
+Partito Autonomista Trentino Tirolese,Umbria,2023,2022,27,0
+Partito Democratico,Umbria,2023,2022,7339,0
+Partito Socialista Italiano,Umbria,2023,2022,296,0
+Piu' Europa,Umbria,2023,2022,448,0
+Possibile,Umbria,2023,2022,266,0
+Radicali Italiani,Umbria,2023,2022,273,0
+Sinistra Italiana,Umbria,2023,2022,1176,0
+Stella Alpina,Umbria,2023,2022,49,0
+Sud chiama Nord,Umbria,2023,2022,78,0
+Sudtiroler Volkspartei,Umbria,2023,2022,58,0
+UDC - Unione di centro,Umbria,2023,2022,36,0
+Unione Sudamericana Emigrati Italiani,Umbria,2023,2022,127,0
+Union Valdotaine,Umbria,2023,2022,50,0
+Articolo 1 - Movimento Democratico e Progressista,Marche,2023,2022,708,0
+Azione,Marche,2023,2022,735,0
+Centro Democratico,Marche,2023,2022,159,0
+Coraggio Italia,Marche,2023,2022,35,0
+Democrazia Solidale - DemoS,Marche,2023,2022,39,0
+Europa Verde-Verdi,Marche,2023,2022,1287,0
+Fratelli d'Italia - Alleanza Nazionale,Marche,2023,2022,6972,0
+Italia al Centro,Marche,2023,2022,51,0
+Italia dei Valori,Marche,2023,2022,65,0
+Italia Viva,Marche,2023,2022,1267,0
+Lega Nord per l'Indipendenza della Padania,Marche,2023,2022,175,0
+Lega per Salvini Premier,Marche,2023,2022,1431,0
+Movimento Associativo Italiani all'Estero - MAIE,Marche,2023,2022,97,0
+Movimento Cinque Stelle,Marche,2023,2022,3756,0
+Movimento politico Forza Italia,Marche,2023,2022,664,0
+Noi con l'Italia,Marche,2023,2022,69,0
+Partito Autonomista Trentino Tirolese,Marche,2023,2022,42,0
+Partito Democratico,Marche,2023,2022,10562,0
+Partito Socialista Italiano,Marche,2023,2022,353,0
+Piu' Europa,Marche,2023,2022,806,0
+Possibile,Marche,2023,2022,596,0
+Radicali Italiani,Marche,2023,2022,380,0
+Sinistra Italiana,Marche,2023,2022,1402,0
+Stella Alpina,Marche,2023,2022,91,0
+Sud chiama Nord,Marche,2023,2022,85,0
+Sudtiroler Volkspartei,Marche,2023,2022,114,0
+UDC - Unione di centro,Marche,2023,2022,105,0
+Unione Sudamericana Emigrati Italiani,Marche,2023,2022,239,0
+Union Valdotaine,Marche,2023,2022,135,0
+Articolo 1 - Movimento Democratico e Progressista,Lazio,2023,2022,4878,0
+Azione,Lazio,2023,2022,6243,0
+Centro Democratico,Lazio,2023,2022,860,0
+Coraggio Italia,Lazio,2023,2022,183,0
+Democrazia Solidale - DemoS,Lazio,2023,2022,1091,0
+Europa Verde-Verdi,Lazio,2023,2022,7868,0
+Fratelli d'Italia - Alleanza Nazionale,Lazio,2023,2022,51449,0
+Italia al Centro,Lazio,2023,2022,178,0
+Italia dei Valori,Lazio,2023,2022,427,0
+Italia Viva,Lazio,2023,2022,6630,0
+Lega Nord per l'Indipendenza della Padania,Lazio,2023,2022,277,0
+Lega per Salvini Premier,Lazio,2023,2022,4754,0
+Movimento Associativo Italiani all'Estero - MAIE,Lazio,2023,2022,709,0
+Movimento Cinque Stelle,Lazio,2023,2022,26153,0
+Movimento politico Forza Italia,Lazio,2023,2022,3002,0
+Noi con l'Italia,Lazio,2023,2022,271,0
+Partito Autonomista Trentino Tirolese,Lazio,2023,2022,307,0
+Partito Democratico,Lazio,2023,2022,55543,0
+Partito Socialista Italiano,Lazio,2023,2022,1452,0
+Piu' Europa,Lazio,2023,2022,5924,0
+Possibile,Lazio,2023,2022,2699,0
+Radicali Italiani,Lazio,2023,2022,3683,0
+Sinistra Italiana,Lazio,2023,2022,9792,0
+Stella Alpina,Lazio,2023,2022,452,0
+Sud chiama Nord,Lazio,2023,2022,876,0
+Sudtiroler Volkspartei,Lazio,2023,2022,645,0
+UDC - Unione di centro,Lazio,2023,2022,270,0
+Unione Sudamericana Emigrati Italiani,Lazio,2023,2022,1510,0
+Union Valdotaine,Lazio,2023,2022,389,0
+Articolo 1 - Movimento Democratico e Progressista,Abruzzo,2023,2022,532,0
+Azione,Abruzzo,2023,2022,558,0
+Centro Democratico,Abruzzo,2023,2022,81,0
+Coraggio Italia,Abruzzo,2023,2022,23,0
+Democrazia Solidale - DemoS,Abruzzo,2023,2022,24,0
+Europa Verde-Verdi,Abruzzo,2023,2022,900,0
+Fratelli d'Italia - Alleanza Nazionale,Abruzzo,2023,2022,5046,0
+Italia al Centro,Abruzzo,2023,2022,46,0
+Italia dei Valori,Abruzzo,2023,2022,34,0
+Italia Viva,Abruzzo,2023,2022,790,0
+Lega Nord per l'Indipendenza della Padania,Abruzzo,2023,2022,42,0
+Lega per Salvini Premier,Abruzzo,2023,2022,874,0
+Movimento Associativo Italiani all'Estero - MAIE,Abruzzo,2023,2022,50,0
+Movimento Cinque Stelle,Abruzzo,2023,2022,2951,0
+Movimento politico Forza Italia,Abruzzo,2023,2022,548,0
+Noi con l'Italia,Abruzzo,2023,2022,55,0
+Partito Autonomista Trentino Tirolese,Abruzzo,2023,2022,13,0
+Partito Democratico,Abruzzo,2023,2022,4883,0
+Partito Socialista Italiano,Abruzzo,2023,2022,247,0
+Piu' Europa,Abruzzo,2023,2022,514,0
+Possibile,Abruzzo,2023,2022,230,0
+Radicali Italiani,Abruzzo,2023,2022,388,0
+Sinistra Italiana,Abruzzo,2023,2022,767,0
+Stella Alpina,Abruzzo,2023,2022,32,0
+Sud chiama Nord,Abruzzo,2023,2022,289,0
+Sudtiroler Volkspartei,Abruzzo,2023,2022,42,0
+UDC - Unione di centro,Abruzzo,2023,2022,32,0
+Unione Sudamericana Emigrati Italiani,Abruzzo,2023,2022,121,0
+Union Valdotaine,Abruzzo,2023,2022,31,0
+Articolo 1 - Movimento Democratico e Progressista,Molise,2023,2022,89,0
+Azione,Molise,2023,2022,56,0
+Centro Democratico,Molise,2023,2022,57,0
+Coraggio Italia,Molise,2023,2022,,1
+Democrazia Solidale - DemoS,Molise,2023,2022,13,0
+Europa Verde-Verdi,Molise,2023,2022,165,0
+Fratelli d'Italia - Alleanza Nazionale,Molise,2023,2022,768,0
+Italia al Centro,Molise,2023,2022,,1
+Italia dei Valori,Molise,2023,2022,,1
+Italia Viva,Molise,2023,2022,151,0
+Lega Nord per l'Indipendenza della Padania,Molise,2023,2022,,1
+Lega per Salvini Premier,Molise,2023,2022,98,0
+Movimento Associativo Italiani all'Estero - MAIE,Molise,2023,2022,19,0
+Movimento Cinque Stelle,Molise,2023,2022,789,0
+Movimento politico Forza Italia,Molise,2023,2022,120,0
+Noi con l'Italia,Molise,2023,2022,,1
+Partito Autonomista Trentino Tirolese,Molise,2023,2022,,1
+Partito Democratico,Molise,2023,2022,1247,0
+Partito Socialista Italiano,Molise,2023,2022,79,0
+Piu' Europa,Molise,2023,2022,77,0
+Possibile,Molise,2023,2022,52,0
+Radicali Italiani,Molise,2023,2022,39,0
+Sinistra Italiana,Molise,2023,2022,144,0
+Stella Alpina,Molise,2023,2022,,1
+Sud chiama Nord,Molise,2023,2022,,1
+Sudtiroler Volkspartei,Molise,2023,2022,10,0
+UDC - Unione di centro,Molise,2023,2022,18,0
+Unione Sudamericana Emigrati Italiani,Molise,2023,2022,22,0
+Union Valdotaine,Molise,2023,2022,,1
+Articolo 1 - Movimento Democratico e Progressista,Campania,2023,2022,2196,0
+Azione,Campania,2023,2022,1396,0
+Centro Democratico,Campania,2023,2022,1518,0
+Coraggio Italia,Campania,2023,2022,153,0
+Democrazia Solidale - DemoS,Campania,2023,2022,144,0
+Europa Verde-Verdi,Campania,2023,2022,4343,0
+Fratelli d'Italia - Alleanza Nazionale,Campania,2023,2022,18161,0
+Italia al Centro,Campania,2023,2022,84,0
+Italia dei Valori,Campania,2023,2022,261,0
+Italia Viva,Campania,2023,2022,3374,0
+Lega Nord per l'Indipendenza della Padania,Campania,2023,2022,80,0
+Lega per Salvini Premier,Campania,2023,2022,1503,0
+Movimento Associativo Italiani all'Estero - MAIE,Campania,2023,2022,417,0
+Movimento Cinque Stelle,Campania,2023,2022,16841,0
+Movimento politico Forza Italia,Campania,2023,2022,3016,0
+Noi con l'Italia,Campania,2023,2022,2821,0
+Partito Autonomista Trentino Tirolese,Campania,2023,2022,63,0
+Partito Democratico,Campania,2023,2022,24544,0
+Partito Socialista Italiano,Campania,2023,2022,2896,0
+Piu' Europa,Campania,2023,2022,1733,0
+Possibile,Campania,2023,2022,726,0
+Radicali Italiani,Campania,2023,2022,812,0
+Sinistra Italiana,Campania,2023,2022,4165,0
+Stella Alpina,Campania,2023,2022,78,0
+Sud chiama Nord,Campania,2023,2022,3630,0
+Sudtiroler Volkspartei,Campania,2023,2022,135,0
+UDC - Unione di centro,Campania,2023,2022,92,0
+Unione Sudamericana Emigrati Italiani,Campania,2023,2022,625,0
+Union Valdotaine,Campania,2023,2022,109,0
+Articolo 1 - Movimento Democratico e Progressista,Puglia,2023,2022,1608,0
+Azione,Puglia,2023,2022,836,0
+Centro Democratico,Puglia,2023,2022,362,0
+Coraggio Italia,Puglia,2023,2022,166,0
+Democrazia Solidale - DemoS,Puglia,2023,2022,279,0
+Europa Verde-Verdi,Puglia,2023,2022,2098,0
+Fratelli d'Italia - Alleanza Nazionale,Puglia,2023,2022,13766,0
+Italia al Centro,Puglia,2023,2022,48,0
+Italia dei Valori,Puglia,2023,2022,120,0
+Italia Viva,Puglia,2023,2022,2137,0
+Lega Nord per l'Indipendenza della Padania,Puglia,2023,2022,54,0
+Lega per Salvini Premier,Puglia,2023,2022,1157,0
+Movimento Associativo Italiani all'Estero - MAIE,Puglia,2023,2022,128,0
+Movimento Cinque Stelle,Puglia,2023,2022,11426,0
+Movimento politico Forza Italia,Puglia,2023,2022,2008,0
+Noi con l'Italia,Puglia,2023,2022,630,0
+Partito Autonomista Trentino Tirolese,Puglia,2023,2022,34,0
+Partito Democratico,Puglia,2023,2022,15451,0
+Partito Socialista Italiano,Puglia,2023,2022,935,0
+Piu' Europa,Puglia,2023,2022,1511,0
+Possibile,Puglia,2023,2022,498,0
+Radicali Italiani,Puglia,2023,2022,525,0
+Sinistra Italiana,Puglia,2023,2022,2611,0
+Stella Alpina,Puglia,2023,2022,43,0
+Sud chiama Nord,Puglia,2023,2022,2593,0
+Sudtiroler Volkspartei,Puglia,2023,2022,78,0
+UDC - Unione di centro,Puglia,2023,2022,130,0
+Unione Sudamericana Emigrati Italiani,Puglia,2023,2022,301,0
+Union Valdotaine,Puglia,2023,2022,42,0
+Articolo 1 - Movimento Democratico e Progressista,Basilicata,2023,2022,566,0
+Azione,Basilicata,2023,2022,227,0
+Centro Democratico,Basilicata,2023,2022,,1
+Coraggio Italia,Basilicata,2023,2022,10,0
+Democrazia Solidale - DemoS,Basilicata,2023,2022,,1
+Europa Verde-Verdi,Basilicata,2023,2022,248,0
+Fratelli d'Italia - Alleanza Nazionale,Basilicata,2023,2022,1428,0
+Italia al Centro,Basilicata,2023,2022,10,0
+Italia dei Valori,Basilicata,2023,2022,40,0
+Italia Viva,Basilicata,2023,2022,447,0
+Lega Nord per l'Indipendenza della Padania,Basilicata,2023,2022,,1
+Lega per Salvini Premier,Basilicata,2023,2022,186,0
+Movimento Associativo Italiani all'Estero - MAIE,Basilicata,2023,2022,28,0
+Movimento Cinque Stelle,Basilicata,2023,2022,2252,0
+Movimento politico Forza Italia,Basilicata,2023,2022,180,0
+Noi con l'Italia,Basilicata,2023,2022,35,0
+Partito Autonomista Trentino Tirolese,Basilicata,2023,2022,,1
+Partito Democratico,Basilicata,2023,2022,2704,0
+Partito Socialista Italiano,Basilicata,2023,2022,215,0
+Piu' Europa,Basilicata,2023,2022,161,0
+Possibile,Basilicata,2023,2022,93,0
+Radicali Italiani,Basilicata,2023,2022,132,0
+Sinistra Italiana,Basilicata,2023,2022,356,0
+Stella Alpina,Basilicata,2023,2022,,1
+Sud chiama Nord,Basilicata,2023,2022,52,0
+Sudtiroler Volkspartei,Basilicata,2023,2022,10,0
+UDC - Unione di centro,Basilicata,2023,2022,,1
+Unione Sudamericana Emigrati Italiani,Basilicata,2023,2022,53,0
+Union Valdotaine,Basilicata,2023,2022,,1
+Articolo 1 - Movimento Democratico e Progressista,Calabria,2023,2022,575,0
+Azione,Calabria,2023,2022,330,0
+Centro Democratico,Calabria,2023,2022,216,0
+Coraggio Italia,Calabria,2023,2022,46,0
+Democrazia Solidale - DemoS,Calabria,2023,2022,50,0
+Europa Verde-Verdi,Calabria,2023,2022,623,0
+Fratelli d'Italia - Alleanza Nazionale,Calabria,2023,2022,6498,0
+Italia al Centro,Calabria,2023,2022,25,0
+Italia dei Valori,Calabria,2023,2022,73,0
+Italia Viva,Calabria,2023,2022,1522,0
+Lega Nord per l'Indipendenza della Padania,Calabria,2023,2022,56,0
+Lega per Salvini Premier,Calabria,2023,2022,783,0
+Movimento Associativo Italiani all'Estero - MAIE,Calabria,2023,2022,67,0
+Movimento Cinque Stelle,Calabria,2023,2022,4280,0
+Movimento politico Forza Italia,Calabria,2023,2022,1164,0
+Noi con l'Italia,Calabria,2023,2022,182,0
+Partito Autonomista Trentino Tirolese,Calabria,2023,2022,35,0
+Partito Democratico,Calabria,2023,2022,6600,0
+Partito Socialista Italiano,Calabria,2023,2022,1192,0
+Piu' Europa,Calabria,2023,2022,331,0
+Possibile,Calabria,2023,2022,269,0
+Radicali Italiani,Calabria,2023,2022,276,0
+Sinistra Italiana,Calabria,2023,2022,790,0
+Stella Alpina,Calabria,2023,2022,10,0
+Sud chiama Nord,Calabria,2023,2022,1337,0
+Sudtiroler Volkspartei,Calabria,2023,2022,37,0
+UDC - Unione di centro,Calabria,2023,2022,61,0
+Unione Sudamericana Emigrati Italiani,Calabria,2023,2022,301,0
+Union Valdotaine,Calabria,2023,2022,21,0
+Articolo 1 - Movimento Democratico e Progressista,Sicilia,2023,2022,1482,0
+Azione,Sicilia,2023,2022,955,0
+Centro Democratico,Sicilia,2023,2022,421,0
+Coraggio Italia,Sicilia,2023,2022,66,0
+Democrazia Solidale - DemoS,Sicilia,2023,2022,75,0
+Europa Verde-Verdi,Sicilia,2023,2022,2147,0
+Fratelli d'Italia - Alleanza Nazionale,Sicilia,2023,2022,15288,0
+Italia al Centro,Sicilia,2023,2022,56,0
+Italia dei Valori,Sicilia,2023,2022,311,0
+Italia Viva,Sicilia,2023,2022,3022,0
+Lega Nord per l'Indipendenza della Padania,Sicilia,2023,2022,75,0
+Lega per Salvini Premier,Sicilia,2023,2022,1587,0
+Movimento Associativo Italiani all'Estero - MAIE,Sicilia,2023,2022,199,0
+Movimento Cinque Stelle,Sicilia,2023,2022,12399,0
+Movimento politico Forza Italia,Sicilia,2023,2022,1531,0
+Noi con l'Italia,Sicilia,2023,2022,172,0
+Partito Autonomista Trentino Tirolese,Sicilia,2023,2022,68,0
+Partito Democratico,Sicilia,2023,2022,18051,0
+Partito Socialista Italiano,Sicilia,2023,2022,868,0
+Piu' Europa,Sicilia,2023,2022,1243,0
+Possibile,Sicilia,2023,2022,531,0
+Radicali Italiani,Sicilia,2023,2022,680,0
+Sinistra Italiana,Sicilia,2023,2022,2565,0
+Stella Alpina,Sicilia,2023,2022,69,0
+Sud chiama Nord,Sicilia,2023,2022,21499,0
+Sudtiroler Volkspartei,Sicilia,2023,2022,87,0
+UDC - Unione di centro,Sicilia,2023,2022,160,0
+Unione Sudamericana Emigrati Italiani,Sicilia,2023,2022,436,0
+Union Valdotaine,Sicilia,2023,2022,59,0
+Articolo 1 - Movimento Democratico e Progressista,Sardegna,2023,2022,1420,0
+Azione,Sardegna,2023,2022,589,0
+Centro Democratico,Sardegna,2023,2022,296,0
+Coraggio Italia,Sardegna,2023,2022,50,0
+Democrazia Solidale - DemoS,Sardegna,2023,2022,97,0
+Europa Verde-Verdi,Sardegna,2023,2022,1551,0
+Fratelli d'Italia - Alleanza Nazionale,Sardegna,2023,2022,8695,0
+Italia al Centro,Sardegna,2023,2022,51,0
+Italia dei Valori,Sardegna,2023,2022,119,0
+Italia Viva,Sardegna,2023,2022,1107,0
+Lega Nord per l'Indipendenza della Padania,Sardegna,2023,2022,80,0
+Lega per Salvini Premier,Sardegna,2023,2022,944,0
+Movimento Associativo Italiani all'Estero - MAIE,Sardegna,2023,2022,190,0
+Movimento Cinque Stelle,Sardegna,2023,2022,7474,0
+Movimento politico Forza Italia,Sardegna,2023,2022,683,0
+Noi con l'Italia,Sardegna,2023,2022,61,0
+Partito Autonomista Trentino Tirolese,Sardegna,2023,2022,73,0
+Partito Democratico,Sardegna,2023,2022,12172,0
+Partito Socialista Italiano,Sardegna,2023,2022,619,0
+Piu' Europa,Sardegna,2023,2022,1007,0
+Possibile,Sardegna,2023,2022,935,0
+Radicali Italiani,Sardegna,2023,2022,709,0
+Sinistra Italiana,Sardegna,2023,2022,1955,0
+Stella Alpina,Sardegna,2023,2022,67,0
+Sud chiama Nord,Sardegna,2023,2022,77,0
+Sudtiroler Volkspartei,Sardegna,2023,2022,131,0
+UDC - Unione di centro,Sardegna,2023,2022,88,0
+Unione Sudamericana Emigrati Italiani,Sardegna,2023,2022,538,0
+Union Valdotaine,Sardegna,2023,2022,92,0
+Articolo 1 - Movimento Democratico e Progressista,Non indicata,2023,2022,0,0
+Azione,Non indicata,2023,2022,0,0
+Centro Democratico,Non indicata,2023,2022,0,0
+Coraggio Italia,Non indicata,2023,2022,0,0
+Democrazia Solidale - DemoS,Non indicata,2023,2022,0,0
+Europa Verde-Verdi,Non indicata,2023,2022,0,0
+Fratelli d'Italia - Alleanza Nazionale,Non indicata,2023,2022,0,0
+Italia al Centro,Non indicata,2023,2022,0,0
+Italia dei Valori,Non indicata,2023,2022,0,0
+Italia Viva,Non indicata,2023,2022,0,0
+Lega Nord per l'Indipendenza della Padania,Non indicata,2023,2022,0,0
+Lega per Salvini Premier,Non indicata,2023,2022,0,0
+Movimento Associativo Italiani all'Estero - MAIE,Non indicata,2023,2022,0,0
+Movimento Cinque Stelle,Non indicata,2023,2022,0,0
+Movimento politico Forza Italia,Non indicata,2023,2022,0,0
+Noi con l'Italia,Non indicata,2023,2022,0,0
+Partito Autonomista Trentino Tirolese,Non indicata,2023,2022,0,0
+Partito Democratico,Non indicata,2023,2022,0,0
+Partito Socialista Italiano,Non indicata,2023,2022,0,0
+Piu' Europa,Non indicata,2023,2022,0,0
+Possibile,Non indicata,2023,2022,0,0
+Radicali Italiani,Non indicata,2023,2022,0,0
+Sinistra Italiana,Non indicata,2023,2022,0,0
+Stella Alpina,Non indicata,2023,2022,0,0
+Sud chiama Nord,Non indicata,2023,2022,0,0
+Sudtiroler Volkspartei,Non indicata,2023,2022,0,0
+UDC - Unione di centro,Non indicata,2023,2022,0,0
+Unione Sudamericana Emigrati Italiani,Non indicata,2023,2022,0,0
+Union Valdotaine,Non indicata,2023,2022,0,0

@@ -24,6 +24,22 @@ declare(strict_types=1);
   <?php if ($regions === []): ?>
     <p>Nessun dato disponibile per l'anno selezionato.</p>
   <?php else: ?>
+  <div class="chart-card" id="map-card" hidden>
+    <h3>Mappa delle scelte per regione (<?= h((string) $year) ?>)</h3>
+    <p class="text-muted">
+      Intensità di colore proporzionale al numero di scelte valide (scala in radice quadrata,
+      per mantenere leggibili le regioni piccole). Le due Province Autonome di Trento e Bolzano
+      sono sommate sul Trentino-Alto Adige; i contribuenti non residenti non sono rappresentabili
+      sulla mappa ma compaiono nella tabella. Clicca una regione per la classifica completa.
+    </p>
+    <div class="map-wrap">
+      <?php require __DIR__ . '/../includes/italy-map.php'; ?>
+      <div class="map-legend" id="map-legend"></div>
+    </div>
+    <p class="text-muted map-credits">Confini regionali: ISTAT, via openpolis/geojson-italy (CC-BY 4.0).</p>
+  </div>
+  <div class="map-tooltip" id="map-tooltip" role="status" aria-live="polite"></div>
+
   <div class="chart-card">
     <h3>Scelte valide per regione (<?= h((string) $year) ?>)</h3>
     <div class="chart-wrap tall"><canvas id="chart-regions" role="img" aria-label="Scelte valide totali per regione"></canvas></div>
@@ -56,6 +72,6 @@ declare(strict_types=1);
 </div>
 
 <script>
-  window.REGIONS_DATA = <?= json_encode(['regions' => $regions]) ?>;
+  window.REGIONS_DATA = <?= json_encode(['regions' => $regions, 'year' => $year]) ?>;
 </script>
 <script src="/assets/js/regions.js"></script>

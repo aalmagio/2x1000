@@ -53,11 +53,27 @@ CHOICES_ALIASES = frozenset({
 # colonne percentuali come "% sul totale scelte", facendo puntare amount_idx
 # alla colonna sbagliata. Le frasi sotto sono quelle viste nei PDF reali del
 # Dipartimento delle Finanze (export=1) e nelle fonti CSV/Excel più comuni.
+#
+# Anno 2015: il MEF non pubblica una colonna "Importo" ma tre colonne
+# ("2‰ teorico", "Totale 2‰ erogato nel 2015", "Somme erogate nel 2016 in
+# base all'art. 11 D.L. 149/2013"): l'importo spettante fu erogato in due
+# tranche per il tetto di bilancio, e teorico ≈ erogato 2015 + erogato 2016.
+# La colonna semanticamente equivalente all'"Importo" degli anni successivi
+# è quindi "2‰ teorico": l'alias "teorico" (match parziale) la aggancia in
+# tutte le varianti di punteggiatura e, scansionando le celle da sinistra,
+# vince sempre sulla colonna "erogato" parziale che le sta a destra.
+#
+# Anno 2016: un'unica colonna "Totale 2‰ erogato" (niente teorico, niente
+# art. 11: erogazione piena in un'unica soluzione, ~10 €/scelta in linea col
+# teorico 2015). Gli alias "erogato" sotto valgono solo quando non esiste
+# una colonna teorico.
 AMOUNT_ALIASES = frozenset({
     "importo", "importo (euro)", "importo euro", "importo totale",
     "importo assegnato", "ammontare",
     "totale 2‰ spettante", "totale 2 per mille spettante",
     "totale spettante", "importo spettante",
+    "2‰ teorico", "2 per mille teorico", "teorico",
+    "totale 2‰ erogato", "totale 2 per mille erogato", "2‰ erogato",
 })
 
 # URL per anno (Dipartimento delle Finanze / MEF). Vuoto di default: va
@@ -75,12 +91,15 @@ def _apply_config(cfg: dict) -> None:
             YEAR_URLS[int(anno)] = str(url)
 
 
-def parse_results_table(header: "list[str]", rows: "list[list[str]]") -> "tuple[list[dict], int | None]":
+def parse_results_table(header: "list[str]", rows: "list[list[str]]") -> "tuple[list[dict], int | None, dict]":
     """
     Mappa una tabella grezza (header, rows) sullo schema normalizzato
     [{"party_name": ..., "valid_choices": int, "amount": float}, ...], più il
     totale contribuenti se presente nella riga "Per memoria: Totale
-    contribuenti" (necessario per calcolare il tasso di scelta).
+    contribuenti" (necessario per calcolare il tasso di scelta) e i totali
+    di controllo della riga "Totale" (scelte e importo dichiarati dalla
+    fonte: usati da validate_data.py per verificare che la somma delle righe
+    importate coincida con il totale del file ufficiale).
     Salta le righe senza nome partito o totalmente numeriche/vuote (righe di
     totale, note a piè di pagina, ecc.).
     """
@@ -92,13 +111,14 @@ def parse_results_table(header: "list[str]", rows: "list[list[str]]") -> "tuple[
 
     if party_idx is None:
         logging.error(f"  Colonna partito non trovata. Intestazione: {header}")
-        return [], None
+        return [], None, {}
     if choices_idx is None and amount_idx is None:
         logging.error(f"  Nessuna colonna scelte/importo trovata. Intestazione: {header}")
-        return [], None
+        return [], None, {}
 
     records = []
     total_taxpayers = None
+    control_totals: dict = {}
     for row in rows:
         if party_idx >= len(row):
             continue
@@ -112,6 +132,20 @@ def parse_results_table(header: "list[str]", rows: "list[list[str]]") -> "tuple[
         if "memoria" in name_lower and "contribuenti" in name_lower:
             if choices_idx is not None and choices_idx < len(row):
                 total_taxpayers = parse_int(row[choices_idx])
+            continue
+
+        # La riga "Totale" (scartata come footer) porta i totali di controllo
+        # dichiarati dalla fonte: si salvano nel meta.json così
+        # validate_data.py può verificare che la somma delle righe importate
+        # nel database coincida con il totale del file ufficiale.
+        if name_lower.startswith(("totale", "totali")) and not control_totals:
+            ctrl_choices = parse_int(row[choices_idx]) if choices_idx is not None and choices_idx < len(row) else None
+            ctrl_amount = parse_amount(row[amount_idx]) if amount_idx is not None and amount_idx < len(row) else None
+            if ctrl_choices is not None or ctrl_amount is not None:
+                control_totals = {
+                    "control_total_choices": ctrl_choices,
+                    "control_total_amount": ctrl_amount,
+                }
             continue
 
         if is_footer_row(name):
@@ -128,7 +162,7 @@ def parse_results_table(header: "list[str]", rows: "list[list[str]]") -> "tuple[
             "amount": amount or 0.0,
         })
 
-    return records, total_taxpayers
+    return records, total_taxpayers, control_totals
 
 
 def write_normalized_csv(records: "list[dict]", declaration_year: int, tax_year: int, out_path: Path) -> None:
@@ -201,7 +235,7 @@ def process_year(year: int, args, raw_dir: Path, processed_dir: Path, session=No
         logging.error(f"[{year}] Impossibile determinare l'intestazione di {file_path.name}")
         return "error"
 
-    records, total_taxpayers = parse_results_table(header, rows)
+    records, total_taxpayers, control_totals = parse_results_table(header, rows)
     if not records:
         logging.warning(f"[{year}] Nessun risultato estratto da {file_path.name}")
         return "error"
@@ -221,6 +255,7 @@ def process_year(year: int, args, raw_dir: Path, processed_dir: Path, session=No
         "download_date": date.today().isoformat(),
         "row_count": len(records),
         "total_taxpayers": total_taxpayers,
+        **control_totals,
     }
     write_meta(meta, processed_dir / f"mef_results_{year}.meta.json")
 

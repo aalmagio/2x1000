@@ -1,0 +1,15 @@
+{
+  "declaration_year": 2025,
+  "tax_year": 2024,
+  "institution": "Ministero dell'Economia e delle Finanze — Dipartimento delle Finanze",
+  "source_type": "ripartizione_regionale",
+  "url": "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2025AADUEXM0201&page=1&export=3&aggiornato=1522252800",
+  "source_file": "data/raw/2025/geografia/DUEXM2025tab_02_01_.csv",
+  "checksum": "0fb5ae3fe7993e25e0f3506958786a480fd49e36e595176497f0ecc6bafa4bbd",
+  "download_date": "2026-07-12",
+  "row_count": 630,
+  "regions": 21,
+  "parties": 30,
+  "suppressed": 27,
+  "pages": 1
+}

@@ -25,7 +25,10 @@ from datetime import date
 from pathlib import Path
 
 from common import REPO_ROOT, get_logger, load_config
-from extract import fetch_source_file, find_col, is_footer_row, locate_header, read_table, sha256_file
+from extract import (
+    fetch_source_file, find_col, is_footer_row, locate_header,
+    parse_page_range, read_table, sha256_file,
+)
 
 NAME_ALIASES = frozenset({
     "denominazione", "denominazione ufficiale", "partito", "partito politico",
@@ -40,15 +43,27 @@ CODE_ALIASES = frozenset({
 # config.yaml (sezione url_anni_codici) con le pagine ufficiali man mano che
 # vengono verificate. Senza URL configurato, lo script legge i file già
 # presenti in data/raw/<anno>/codici/.
+#
+# Una voce di config può essere un semplice URL, oppure — quando la tabella
+# non è pubblicata come file a sé ma dentro un documento lungo (es. le
+# istruzioni del modello 730) — una mappa {url: ..., pages: "203-206"}:
+# `pages` limita l'estrazione PDF a quelle pagine, altrimenti la prima
+# tabella qualunque del documento verrebbe scambiata per l'elenco partiti.
 YEAR_URLS: dict = {}
+YEAR_PAGES: dict = {}
 
 
 def _apply_config(cfg: dict) -> None:
-    global YEAR_URLS
+    global YEAR_URLS, YEAR_PAGES
     url_anni = cfg.get("url_anni_codici")
     if url_anni and isinstance(url_anni, dict):
-        for anno, url in url_anni.items():
-            YEAR_URLS[int(anno)] = str(url)
+        for anno, entry in url_anni.items():
+            if isinstance(entry, dict):
+                YEAR_URLS[int(anno)] = str(entry.get("url", ""))
+                if entry.get("pages"):
+                    YEAR_PAGES[int(anno)] = str(entry["pages"])
+            else:
+                YEAR_URLS[int(anno)] = str(entry)
 
 
 def parse_codes_table(header: "list[str]", rows: "list[list[str]]") -> "list[dict]":
@@ -130,9 +145,16 @@ def process_year(year: int, args, raw_dir: Path, processed_dir: Path, session=No
         )
         return "skipped"
 
-    logging.info(f"[{year}] Lettura: {file_path.name}")
+    pages_spec = args.pages if args.pages else YEAR_PAGES.get(year)
     try:
-        header, rows = read_table(file_path)
+        pages = parse_page_range(pages_spec)
+    except ValueError as e:
+        logging.error(f"[{year}] Specifica pagine non valida ({pages_spec!r}): {e}")
+        return "error"
+
+    logging.info(f"[{year}] Lettura: {file_path.name}" + (f" (pagine {pages_spec})" if pages else ""))
+    try:
+        header, rows = read_table(file_path, pages=pages)
     except Exception as e:
         logging.error(f"[{year}] Errore nella lettura di {file_path.name}: {e}")
         return "error"
@@ -160,6 +182,7 @@ def process_year(year: int, args, raw_dir: Path, processed_dir: Path, session=No
         "checksum": sha256_file(file_path),
         "download_date": date.today().isoformat(),
         "row_count": len(records),
+        "pdf_pages": pages_spec,
     }
     write_meta(meta, processed_dir / f"ade_codes_{year}.meta.json")
 
@@ -178,6 +201,10 @@ def parse_args():
                          help="Non scaricare: usa i file già presenti in data/raw/<anno>/codici/")
     parser.add_argument("--input", type=str, default=None,
                          help="Percorso di un file specifico da elaborare (richiede un solo anno in --anni)")
+    parser.add_argument("--pages", type=str, default=None,
+                         help="Solo PDF: limita l'estrazione a queste pagine (es. \"203\" o \"203-206\"). "
+                              "Prevale su 'pages' in config.yaml. Utile quando la tabella è dentro "
+                              "un documento lungo, come le istruzioni del modello 730.")
     parser.add_argument("--tax-year", type=int, default=None,
                          help="Anno d'imposta, se diverso da anno_dichiarazione - 1")
     return parser.parse_args()

@@ -1,0 +1,12 @@
+{
+  "declaration_year": 2021,
+  "tax_year": 2020,
+  "institution": "Ministero dell'Economia e delle Finanze — Dipartimento delle Finanze",
+  "source_type": "risultati_annuali",
+  "url": "https://www1.finanze.gov.it/finanze/2xmille/public/index.php?tree=2021AADUEXM0101&page=1&export=3&aggiornato=1522252800",
+  "source_file": "data/raw/2021/DUEXM2021tab_01_01_.csv",
+  "checksum": "6a5af2d18fbd825bda6f9391d8a07b48673c1b8bd2e0a98dbd7afd0a8b52927a",
+  "download_date": "2026-07-08",
+  "row_count": 30,
+  "total_taxpayers": 41180529
+}

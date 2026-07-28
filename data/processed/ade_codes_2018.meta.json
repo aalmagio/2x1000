@@ -1,0 +1,11 @@
+{
+  "declaration_year": 2018,
+  "tax_year": 2017,
+  "institution": "Agenzia delle Entrate",
+  "source_type": "codici_dichiarazione",
+  "url": "https://www.agenziaentrate.gov.it/portale/documents/20143/359636/Tabella+partiti+politici+Redditi+2018_PF1_partiti_politici.pdf/66b3dac2-376c-fe7e-d298-4e242b85833f",
+  "source_file": "data/raw/2018/codici/Tabella_partiti_politici_Redditi_2018_PF1_partiti_politici.pdf",
+  "checksum": "e807b73d6d5060f0969aeabce1d3700e6bcc14eef5121810cb3f84a7f3a8f89c",
+  "download_date": "2026-07-08",
+  "row_count": 27
+}

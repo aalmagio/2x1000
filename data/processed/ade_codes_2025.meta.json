@@ -1,0 +1,11 @@
+{
+  "declaration_year": 2025,
+  "tax_year": 2024,
+  "institution": "Agenzia delle Entrate",
+  "source_type": "codici_dichiarazione",
+  "url": "https://www.agenziaentrate.gov.it/portale/documents/20143/8673492/PF1_Tabella+partiti+politici+2025.pdf/07dd2e41-6897-bee5-bd9a-84eb764a5979?t=1742475109785",
+  "source_file": "data/raw/2025/codici/PF1_Tabella_partiti_politici_2025.pdf",
+  "checksum": "6e0d42c8cf8314484f9930a933b5ba7d2b4157be1f435193345dea62c2ee2a7f",
+  "download_date": "2026-07-08",
+  "row_count": 30
+}

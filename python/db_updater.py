@@ -35,6 +35,7 @@ from pathlib import Path
 
 from common import REPO_ROOT, get_logger, load_dotenv, slugify
 from db import db_available, get_connection
+from region_resolver import resolve_region_slug
 
 logger = logging.getLogger(__name__)
 
@@ -194,20 +195,41 @@ def upsert_party_code(cur, party_id: int, declaration_year: int, tax_year: int,
 
 
 def upsert_regional_result(cur, party_id: int, declaration_year: int, tax_year: int,
-                            region: str, valid_choices: "int | None", is_suppressed: bool,
-                            source_id: "int | None") -> None:
+                            region: str, region_id: "int | None", valid_choices: "int | None",
+                            is_suppressed: bool, source_id: "int | None") -> None:
     cur.execute(
         """
-        INSERT INTO regional_results (party_id, declaration_year, tax_year, region, valid_choices, is_suppressed, source_id)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO regional_results (party_id, declaration_year, tax_year, region, region_id, valid_choices, is_suppressed, source_id)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         ON DUPLICATE KEY UPDATE
             tax_year = VALUES(tax_year),
+            region_id = VALUES(region_id),
             valid_choices = VALUES(valid_choices),
             is_suppressed = VALUES(is_suppressed),
             source_id = VALUES(source_id)
         """,
-        (party_id, declaration_year, tax_year, region, valid_choices, 1 if is_suppressed else 0, source_id),
+        (party_id, declaration_year, tax_year, region, region_id, valid_choices, 1 if is_suppressed else 0, source_id),
     )
+
+
+def build_region_index(cur) -> "dict[str, int] | None":
+    """
+    slug -> region_id dalla tabella `regions` (anagrafica normalizzata delle
+    regioni con codici ISTAT). Restituisce None se la tabella non esiste
+    ancora (database non migrato): in quel caso le righe regionali vengono
+    scritte con region_id NULL, come prima della normalizzazione — l'import
+    non si blocca, ma mappa e incroci ISTAT non saranno disponibili.
+    """
+    try:
+        cur.execute("SELECT slug, id FROM regions")
+    except Exception:
+        logger.warning(
+            "Tabella `regions` non trovata: region_id non verrà valorizzato. "
+            "Esegui database/schema.sql (crea la tabella) e database/migrations.sql "
+            "(aggiunge la colonna region_id), poi python backfill_region_ids.py."
+        )
+        return None
+    return {slug: region_id for slug, region_id in cur.fetchall()}
 
 
 def build_party_name_index(cur) -> "dict[str, int]":
@@ -333,12 +355,18 @@ def process_codes_file(cur, csv_path: Path, dry_run: bool, alias_index: "dict[st
 
 
 def process_regional_file(cur, csv_path: Path, dry_run: bool, name_index: "dict[str, int] | None" = None,
-                           unresolved: "set[str] | None" = None) -> int:
+                           unresolved: "set[str] | None" = None,
+                           region_index: "dict[str, int] | None" = None,
+                           unresolved_regions: "set[str] | None" = None) -> int:
     """
     name_index: da build_party_name_index(), obbligatorio quando dry_run=False.
     unresolved: set (mutato in place) dove si accumulano i nomi partito che
     non sono stati trovati in name_index, per il report finale — le righe
     corrispondenti vengono scartate, non inventano un partito nuovo.
+    region_index: da build_region_index() (slug regione -> region_id); None se
+    la tabella `regions` non esiste. unresolved_regions: set (mutato in place)
+    delle etichette regione non riconosciute — le righe vengono comunque
+    scritte, con region_id NULL.
     """
     meta = _load_meta(csv_path)
 
@@ -369,6 +397,14 @@ def process_regional_file(cur, csv_path: Path, dry_run: bool, name_index: "dict[
             skipped_unresolved += 1
             continue
 
+        region_id = None
+        if region_index is not None:
+            region_slug = resolve_region_slug(row["region"], region_index)
+            if region_slug is not None:
+                region_id = region_index[region_slug]
+            elif unresolved_regions is not None:
+                unresolved_regions.add(row["region"])
+
         valid_choices = int(row["valid_choices"]) if row["valid_choices"] not in (None, "") else None
         upsert_regional_result(
             cur,
@@ -376,6 +412,7 @@ def process_regional_file(cur, csv_path: Path, dry_run: bool, name_index: "dict[
             int(row["declaration_year"]),
             int(row["tax_year"]),
             row["region"],
+            region_id,
             valid_choices,
             row["is_suppressed"] in ("1", "True", "true"),
             source_id,
@@ -453,6 +490,7 @@ def main():
     conn = get_connection()
     total = 0
     unresolved: set[str] = set()
+    unresolved_regions: set[str] = set()
     try:
         with conn.cursor() as cur:
             alias_index = build_alias_index(cur)
@@ -466,8 +504,11 @@ def main():
                 # codici scritti in questa stessa esecuzione (stessa
                 # transazione, non serve un commit intermedio).
                 name_index = build_party_name_index(cur)
+                region_index = build_region_index(cur)
                 for f in regional_files:
-                    total += process_regional_file(cur, f, dry_run=False, name_index=name_index, unresolved=unresolved)
+                    total += process_regional_file(
+                        cur, f, dry_run=False, name_index=name_index, unresolved=unresolved,
+                        region_index=region_index, unresolved_regions=unresolved_regions)
 
         conn.commit()
         logging.info(f"Completato: {total} righe scritte nel database (commit ok)")
@@ -482,6 +523,15 @@ def main():
                 logging.warning(f"  - {name!r}")
             logging.warning(
                 "  python add_party_alias.py --party <slug-corretto> --alias \"<nome esatto sopra>\""
+            )
+
+        if unresolved_regions:
+            logging.warning(
+                f"{len(unresolved_regions)} etichette regione non riconosciute (righe scritte "
+                f"con region_id NULL — non compariranno sulla mappa): "
+                f"{sorted(unresolved_regions)}. Aggiungi la grafia a "
+                f"REGION_ALIAS_SLUGS in region_resolver.py e rilancia "
+                f"backfill_region_ids.py."
             )
     except Exception:
         conn.rollback()
