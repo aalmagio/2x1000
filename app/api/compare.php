@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/_bootstrap.php';
 
-$partiesParam = $_GET['parties'] ?? null;
+$partiesParam = query_param('parties');
 if ($partiesParam === null || trim($partiesParam) === '') {
     json_error('Parametro "parties" mancante (elenco di slug separati da virgola).', 400);
 }

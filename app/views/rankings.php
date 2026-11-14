@@ -29,7 +29,7 @@ function ranking_value(array $row, string $col): string
   <form class="filter-bar" method="get" action="/classifiche.php">
     <div class="field">
       <label for="year">Anno di dichiarazione</label>
-      <select id="year" name="year" onchange="this.form.submit()">
+      <select id="year" name="year" data-autosubmit>
         <?php foreach ($availableYears as $y): ?>
           <option value="<?= $y ?>" <?= $y === $year ? 'selected' : '' ?>><?= $y ?></option>
         <?php endforeach; ?>
@@ -41,7 +41,7 @@ function ranking_value(array $row, string $col): string
     </div>
     <div class="field">
       <label for="region">Regione</label>
-      <select id="region" name="region" onchange="this.form.submit()">
+      <select id="region" name="region" data-autosubmit>
         <option value="">Tutte le regioni (nazionale)</option>
         <?php foreach ($availableRegions as $r): ?>
           <option value="<?= h($r) ?>" <?= $r === $region ? 'selected' : '' ?>><?= h($r) ?></option>
@@ -122,4 +122,3 @@ function ranking_value(array $row, string $col): string
     </table>
   </div>
 </div>
-<script src="/assets/js/rankings.js"></script>

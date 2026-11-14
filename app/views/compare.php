@@ -65,7 +65,4 @@ declare(strict_types=1);
   <?php endif; ?>
 </div>
 
-<script>
-  window.COMPARE_DATA = <?= json_encode($comparison) ?>;
-</script>
-<script src="/assets/js/compare.js"></script>
+<?= json_data_block('page-data', $comparison) ?>

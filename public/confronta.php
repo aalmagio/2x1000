@@ -7,7 +7,7 @@ $allParties = Party::all(true);
 
 $requestedSlugs = [];
 if (isset($_GET['parties']) && is_array($_GET['parties'])) {
-    $requestedSlugs = array_slice(array_filter(array_map('clean_slug', $_GET['parties'])), 0, 5);
+    $requestedSlugs = array_slice(array_filter(array_map('clean_slug', array_filter($_GET['parties'], 'is_string'))), 0, 5);
 }
 
 $selectedIds = [];
@@ -24,5 +24,6 @@ render_page(
     __DIR__ . '/../app/views/compare.php',
     ['allParties' => $allParties, 'selectedSlugs' => $requestedSlugs, 'comparison' => $comparison],
     'Confronta partiti — 2x1000 Open Data',
-    'Confronta fino a 5 partiti per scelte, importo, importo medio, quote e ranking nel tempo.'
+    'Confronta fino a 5 partiti per scelte, importo, importo medio, quote e ranking nel tempo.',
+    ['charts' => true, 'scripts' => ['compare.js']]
 );

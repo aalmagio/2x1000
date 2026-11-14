@@ -43,6 +43,12 @@ final class Result
         return $stmt->fetchAll();
     }
 
+    /** Risultati di tutti i partiti per tutti gli anni (anno crescente, poi rank importo). */
+    public static function all(): array
+    {
+        return db()->query('SELECT * FROM v_results_full ORDER BY declaration_year ASC, rank_amount ASC')->fetchAll();
+    }
+
     /** Risultati di tutti i partiti per un anno di dichiarazione. */
     public static function forYear(int $year): array
     {

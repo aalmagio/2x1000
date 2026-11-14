@@ -15,7 +15,7 @@ declare(strict_types=1);
         <h3 class="mt-0"><?= h($s['title']) ?></h3>
         <p><strong>Istituzione:</strong> <?= h($s['institution']) ?><br>
         <strong>Tipo:</strong> <?= h($s['source_type']) ?><br>
-        <?php if ($s['url']): ?><strong>URL:</strong> <a href="<?= h($s['url']) ?>" target="_blank" rel="noopener"><?= h($s['url']) ?></a><br><?php endif; ?>
+        <?php if (($sourceUrl = safe_url($s['url'])) !== null): ?><strong>URL:</strong> <a href="<?= h($sourceUrl) ?>" target="_blank" rel="noopener noreferrer"><?= h($sourceUrl) ?></a><br><?php endif; ?>
         <?php if ($s['publication_date']): ?><strong>Data pubblicazione:</strong> <?= h($s['publication_date']) ?><br><?php endif; ?>
         <?php if ($s['download_date']): ?><strong>Data download:</strong> <?= h($s['download_date']) ?><br><?php endif; ?>
         <?php if ($s['checksum']): ?><strong>Checksum:</strong> <code><?= h($s['checksum']) ?></code><br><?php endif; ?>

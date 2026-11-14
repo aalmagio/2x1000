@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/_bootstrap.php';
 
-$yearParam = $_GET['year'] ?? null;
+$yearParam = query_param('year');
 
 if ($yearParam !== null) {
     $year = clean_year($yearParam);
@@ -16,9 +16,13 @@ if ($yearParam !== null) {
     json_response(Result::forYear($year));
 }
 
-$years = Result::availableYears();
+// Una sola query per l'intera serie storica, raggruppata per anno in PHP.
+$byYear = [];
+foreach (Result::all() as $row) {
+    $byYear[(int) $row['declaration_year']][] = $row;
+}
 $all = [];
-foreach ($years as $year) {
-    $all[] = ['declaration_year' => $year, 'results' => Result::forYear($year)];
+foreach ($byYear as $year => $rows) {
+    $all[] = ['declaration_year' => $year, 'results' => $rows];
 }
 json_response($all);

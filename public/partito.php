@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../app/includes/bootstrap.php';
 
-$slug = clean_slug($_GET['slug'] ?? null);
+$slug = clean_slug(query_param('slug'));
 $party = $slug !== null ? Party::findBySlug($slug) : null;
 
 if ($party === null) {
@@ -27,5 +27,6 @@ render_page(
         'regionalResults' => RegionalResult::forParty((int) $party['id']),
     ],
     $party['canonical_name'] . ' — 2x1000 Open Data',
-    'Scheda dati 2x1000 per ' . $party['canonical_name']
+    'Scheda dati 2x1000 per ' . $party['canonical_name'],
+    ['charts' => true, 'scripts' => ['party.js']]
 );

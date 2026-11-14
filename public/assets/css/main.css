@@ -263,3 +263,5 @@ select, input[type=text], input[type=search], input[type=number] {
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
 .compare-picker { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
 .compare-picker label { display: flex; align-items: center; gap: 6px; border: 1px solid var(--color-border); border-radius: 999px; padding: 6px 12px; background: var(--color-surface); font-size: .88rem; }
+
+.field-narrow { max-width: 320px; }

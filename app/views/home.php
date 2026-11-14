@@ -95,14 +95,8 @@ declare(strict_types=1);
   </div>
 </section>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  var years = <?= json_encode(array_map(fn($t) => (int) $t['declaration_year'], $totals)) ?>;
-  var choices = <?= json_encode(array_map(fn($t) => (int) $t['total_valid_choices'], $totals)) ?>;
-  var amounts = <?= json_encode(array_map(fn($t) => (float) $t['total_amount'], $totals)) ?>;
-  Viz.lineChart('chart-home-choices', years, [{ label: 'Scelte valide', data: choices }]);
-  Viz.lineChart('chart-home-amount', years, [{ label: 'Importo totale (€)', data: amounts }], {
-    yTickFormat: function (v) { return '€ ' + Number(v).toLocaleString('it-IT'); },
-  });
-});
-</script>
+<?= json_data_block('page-data', [
+    'years' => array_map(fn($t) => (int) $t['declaration_year'], $totals),
+    'choices' => array_map(fn($t) => (int) $t['total_valid_choices'], $totals),
+    'amounts' => array_map(fn($t) => (float) $t['total_amount'], $totals),
+]) ?>

@@ -6,7 +6,7 @@ declare(strict_types=1);
 ?>
 <?php if (($datasetsLd ?? []) !== []): ?>
 <script type="application/ld+json">
-<?= json_encode([
+<?= js_json([
     '@context' => 'https://schema.org',
     '@type' => 'DataCatalog',
     'name' => '2x1000 Open Data — Partiti politici',
@@ -18,7 +18,7 @@ declare(strict_types=1);
         'url' => 'https://osservatorio.assif.it',
     ],
     'dataset' => $datasetsLd,
-], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?>
+]) ?>
 </script>
 <?php endif; ?>
 <div class="container section">
@@ -43,7 +43,7 @@ declare(strict_types=1);
       <?php foreach ($files as $f): ?>
         <li>
           <span><?= h($f['label']) ?> <span class="badge"><?= strtoupper(h($f['ext'])) ?></span></span>
-          <a class="btn btn-sm" href="/download.php?file=<?= h($f['file']) ?>" download>Scarica</a>
+          <a class="btn btn-sm" href="/download.php?file=<?= h(rawurlencode($f['file'])) ?>" download>Scarica</a>
         </li>
       <?php endforeach; ?>
     </ul>

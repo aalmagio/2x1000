@@ -1,6 +1,7 @@
 <?php
 /** @var string $pageTitle */
 /** @var string $pageDescription */
+/** @var list<string> $pageScripts */
 declare(strict_types=1);
 
 $navItems = [
@@ -43,8 +44,10 @@ $canonicalUrl = (env('APP_URL', '') ?? '') !== '' ? canonical_url() : null;
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="<?= h($metaTitle) ?>">
 <meta name="twitter:description" content="<?= h($metaDescription) ?>">
-<link rel="stylesheet" href="/assets/css/main.css">
-<script src="/assets/js/vendor/chart.umd.min.js"></script>
+<link rel="stylesheet" href="<?= h(asset_url('assets/css/main.css')) ?>">
+<?php foreach ($pageScripts as $script): ?>
+<script src="<?= h(asset_url('assets/js/' . $script)) ?>" defer></script>
+<?php endforeach; ?>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Vai al contenuto principale</a>

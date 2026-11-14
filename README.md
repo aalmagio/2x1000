@@ -24,6 +24,7 @@ metodologica completa.
 - [Pipeline Python di acquisizione dati](#pipeline-python-di-acquisizione-dati)
 - [Generazione degli open data](#generazione-degli-open-data)
 - [API](#api)
+- [Sicurezza e prestazioni](#sicurezza-e-prestazioni)
 - [Dati demo](#dati-demo)
 - [Note metodologiche](#note-metodologiche)
 - [Licenza](#licenza)
@@ -64,6 +65,8 @@ database/
   schema.sql               Schema completo (tabelle + indici)
   views.sql                Viste SQL di comodo (v_results_full, v_party_summary)
   seed.sql                 Dati DEMO (marcati esplicitamente, non reali)
+tests/
+  php/http_test.php        Test del livello HTTP (header, input, escaping), senza dipendenze
 scripts/
   import_parties.php       Importa/aggiorna l'anagrafica partiti da CSV
   import_results.php       Importa i risultati annuali da CSV
@@ -459,6 +462,67 @@ Tutte le API restituiscono JSON con header corretti e gestiscono gli errori
 (parametri mancanti/non validi → 400, risorsa non trovata → 404), senza mai
 concatenare l'input utente direttamente in query SQL (uso esclusivo di PDO
 con prepared statement).
+
+## Sicurezza e prestazioni
+
+Il sito è in sola lettura: nessun login, nessun form che scrive, nessun
+cookie. Le difese sono concentrate in `app/includes/http.php`, richiamato da
+tutte le pagine, dalle API e da `download.php`.
+
+- **Header di sicurezza** su ogni risposta: `Content-Security-Policy`,
+  `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`,
+  `Permissions-Policy` e, in produzione su HTTPS, `Strict-Transport-Security`.
+- **CSP senza `unsafe-inline`**: le viste non contengono script né stili
+  inline. I dati per i grafici passano da `json_data_block()` (un
+  `<script type="application/json">`, che il browser non esegue) e sono letti
+  dal JavaScript con `Site.pageData()`. Chi aggiunge una pagina deve seguire
+  la stessa strada: uno `<script>` inline verrebbe bloccato dal browser, e
+  `tests/php/http_test.php` lo segnala in CI.
+- **Input**: i parametri si leggono con `query_param()`, che scarta gli array
+  (`?slug[]=x`), e si validano con `clean_slug()`, `clean_year()`,
+  `clean_int()`. Sono ammessi solo i metodi `GET` e `HEAD` (più `OPTIONS`
+  sulle API).
+- **Errori**: in produzione (`APP_ENV=production`) eccezioni ed errori
+  fatali producono una risposta generica; i dettagli finiscono solo nel log
+  del server.
+- **Cache HTTP**: pagine e API rispondono con `Cache-Control` (durata in
+  `CACHE_MAX_AGE`) ed `ETag`; una richiesta con contenuto invariato riceve
+  `304` senza corpo. Gli asset hanno un parametro di versione (`asset_url()`)
+  e restano in cache un anno.
+- **JavaScript**: Chart.js (~200 KB, ~70 KB compressi) viene caricato solo
+  dalle pagine con grafici, e tutti gli script usano `defer`.
+- **Ambienti non di produzione**: rispondono con `X-Robots-Tag: noindex`.
+
+Le regole per i file statici (cache, compressione, blocco dei file nascosti)
+sono in `public/.htaccess`. I file `.htaccess` nella radice e nelle cartelle
+`app/`, `data/`, `database/`, `python/`, `scripts/`, `tests/` sono una rete
+di sicurezza: negano l'accesso nel caso la document root venga puntata per
+errore alla radice del progetto.
+
+Se Plesk serve i file statici direttamente con nginx (opzione "Smart static
+files processing" / "Serve static files directly by nginx"), `.htaccess` non
+vale per quei file: le stesse regole vanno in *Impostazioni Apache e nginx →
+Direttive nginx aggiuntive*:
+
+```nginx
+location ~ /\.(?!well-known) { deny all; }
+location ~* \.(?:css|js|svg|png|jpg|jpeg|webp|ico|woff2)$ {
+    add_header Cache-Control "public, max-age=31536000, immutable";
+    add_header X-Content-Type-Options "nosniff";
+}
+gzip on;
+gzip_types text/css text/javascript application/javascript application/json text/csv image/svg+xml;
+```
+
+Verifica rapida dopo un deploy:
+
+```bash
+curl -sI https://2x1000.assif.it/ | grep -iE "content-security|strict-transport|cache-control|etag"
+```
+
+```bash
+php tests/php/http_test.php
+```
 
 ## Dati demo
 

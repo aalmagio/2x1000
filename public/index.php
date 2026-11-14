@@ -11,5 +11,6 @@ render_page(
     __DIR__ . '/../app/views/home.php',
     ['latestYear' => $latestYear, 'latest' => $latest, 'totals' => $totals],
     '2x1000 Open Data — Partiti politici',
-    "Dati ufficiali sulla destinazione del 2 per mille IRPEF ai partiti politici, a cura dell'Osservatorio ASSIF."
+    "Dati ufficiali sulla destinazione del 2 per mille IRPEF ai partiti politici, a cura dell'Osservatorio ASSIF.",
+    ['charts' => true, 'scripts' => ['home.js']]
 );

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/_bootstrap.php';
 
-$yearParam = $_GET['year'] ?? null;
+$yearParam = query_param('year');
 
 if ($yearParam !== null) {
     $year = clean_year($yearParam);
