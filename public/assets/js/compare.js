@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  var groups = window.COMPARE_DATA;
+  var groups = Site.pageData('page-data');
   if (!groups || groups.length === 0) return;
 
   document.addEventListener('DOMContentLoaded', function () {

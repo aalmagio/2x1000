@@ -7,6 +7,10 @@ on:
   push:
   pull_request:
 
+# Il workflow legge soltanto il codice: token con i permessi minimi.
+permissions:
+  contents: read
+
 jobs:
   php-lint:
     name: Lint PHP
@@ -19,8 +23,10 @@ jobs:
       - name: php -l su tutti i file
         run: |
           set -e
-          find app public scripts -name '*.php' -print0 | xargs -0 -n1 php -l > /dev/null
+          find app public scripts tests -name '*.php' -print0 | xargs -0 -n1 php -l > /dev/null
           echo "Sintassi PHP OK"
+      - name: Test del livello HTTP (header, input, escaping)
+        run: php tests/php/http_test.php
 
   python-tests:
     name: Test pipeline Python

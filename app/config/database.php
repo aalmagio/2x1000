@@ -55,12 +55,16 @@ function db(): PDO
             PDO::ATTR_EMULATE_PREPARES => false,
         ]);
     } catch (PDOException $e) {
-        http_response_code(500);
+        error_log('[2x1000] Connessione al database fallita: ' . $e->getMessage());
+        http_response_code(503);
+        header('Retry-After: 60');
+        header('Cache-Control: no-store');
         if (str_starts_with($_SERVER['SCRIPT_NAME'] ?? '', '/api/')) {
             header('Content-Type: application/json; charset=utf-8');
             echo json_encode(['error' => 'Database non disponibile']);
         } else {
-            echo 'Database non disponibile. Verifica la configurazione in .env.';
+            header('Content-Type: text/plain; charset=utf-8');
+            echo 'Servizio temporaneamente non disponibile.';
         }
         exit;
     }

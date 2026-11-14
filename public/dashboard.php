@@ -5,7 +5,7 @@ require __DIR__ . '/../app/includes/bootstrap.php';
 
 $availableYears = Result::availableYears();
 $latestYear = end($availableYears) ?: null;
-$year = clean_year($_GET['year'] ?? null);
+$year = clean_year(query_param('year'));
 if ($year === null || !in_array($year, $availableYears, true)) {
     $year = $latestYear;
 }
@@ -20,5 +20,6 @@ render_page(
     __DIR__ . '/../app/views/dashboard.php',
     compact('year', 'availableYears', 'currentTotal', 'totals', 'topChoices', 'topAmount', 'yearResults'),
     'Dashboard — 2x1000 Open Data',
-    'KPI annuali, top 10 partiti per scelte e importo, concentrazione dell\'importo.'
+    'KPI annuali, top 10 partiti per scelte e importo, concentrazione dell\'importo.',
+    ['charts' => true, 'scripts' => ['dashboard.js']]
 );

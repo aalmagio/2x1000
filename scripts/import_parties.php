@@ -11,6 +11,11 @@ declare(strict_types=1);
  * Default: data/processed/parties.csv
  */
 
+if (PHP_SAPI !== 'cli') {
+    http_response_code(403);
+    exit('Script eseguibile solo da riga di comando.');
+}
+
 require_once __DIR__ . '/../app/config/database.php';
 require_once __DIR__ . '/../app/includes/helpers.php';
 

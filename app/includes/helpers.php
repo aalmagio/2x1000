@@ -124,7 +124,7 @@ function current_path(): string
 function canonical_url(): string
 {
     $query = '';
-    $slug = clean_slug($_GET['slug'] ?? null);
+    $slug = clean_slug(query_param('slug'));
     if ($slug !== null) {
         $query = '?slug=' . rawurlencode($slug);
     }

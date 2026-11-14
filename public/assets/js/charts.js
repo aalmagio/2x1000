@@ -154,16 +154,4 @@
     scatterChart: scatterChart,
     seriesColor: seriesColor,
   };
-
-  document.addEventListener('DOMContentLoaded', function () {
-    var toggle = document.querySelector('.nav-toggle');
-    var list = document.getElementById('main-nav-list');
-    if (toggle && list) {
-      toggle.addEventListener('click', function () {
-        var expanded = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', String(!expanded));
-        list.classList.toggle('open');
-      });
-    }
-  });
 })(window);

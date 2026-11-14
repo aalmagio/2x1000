@@ -1,0 +1,49 @@
+# 2x1000 Open Data — regole Apache per la document root.
+# Ogni blocco è protetto da <IfModule>: se un modulo manca la regola viene
+# ignorata invece di mandare il sito in errore 500.
+# Gli header di sicurezza delle pagine PHP sono inviati da
+# app/includes/http.php; qui si coprono i file statici.
+
+# Niente file nascosti (.env, .git, .htaccess...) né sorgenti/backup.
+<IfModule mod_authz_core.c>
+  <FilesMatch "^\.(?!well-known)|\.(?:sql|log|ini|bak|sh|py|yaml|yml|md|lock)$|~$">
+    Require all denied
+  </FilesMatch>
+</IfModule>
+
+# Nessuna cartella nascosta (.git, .github...) deve essere raggiungibile;
+# resta ammessa solo .well-known (rinnovo dei certificati, security.txt).
+<IfModule mod_alias.c>
+  RedirectMatch 404 "/\.(?!well-known/)"
+</IfModule>
+
+<IfModule mod_autoindex.c>
+  IndexIgnore *
+</IfModule>
+
+<IfModule mod_headers.c>
+  # "Header set" (non "always") sostituisce l'eventuale header omonimo già
+  # impostato da PHP, evitando duplicati.
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header unset X-Powered-By
+
+  # Gli asset sono referenziati con ?v=<versione> (asset_url() in
+  # app/includes/http.php): possono restare in cache un anno.
+  <FilesMatch "\.(?:css|js|svg|png|jpg|jpeg|webp|ico|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "^(?:sitemap\.xml|robots\.txt)$">
+    Header set Cache-Control "public, max-age=3600"
+  </FilesMatch>
+</IfModule>
+
+# Compressione delle risposte testuali (HTML, JSON delle API, CSV, JS, CSS).
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/csv text/xml
+  AddOutputFilterByType DEFLATE text/javascript application/javascript application/json application/ld+json application/xml image/svg+xml
+</IfModule>
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/csv text/xml
+  AddOutputFilterByType BROTLI_COMPRESS text/javascript application/javascript application/json application/ld+json application/xml image/svg+xml
+</IfModule>

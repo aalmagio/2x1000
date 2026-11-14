@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/helpers.php';
+require_once __DIR__ . '/../includes/http.php';
 require_once __DIR__ . '/../models/Party.php';
 require_once __DIR__ . '/../models/Result.php';
 require_once __DIR__ . '/../models/AnnualTotal.php';
@@ -10,8 +11,10 @@ require_once __DIR__ . '/../models/Source.php';
 require_once __DIR__ . '/../models/RegionalResult.php';
 
 header('Content-Type: application/json; charset=utf-8');
+// Dati pubblici in sola lettura, senza cookie né autenticazione: CORS aperto.
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET');
+header('Access-Control-Allow-Methods: GET, HEAD, OPTIONS');
+http_init('api');
 
 function json_response(mixed $data, int $status = 200): never
 {

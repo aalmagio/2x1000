@@ -7,7 +7,7 @@ declare(strict_types=1);
   <h1>Partiti</h1>
   <p class="text-muted">Elenco dei partiti politici con dati sul 2x1000, ordinati alfabeticamente. Usa la ricerca per filtrare.</p>
 
-  <div class="field" style="max-width:320px">
+  <div class="field field-narrow">
     <label for="party-search">Cerca partito</label>
     <input type="search" id="party-search" placeholder="Digita un nome...">
   </div>
@@ -44,17 +44,3 @@ declare(strict_types=1);
     </table>
   </div>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  var input = document.getElementById('party-search');
-  var rows = document.querySelectorAll('#parties-table tbody tr');
-  input.addEventListener('input', function () {
-    var q = input.value.trim().toLowerCase();
-    rows.forEach(function (row) {
-      var name = row.querySelector('td').textContent.toLowerCase();
-      row.style.display = name.indexOf(q) !== -1 ? '' : 'none';
-    });
-  });
-});
-</script>

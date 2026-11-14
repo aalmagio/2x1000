@@ -5,7 +5,7 @@ require __DIR__ . '/../app/includes/bootstrap.php';
 
 $availableYears = RegionalResult::availableYears();
 $latestYear = end($availableYears) ?: null;
-$year = clean_year($_GET['year'] ?? null);
+$year = clean_year(query_param('year'));
 if ($year === null || !in_array($year, $availableYears, true)) {
     $year = $latestYear;
 }
@@ -23,5 +23,6 @@ render_page(
     __DIR__ . '/../app/views/regions.php',
     compact('year', 'availableYears', 'regions'),
     'Regioni — 2x1000 Open Data',
-    'Ripartizione regionale delle scelte del 2x1000 ai partiti politici, per anno di dichiarazione.'
+    'Ripartizione regionale delle scelte del 2x1000 ai partiti politici, per anno di dichiarazione.',
+    ['charts' => true, 'scripts' => ['regions.js']]
 );

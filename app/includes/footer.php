@@ -23,6 +23,5 @@
     <span>© <?= date('Y') ?> Osservatorio ASSIF sul 5, 2 e 8 per mille</span>
   </div>
 </footer>
-<script src="/assets/js/charts.js"></script>
 </body>
 </html>

@@ -1,0 +1,14 @@
+# La document root del sito deve essere public/ (vedi README). Questo file è
+# una rete di sicurezza: se la document root venisse puntata per errore alla
+# radice del progetto, .env e i sorgenti non devono essere scaricabili.
+<IfModule mod_authz_core.c>
+  <FilesMatch "^\.(?!well-known)|\.(?:sql|log|ini|bak|sh|py|yaml|yml|md|lock|example)$|~$">
+    Require all denied
+  </FilesMatch>
+</IfModule>
+
+# Nessuna cartella nascosta (.git, .github...) deve essere raggiungibile;
+# resta ammessa solo .well-known (rinnovo dei certificati, security.txt).
+<IfModule mod_alias.c>
+  RedirectMatch 404 "/\.(?!well-known/)"
+</IfModule>

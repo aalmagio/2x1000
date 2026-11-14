@@ -16,7 +16,7 @@ declare(strict_types=1);
   <form class="filter-bar" method="get" action="/dashboard.php">
     <div class="field">
       <label for="year">Anno di dichiarazione</label>
-      <select id="year" name="year" onchange="this.form.submit()">
+      <select id="year" name="year" data-autosubmit>
         <?php foreach ($availableYears as $y): ?>
           <option value="<?= $y ?>" <?= $y === $year ? 'selected' : '' ?>><?= $y ?></option>
         <?php endforeach; ?>
@@ -98,14 +98,11 @@ declare(strict_types=1);
   </div>
 </div>
 
-<script>
-  window.DASHBOARD_DATA = {
-    year: <?= json_encode($year) ?>,
-    totals: <?= json_encode($totals) ?>,
-    topChoices: <?= json_encode($topChoices) ?>,
-    topAmount: <?= json_encode($topAmount) ?>,
-    yearResults: <?= json_encode($yearResults) ?>,
-    currentTotal: <?= json_encode($currentTotal) ?>
-  };
-</script>
-<script src="/assets/js/dashboard.js"></script>
+<?= json_data_block('page-data', [
+    'year' => $year,
+    'totals' => $totals,
+    'topChoices' => $topChoices,
+    'topAmount' => $topAmount,
+    'yearResults' => $yearResults,
+    'currentTotal' => $currentTotal,
+]) ?>

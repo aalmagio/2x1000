@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/_bootstrap.php';
 
-$slug = clean_slug($_GET['slug'] ?? null);
+$slug = clean_slug(query_param('slug'));
 if ($slug === null) {
     json_error('Parametro "slug" mancante o non valido.', 400);
 }

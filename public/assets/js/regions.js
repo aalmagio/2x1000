@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  var d = window.REGIONS_DATA;
+  var d = Site.pageData('page-data');
   if (!d || !d.regions || !d.regions.length) return;
 
   function esc(text) {

@@ -5,15 +5,15 @@ require __DIR__ . '/../app/includes/bootstrap.php';
 
 $availableYears = Result::availableYears();
 $latestYear = end($availableYears) ?: null;
-$year = clean_year($_GET['year'] ?? null);
+$year = clean_year(query_param('year'));
 if ($year === null || !in_array($year, $availableYears, true)) {
     $year = $latestYear;
 }
 
-$minPrevious = clean_int($_GET['min_previous'] ?? null, 0, 10000000) ?? (int) (env('GROWTH_MIN_PREVIOUS_CHOICES', '5000'));
+$minPrevious = clean_int(query_param('min_previous'), 0, 10000000) ?? (int) (env('GROWTH_MIN_PREVIOUS_CHOICES', '5000'));
 
 $availableRegions = RegionalResult::availableRegions();
-$region = trim((string) ($_GET['region'] ?? ''));
+$region = trim(query_param('region') ?? '');
 if ($region !== '' && !in_array($region, $availableRegions, true)) {
     $region = '';
 }
@@ -45,5 +45,6 @@ render_page(
     __DIR__ . '/../app/views/rankings.php',
     compact('year', 'availableYears', 'minPrevious', 'rankings', 'longestPresence', 'availableRegions', 'region', 'regionalRanking'),
     'Classifiche — 2x1000 Open Data',
-    'Classifiche dei partiti per scelte, importo, crescita e presenza storica nel 2x1000.'
+    'Classifiche dei partiti per scelte, importo, crescita e presenza storica nel 2x1000.',
+    ['scripts' => ['rankings.js']]
 );

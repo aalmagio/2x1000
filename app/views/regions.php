@@ -12,7 +12,7 @@ declare(strict_types=1);
   <form class="filter-bar" method="get" action="/regioni.php">
     <div class="field">
       <label for="year">Anno di dichiarazione</label>
-      <select id="year" name="year" onchange="this.form.submit()">
+      <select id="year" name="year" data-autosubmit>
         <?php foreach ($availableYears as $y): ?>
           <option value="<?= $y ?>" <?= $y === $year ? 'selected' : '' ?>><?= $y ?></option>
         <?php endforeach; ?>
@@ -71,7 +71,4 @@ declare(strict_types=1);
   <?php endif; ?>
 </div>
 
-<script>
-  window.REGIONS_DATA = <?= json_encode(['regions' => $regions, 'year' => $year]) ?>;
-</script>
-<script src="/assets/js/regions.js"></script>
+<?= json_data_block('page-data', ['regions' => $regions, 'year' => $year]) ?>

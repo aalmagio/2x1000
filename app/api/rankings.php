@@ -11,18 +11,18 @@ $validTypes = [
     'longest_presence',
 ];
 
-$type = $_GET['type'] ?? null;
+$type = query_param('type');
 if ($type === null || !in_array($type, $validTypes, true)) {
     json_error('Parametro "type" mancante o non valido. Valori ammessi: ' . implode(', ', $validTypes), 400);
 }
 
-$limit = clean_int($_GET['limit'] ?? null, 1, 100) ?? 10;
+$limit = clean_int(query_param('limit'), 1, 100) ?? 10;
 
 if ($type === 'longest_presence') {
     json_response(Result::longestPresenceRanking($limit));
 }
 
-$year = clean_year($_GET['year'] ?? null);
+$year = clean_year(query_param('year'));
 if ($year === null) {
     json_error('Parametro "year" mancante o non valido.', 400);
 }
@@ -30,7 +30,7 @@ if (!in_array($year, Result::availableYears(), true)) {
     json_error('Anno non trovato.', 404);
 }
 
-$region = trim((string) ($_GET['region'] ?? ''));
+$region = trim(query_param('region') ?? '');
 if ($region !== '') {
     if ($type !== 'choices') {
         json_error('Il parametro "region" è supportato solo per type=choices: la ripartizione regionale include solo il numero di scelte, non importi.', 400);
@@ -41,7 +41,7 @@ if ($region !== '') {
     json_response(RegionalResult::rankingForRegion($year, $region, $limit));
 }
 
-$minPrevious = clean_int($_GET['min_previous'] ?? null, 0, 10000000) ?? (int) (env('GROWTH_MIN_PREVIOUS_CHOICES', '5000'));
+$minPrevious = clean_int(query_param('min_previous'), 0, 10000000) ?? (int) (env('GROWTH_MIN_PREVIOUS_CHOICES', '5000'));
 
 $result = match ($type) {
     'choices' => Result::top($year, 'choices', $limit),

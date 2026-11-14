@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  var d = window.DASHBOARD_DATA;
+  var d = Site.pageData('page-data');
   if (!d) return;
 
   document.addEventListener('DOMContentLoaded', function () {
