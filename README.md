@@ -11,7 +11,7 @@ ammesso al beneficio. Si veda la pagina `/metodo.php` per la nota
 metodologica completa.
 
 - Ambiente di sviluppo: https://dev2x1000.almagioni.com
-- Produzione: https://2x1000.assif.it
+- Produzione: https://dati2x1000.assif.it
 - Repository: https://github.com/aalmagio/2x1000
 
 ## Indice
@@ -517,7 +517,7 @@ gzip_types text/css text/javascript application/javascript application/json text
 Verifica rapida dopo un deploy:
 
 ```bash
-curl -sI https://2x1000.assif.it/ | grep -iE "content-security|strict-transport|cache-control|etag"
+curl -sI https://dati2x1000.assif.it/ | grep -iE "content-security|strict-transport|cache-control|etag"
 ```
 
 ```bash
